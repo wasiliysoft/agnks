@@ -170,7 +170,6 @@ Public Function InitDisk() As Integer
         'GMC присвоить SelectRS("MOTO") последней по дате записи
         'gDateRec присвоить SelectRS("Data")последней по дате записи
         '
-        'gdInitIR = 0
         'd = Now
         'sum = 0
         'k = Int(gdaStat1(0).IR1) 'количество записей в массиве 1
@@ -393,7 +392,6 @@ Public Function ОстановАГНКС() As String
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = True
     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-    gbDVSStopping = True
     ОстановАГНКС = "Останов АГНКС"
 End Function
 
@@ -414,7 +412,6 @@ Public Function ОстановДВС() As String
     gbAkkum = False
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = False
-    gbDVSStopping = True
 End Function
 'Сама процедура заправки
 Public Function Заправка()
@@ -761,7 +758,6 @@ Public Function ПредПуск() As String
                 frmStart.SSCmdStart.Enabled = False
                 gbCmdStart = True
                 frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
-                gbDVSStopping = True
                 'frmStart.Timer2.Enabled = False
                 'Закрыть все Кэм
                 If (gnДатчик(16).Data = 1) Or (gnДатчик(17).Data = 1) Or (gnДатчик(18).Data = 1) Or _
@@ -829,7 +825,6 @@ Public Sub InitAGNKS()
 
     ' Инициализация плат
     giDVS = 0
-    giMAX = 0
 
     giStage = 0  'Инициализация процедуры заправки (Переходим на ИсхСост)
     giStage1 = 0
@@ -841,17 +836,12 @@ Public Sub InitAGNKS()
     Car = 0
     glAver = 0
     glCounter = 0
-    gbDVSStopping = False
     gbRunDVS = False
-    DVSEmul = False
-    MFTEmul = False
     gdРасход1 = 0
 
     gdRashAkkEnd = 65
     gdK = 1
-    '+++++++++++++++++
-    gdAllРасход = 0    ' Пока обнуляю, а в будующем нужно запоминать в файле и считывать
-    '+++++++++++++++++
+
 
     gbDontStat = False
 
@@ -942,49 +932,36 @@ Public Sub ShowPict()
 
         'Повышение температуры охлаждения ДВС
         If gnДатчик(33).Data = 1 Then
-            gnТ_ДВС = 1
         Else
-            gnТ_ДВС = 0
         End If
 
         'Пожар в отсеке ДВС
         If gnДатчик(45).Data = 1 Then
-            gnПожар_ДВС = 1
         Else
-            gnПожар_ДВС = 0
         End If
 
         'Пожар в технологическом отсеке
         If gnДатчик(46).Data = 1 Then
-            gnПожар_Тех = 1
         Else
-            gnПожар_Тех = 0
         End If
 
-        'Газ в отсеке ДВС
+        'Газ в отсеке ДВС 10%
         If (gnДатчик(41).Data = 1) Then
-            gnГаз_10_ДВС = 1
         Else
-            gnГаз_10_ДВС = 0
         End If
-
+        'Газ в отсеке ДВС 20%
         If (gnДатчик(42).Data = 1) Then
-            gnГаз_20_ДВС = 1
         Else
-            gnГаз_20_ДВС = 0
         End If
 
-        'Газ в технологическом отсеке
+        'Газ в технологическом отсеке 10%
         If (gnДатчик(43).Data = 1) Then
-            gnГаз_10_Тех = 1
         Else
-            gnГаз_10_Тех = 0
         End If
 
+        'Газ в технологическом отсеке 20%
         If (gnДатчик(44).Data = 1) Then
-            gnГаз_20_Тех = 1
         Else
-            gnГаз_20_Тех = 0
         End If
     End With
 
@@ -1077,8 +1054,6 @@ Public Function Verify()
     '    gDateRec = Now  ' temp2.dt
     ' End If
     ' frmStart.MousePointer = vbArrow
-
-    'gdInitIR = 0
     'd = Now
     'sum = 0
     'k = Int(gdaStat1(0).IR1) 'количество записей в массиве 1
@@ -1114,7 +1089,6 @@ Public Function Verify_Damage()
             gbCmdStart = True
             frmStart.SSCmdStart.Caption = "Пуск АГНКС"
             frmStart.SSCmdStart.Visible = True
-            gbDVSStopping = True
             StopOutput (2)
             gbStopAGNKS = True
         End If

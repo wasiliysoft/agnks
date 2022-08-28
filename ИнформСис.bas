@@ -3,10 +3,6 @@ Attribute VB_Name = "Module1"
 Option Explicit
 
 'Определение констант
-
-Global Const ggERR_NoError = 0    'Ошибок нет
-Global Const ggERR_BoardNoInit = 1    'Ошибок нет
-Global Const ggXX = 2160    ' Обороты двигателя
 Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
 Global Const A0 = 0
 Global Const A1 = 256
@@ -15,7 +11,6 @@ Global Const B1 = 257
 Global Const C0 = 2
 Global Const C1 = 258
 Global Const conHwndTopmost = -1
-Global Const conHwndNoTopmost = -2
 Global Const conSwpNoActivate = &H10
 Global Const conSwpShowWindow = &H40
 
@@ -54,7 +49,6 @@ Declare Sub ResetExpenseCounter Lib "MetanCounter" Alias "#1" (ByVal i As Long)
 Declare Sub AddSensorsData Lib "MetanCounter" Alias "#2" (ByVal i As Long, ByVal _
         p1 As Double, ByVal t1 As Double, ByVal p2 As Double, ByVal d As Double, ByVal _
         coef As Double, ByVal CorrExp As Double)
-Declare Function GetCalcExpenseResult Lib "MetanCounter" Alias "#3" () As Long
 Declare Function GetMassExpense Lib "MetanCounter" Alias "#4" (ByVal i As Long) As Double
 Declare Function GetMass Lib "MetanCounter" Alias "#5" (ByVal i As Long) As Double
 Declare Function GetTimeCounter Lib "MetanCounter" Alias "#6" (ByVal i As Long) As Double
@@ -87,8 +81,7 @@ Public gKn          As Double
 'Для расхода газа
 Public gdИР1        As Double
 Public gdИР2        As Double
-Public glИР1err     As Long
-Public glИР2err     As Long
+
 
 'Для заправки
 Public gbOnlyAkk    As Boolean    'Флаг заправки только от аккумуляторов
@@ -109,7 +102,7 @@ Public giMainРасход As Integer    'Флаг для подсчета расхода всего газа:
 ' 1 - добавляем
 ' 0 - ничего
 '-1 - отнимаем
-Public gdAllРасход  As Double    ' Общий расход АГНКС
+
 Public gdK          As Double    'Поправочный коэффициент
 Public gdRashAkkEnd As Double    'Нижний расход по которому отсекается поток от аккумуляторов
 
@@ -126,40 +119,22 @@ Public ggACL8113(31) As Double   'состояние датчиков платы 8113
 Public gnDif(31)    As Double    ' Уже пересчитанные значения(с ними и идет работа)
 Public gsРезультат  As String
 Public glЗначение   As Long
-Public glНомерПлаты As Long
 Public glАдрес      As Long
 Public glaАдрес     As Long
-Public glIRQ        As Long
-Public glAd_data    As Long
-Public gsИниРезультат As String
-Public gsОтветМодама As String
-Public gnСтоп       As Integer
-Public gnИнтервал   As Integer
-Public CRLF         As String
-Public CR           As String
-Public gnInterval   As Integer
-Public MaxId        As Integer
+
+
+
+
+
+
+
+
 
 Public CN           As Integer
-Public ДВС          As Integer
-Public Муфта        As Integer
-
-'Переменные для визуализации технологического процесса
-Public gnТ_ДВС      As Integer    'повышенная температура ДВС
-Public gnПожар_ДВС  As Integer  'пожар в отсеке ДВС
-Public gnПожар_Тех  As Integer  'пожар в технологическом отсеке
-Public gnГаз_10_ДВС As Integer   'газ 10% в отсеке ДВС
-Public gnГаз_20_ДВС As Integer   'газ 20% в отсеке ДВС
-Public gnГаз_10_Тех As Integer   'газ 10% в технологическом отсеке
-Public gnГаз_20_Тех As Integer   'газ 20% в технологическом отсеке
 
 
-
-Public gbDVSStopping As Boolean
 Public gbRunDVS     As Boolean
 
-Public DVSEmul      As Boolean
-Public MFTEmul      As Boolean
 Public gdUpLevel    As Double
 Public giChanel     As Integer
 
@@ -188,12 +163,10 @@ Public gdaStat4(100) As MyRecType    'массив данных по годам
 Public gDateRec     As Date    'Дата последней записи
 Public giCountZ     As Integer    'Счетчик заправок
 Public giRealCountZ As Integer    'Реальный счетчик заправок
-Public giErrDisk    As Integer    'Флаг ошибки записи на диск
+
 Public gbDontStat   As Boolean    ' флаг заправки (работы)
 Public gbHandControl As Boolean    ' флаг ручного управления
 
-'Пути к файлам
-Public gsPathData(1 To 4) As String
 
 'Аварийные ситуации
 Public gbStopAGNKS  As Boolean    ' флаг Останова АГНКС
@@ -204,7 +177,7 @@ Public gbFireTech   As Boolean    'пожар в тех. отсеке
 'Болванки
 Public gdTime       As Double    'Время заправки
 Public giaTableDecoder(10) As Integer    ' Таблица перекодировки
-Public gdInitIR     As Double    ' Для ИР1
+
 'структура для secret file
 Public Type pswd
     PC              As Double
@@ -212,5 +185,4 @@ Public Type pswd
 End Type
 Public Password     As String
 Public giDVS        As Integer
-Public giMAX        As Integer
 Public gdPlot       As Double

@@ -4,8 +4,6 @@ Public Function Инициал_ACL8113() As String
 
     Dim i           As Integer
     glaАдрес = Val("&H220")
-    glНомерПлаты = 0
-    ' glРезультат = W_8113_Initial(glНомерПлаты, glАдрес)
     glРезультат = ISO813_DriverInit()
     If glРезультат <> ISO813_NoError Then
         i = MsgBox("Can not initial Driver!!!", , "ISO813 Card Error")
@@ -23,16 +21,9 @@ End Function
 
 
 Public Function Инициал_Pet48DIO() As String
-    Dim Dummy
-    Dim wTotalBoards As Integer
-    wTotalBoards = 1
     'Инициализация
-
     glАдрес = Val("&H2C0")     'Оставляю по умолчанию
-    ' glНомерПлаты = 0
-    glIRQ = 3
-    ' glРезультат = W_48DIO_Initial(glНомерПлаты, glАдрес, glIRQ)
-    glРезультат = DIO_DriverInit(wTotalBoards)
+    glРезультат = DIO_DriverInit(1)
 
     If glРезультат <> DIO_NoError Then
         MsgBox "Driver DIO Initialize OK!!"

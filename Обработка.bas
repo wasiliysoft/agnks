@@ -12,19 +12,15 @@ Public Function ОпросПлат() As String
     'Прочитать состояние портов платы PET-48DIO
     For i = 0 To 5
         If i = 3 Then
-            'glРезультат = W_48DIO_Read_Back((i - 3) + 256, glЗначение)
             glЗначение = DIO_InputByte(glАдрес + 4)
             gn48DIO(i) = CInt(glЗначение)
         ElseIf i = 0 Then
-            'glРезультат = W_48DIO_Read_Back(i, glЗначение)
             glЗначение = DIO_InputByte(glАдрес)
             gn48DIO(i) = CInt(glЗначение)
         ElseIf i < 3 Then
-            'glРезультат = W_48DIO_DI(i, glЗначение)
             glЗначение = DIO_InputByte(glАдрес + i)
             gn48DIO(i) = Not (CInt(glЗначение))
         Else
-            'glРезультат = W_48DIO_DI((i - 3) + 256, glЗначение)
             glЗначение = DIO_InputByte(glАдрес + 1 + i)
             gn48DIO(i) = Not (CInt(glЗначение))
         End If
@@ -33,14 +29,13 @@ Public Function ОпросПлат() As String
     'Опрос каналов платы ACL8113
     For i = 0 To 16
         For j = 0 To 3
-            'glРезультат = W_8113_AD_Aquire(i, glЗначение)
-            f = ISO813_AD_Float(glaАдрес, i, 1, 0, 1)
             'glaАдрес - I/O port base address
             'i - номер канала
             '1 - A/D Gain : 0 0~10 V
             '               1 0~5 V
             '0 - Unipolar
             '1 = 10V     0 = 20 V
+            f = ISO813_AD_Float(glaАдрес, i, 1, 0, 1)
         Next j
 
         ggACL8113(i) = f
@@ -154,14 +149,11 @@ Public Function Обработка_1()
     'Считать расход (общий) по ИР1
     If giMainРасход = 1 Then
         Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, 0)
-        IR = GetMass(1)
-        gdИР1 = gdInitIR + IR
     Else
         Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, -(Temp))
-        IR = GetMass(1)
-        gdИР1 = gdInitIR + IR
     End If
-
+    IR = GetMass(1)
+    gdИР1 = IR
 End Function
 
 

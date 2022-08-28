@@ -3199,7 +3199,6 @@ Private Sub cmdDanger_Click()
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = True
     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-    gbDVSStopping = True
 
     gbStopAGNKS = False
 
@@ -3342,7 +3341,6 @@ Private Sub Form_Load()
     'ConnectKKM
     Left = 10
     Top = 700
-    MaxId = 0
     InitAGNKS
 
     FileHandle = FreeFile
@@ -3552,7 +3550,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
             frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-            gbDVSStopping = True
             If gbDontStat = True Then
                 StatRS.AddNew
                 StatRS("DATA") = Now
@@ -3591,7 +3588,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
             frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-            gbDVSStopping = True
             'frmStart.Timer2.Enabled = False
             'ОстановДВС = "Двигатель остановлен !!!"
             frmStart.cmdDanger.Visible = True
@@ -3834,13 +3830,6 @@ Private Sub Timer_ДВС_Timer()
 End Sub
 
 
-
-
-Private Sub SSPanel4_DblClick()
-    DVSEmul = Not (DVSEmul)
-End Sub
-
-
 Private Sub Timer1_Timer()
     Dim k, f        As Integer
     Dim Dv, Akk, t  As Integer
@@ -3867,7 +3856,7 @@ Private Sub Timer1_Timer()
     If ((giRealCountZ > giCountZ) Or _
             ((Day(gDateRec) < Day(Date)) Or (Month(gDateRec) < Month(Date)) Or (Year(gDateRec) < Year(Date)))) _
             And (gbDontStat = False) Then
-        giErrDisk = Verify
+         Verify
     End If
 
 
@@ -3884,31 +3873,31 @@ Private Sub Timer1_Timer()
     glCounter = glCounter + 1
     For k = 2 To 16
         If gnDif(k) = -1 Then
-            Sum(k) = -1
-        ElseIf Sum(k) = -1 Then
-            Sum(k) = -1
+            sum(k) = -1
+        ElseIf sum(k) = -1 Then
+            sum(k) = -1
         Else
-            Sum(k) = Sum(k) + gnDif(k)
+            sum(k) = sum(k) + gnDif(k)
         End If
     Next k
 
     If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
         For k = 2 To 16
 
-            If Sum(k) = -1 Then
+            If sum(k) = -1 Then
                 Text2(k - 1).ForeColor = &HFF
                 Text1(k - 1).Text = "Не исправен"
                 s = "Не исправен"
-                Sum(k) = 0
+                sum(k) = 0
             Else
-                Sum(k) = Sum(k) / glCounter
+                sum(k) = sum(k) / glCounter
                 Text2(k - 1).ForeColor = &H80000012
                 ' Проверка на ДД1.1 и ДД1.2 - для них другой шаблон
                 If (k = 1) Or (k = 2) Then
-                    Text1(k - 1).Text = Format(Sum(k), "##0.000")
+                    Text1(k - 1).Text = Format(sum(k), "##0.000")
                     s = Text1(k - 1).Text
                 Else
-                    Text1(k - 1).Text = Format(Sum(k), "##0.000")
+                    Text1(k - 1).Text = Format(sum(k), "##0.000")
                     s = Text1(k - 1).Text
                 End If
             End If
@@ -3916,29 +3905,29 @@ Private Sub Timer1_Timer()
             'Для чистового вывода
             Select Case k
                 Case 2
-                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    s = Format(sum(k) / 0.0981, "##0.0")
                     Р_вход_АГНКС.Caption = s
                 Case 6
-                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    s = Format(sum(k) / 0.0981, "##0.0")
                     Р_выход_компр.Caption = s
                 Case 7
-                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    s = Format(sum(k) / 0.0981, "##0.0")
                     Р_аккумулятор.Caption = s
                 Case 8
-                    s = Format(Sum(k), "#0.0")
+                    s = Format(sum(k), "#0.0")
                     Т_после_детандера.Caption = s
                 Case 9
-                    s = Format(Sum(k), "#0.0")
+                    s = Format(sum(k), "#0.0")
                     Т_газ_на_входе.Caption = s
                 Case 4
-                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    s = Format(sum(k) / 0.0981, "##0.0")
                     Р_автобаллон.Caption = s
                 Case 14
-                    s = Format((Sum(k) \ 100) * 100, "###0")
+                    s = Format((sum(k) \ 100) * 100, "###0")
                     ОборотыДВС.Caption = s
             End Select
 
-            Sum(k) = 0
+            sum(k) = 0
         Next k
         glCounter = 0
     End If
@@ -4017,7 +4006,6 @@ Private Sub Timer1_Timer()
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
             frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
-            gbDVSStopping = True
             'frmStart.Timer2.Enabled = False
             'Закрыть все Кэм
             ROff A1, 0
@@ -4073,13 +4061,7 @@ Private Sub Timer2_Timer()
 End Sub
 
 Private Sub tmrMotor_Timer()
-    Dim t           As MyRecType
-    Dim i           As Integer
-    Dim k           As Integer
-
     MotorCount = MotorCount + 1
-
-
 End Sub
 
 
