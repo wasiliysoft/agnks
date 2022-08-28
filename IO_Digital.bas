@@ -34,7 +34,6 @@ Declare Function DIO_InputByte Lib "DIO.DLL" _
 Public gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
 Public gnДатчик(48) As Sensor    'состояние датчиков по платам TB-24P и TB-16P8R
 
-
 Public Function Init_DIO_Driver() As String
     'Инициализация
     glРезультат = DIO_DriverInit(1)
@@ -59,23 +58,13 @@ Public Function Init_DIO_Driver() As String
 End Function
 
 Sub update_gn48DIO()
-    Dim i           As Long
+    gn48DIO(0) = CInt(DIO_InputByte(glАдрес))
+    gn48DIO(1) = Not (CInt(DIO_InputByte(glАдрес + 1)))
+    gn48DIO(2) = Not (CInt(DIO_InputByte(glАдрес + 2)))
 
-    For i = 0 To 5
-        If i = 3 Then
-            glЗначение = DIO_InputByte(glАдрес + 4)
-            gn48DIO(i) = CInt(glЗначение)
-        ElseIf i = 0 Then
-            glЗначение = DIO_InputByte(glАдрес)
-            gn48DIO(i) = CInt(glЗначение)
-        ElseIf i < 3 Then
-            glЗначение = DIO_InputByte(glАдрес + i)
-            gn48DIO(i) = Not (CInt(glЗначение))
-        Else
-            glЗначение = DIO_InputByte(glАдрес + 1 + i)
-            gn48DIO(i) = Not (CInt(glЗначение))
-        End If
-    Next i
+    gn48DIO(3) = CInt(DIO_InputByte(glАдрес + 4))
+    gn48DIO(4) = Not (CInt(DIO_InputByte(glАдрес + 5)))
+    gn48DIO(5) = Not (CInt(DIO_InputByte(glАдрес + 6)))
 End Sub
 
 Sub update_gnДатчик()

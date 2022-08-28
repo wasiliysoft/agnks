@@ -86,7 +86,6 @@ Public sum(31)      As Double
 
 Public glРезультат  As Integer
 
-Public glЗначение   As Long
 
 
 
