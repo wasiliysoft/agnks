@@ -3604,55 +3604,10 @@ Private Sub Timer_ДВС_Timer()
     Else
         tmrMotor.Enabled = False    'Перестать считать моторесурс
     End If
-    'Отображение "открытия" и "закрытия" кранов КЭ1...КЭ7, а также "факела"
-    If КЭ1(1).Visible Then
-        КЭ1(0).Visible = False
-    Else
-        КЭ1(0).Visible = True
-    End If
 
-    If КЭ2(1).Visible Then
-        КЭ2(0).Visible = False
-        Факел(0).Visible = True
-    Else
-        Факел(0).Visible = False
-        КЭ2(0).Visible = True
-    End If
-
-    If КЭ3(1).Visible Then
-        КЭ3(0).Visible = False
-    Else
-        КЭ3(0).Visible = True
-    End If
-
-    If КЭ4(1).Visible Then
-        КЭ4(0).Visible = False
-    Else
-        КЭ4(0).Visible = True
-    End If
-
-    If КЭ5(1).Visible Then
-        КЭ5(0).Visible = False
-    Else
-        КЭ5(0).Visible = True
-    End If
-
-    If КЭ6(1).Visible Then
-        КЭ6(0).Visible = False
-    Else
-        КЭ6(0).Visible = True
-    End If
-
-    If КЭ7(1).Visible Then
-        КЭ7(0).Visible = False
-        Факел(1).Visible = True
-    Else
-        Факел(1).Visible = False
-        КЭ7(0).Visible = True
-    End If
 
     'Отображение заправки автобаллона
-    If КЭ5(1).Visible Then
+    If gnДатчик(19).Data = 1 Then
         Панель_Авто.Visible = True
         If (100 * (Р_автобаллон / 200) >= 100) Then
             Автобаллон.FloodPercent = 100

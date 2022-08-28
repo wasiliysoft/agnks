@@ -851,6 +851,14 @@ Public Sub ShowPict()
     Dim s           As String
     With frmStart
         'Управление кранами
+        If gnДатчик(21).Data = 1 Then
+            .КЭ1(0).Visible = False
+            .КЭ1(1).Visible = True
+        Else
+            .КЭ1(0).Visible = True
+            .КЭ1(1).Visible = False
+        End If
+
         If gnДатчик(16).Data = 1 Then
             .КЭ2(0).Visible = False
             .КЭ2(1).Visible = True
@@ -896,18 +904,14 @@ Public Sub ShowPict()
         If gnДатчик(23).Data = 1 Then
             .КЭ7(0).Visible = False
             .КЭ7(1).Visible = True
+            .Факел(1).Visible = True
         Else
             .КЭ7(0).Visible = True
             .КЭ7(1).Visible = False
+            .Факел(1).Visible = False
         End If
 
-        If gnДатчик(21).Data = 1 Then
-            .КЭ1(0).Visible = False
-            .КЭ1(1).Visible = True
-        Else
-            .КЭ1(0).Visible = True
-            .КЭ1(1).Visible = False
-        End If
+
 
         'Управление муфтой
         If gnДатчик(36).Data = 1 Then
@@ -951,6 +955,7 @@ Public Sub ShowPict()
         End If
     End With
 
+    ' TODO вынести из этой функции
     s = Format(gdK, "0.000")
     s = s + "   - коэффициент"
     frmStart.lblPC.Caption = s
