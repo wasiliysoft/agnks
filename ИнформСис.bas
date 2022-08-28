@@ -20,81 +20,10 @@ Global Const conSwpNoActivate = &H10
 Global Const conSwpShowWindow = &H40
 
 
-
-
-''Описание функций для платы 48DIO
-'Global Const DIO_NoError = 0
-'Global Const DIO_DriverOpenError = 1
-'Global Const DIO_DriverNoOpen = 2
-'Global Const DIO_GetDriverVersionError = 3
-'Global Const DIO_InstallIrqError = 4
-'Global Const DIO_ClearIntCountError = 5
-'Global Const DIO_GetIntCountError = 6
-'Global Const DIO_ResetError = 7
-'Global Const DIO_RemoveIrqError = 8
-'Global Const DIO48_TIMER0 = 12
-'Global Const DIO48_TIMER1 = 13
-'Global Const DIO48_TIMER2 = 14
-'Global Const DIO48_TIMER_MODE0 = 15
-'Global Const DIO64_TIMER0 = 4
-'Global Const DIO64_TIMER1 = 5
-'Global Const DIO64_TIMER2 = 6
-'Global Const DIO64_TIMER_MODE0 = 7
-'Global Const DIO64_TIMER3 = 8
-'Global Const DIO64_TIMER4 = 9
-'Global Const DIO64_TIMER5 = 10
-'Global Const DIO64_TIMER_MODE1 = 11
-'' The test functions
-'Declare Function DIO_ShortSub2 Lib "DIO.DLL" _
- '    (ByVal a As Integer, ByVal b As Integer) As Integer
-'Declare Function DIO_FloatSub2 Lib "DIO.DLL" _
- '    (ByVal a As Single, ByVal b As Single) As Single
-'' The DIO functions
-'Declare Sub DIO_OutputByte Lib "DIO.DLL" _
- '    (ByVal address As Integer, ByVal dataout As Byte)
-'Declare Sub DIO_OutputWord Lib "DIO.DLL" _
- '    (ByVal address As Integer, ByVal dataout As Integer)
-'Declare Function DIO_InputByte Lib "DIO.DLL" _
- '    (ByVal address As Integer) As Integer
-'Declare Function DIO_InputWord Lib "DIO.DLL" _
- '    (ByVal address As Integer) As Integer
-'' The Driver functions
-'Declare Function DIO_DriverInit Lib "DIO.DLL" () As Integer
-'Declare Sub DIO_DriverClose Lib "DIO.DLL" ()
-'Declare Function DIO_GetDllVersion Lib "DIO.DLL" () As Integer
-'Declare Function DIO_GetDriverVersion Lib "DIO.DLL" _
- '    (wDriverVersion As Integer) As Integer
-'' The Interrupt functions
-'Declare Function DIO_InstallIrq Lib "DIO.DLL" _
- '    (ByVal wBase As Integer, ByVal wIrq As Integer, _
- '    hEvent As Long) As Integer
-'Declare Function DIO_RemoveIrq Lib "DIO.DLL" _
- '    (ByVal hEvent As Long) As Integer
-'Declare Function DIO_GetIntCount Lib "DIO.DLL" _
- '    (dwVal As Integer) As Integer
-'' Declare Function DIO_Reset Lib "dio.dll" () As Integer
-
-
-
 'Описание функций для платы ACL-8113
 '*********************************************************************************
 '      The Declare of ISO813.DLL for ISO813 AD Card
 '*********************************************************************************
-
-Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
-
-'****** define the gain mode ********/
-Global Const ISO813_BI_1 = 0
-Global Const ISO813_BI_2 = 1
-Global Const ISO813_BI_4 = 2
-Global Const ISO813_BI_8 = 3
-Global Const ISO813_BI_16 = 4
-
-Global Const ISO813_UNI_1 = 0
-Global Const ISO813_UNI_2 = 1
-Global Const ISO813_UNI_4 = 2
-Global Const ISO813_UNI_8 = 3
-Global Const ISO813_UNI_16 = 4
 
 '****** define the error number *******/
 Global Const ISO813_NoError = 0
@@ -106,37 +35,17 @@ Global Const ISO813_OtherError = 5
 Global Const ISO813_GetDriverVersionError = 6
 Global Const ISO813_TimeOutError = &HFFFF
 
-
-' Function of Test
-Declare Function ISO813_SHORT_SUB_2 Lib "ISO813.DLL" (ByVal nA As Integer, ByVal nB As Integer) As Integer
-Declare Function ISO813_FLOAT_SUB_2 Lib "ISO813.DLL" (ByVal fA As Single, ByVal fB As Single) As Single
-Declare Function ISO813_Get_DLL_Version Lib "ISO813.DLL" () As Integer
-Declare Function ISO813_GetDriverVersion Lib "ISO813.DLL" (wDriverVersion As Integer) As Integer
-
 ' Function of Driver
 Declare Function ISO813_DriverInit Lib "ISO813.DLL" () As Integer
 Declare Sub ISO813_DriverClose Lib "ISO813.DLL" ()
-Declare Function ISO813_Check_Address Lib "ISO813.DLL" (ByVal wBase As Integer) As Integer
 
 ' Function of AD
-Declare Function ISO813_AD_Hex Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
-        ByVal wGainCode As Integer) As Integer
-Declare Function ISO813_ADs_Hex Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
-        ByVal wGainCode As Integer, wBuf As Integer, ByVal dwDataNo As Long) As Integer
 Declare Function ISO813_AD_Float Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
         ByVal wGainCode As Integer, ByVal wBipolar As Integer, _
         ByVal wJmp10v As Integer) As Single
-Declare Function ISO813_ADs_Float Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
-        ByVal wGainCode As Integer, ByVal wBipolar As Integer, _
-        ByVal wJmp10v As Integer, fBuf As Single, ByVal dwDataNo As Long) As Integer
-Declare Function ISO813_AD2F Lib "ISO813.DLL" (ByVal wHex As Integer, ByVal wGainCode As Integer, _
-        ByVal wBipolar As Integer, ByVal wJump10v As Integer) As Single
-Declare Sub ISO813_AD_SetReadyTicks Lib "ISO813.DLL" (ByVal wTicks As Integer)
 
 
-'********** Declare 8253 Timer Interface ************
-Declare Function ISO813_TimerRead Lib "ISO813.DLL" (wTicks As Integer) As Integer
-Declare Sub ISO813_TimerDelay Lib "ISO813.DLL" (ByVal wTicks As Long)
+
 
 'Описание функции подсчета расхода газа (Шестаков)
 Declare Sub ResetExpenseCounter Lib "MetanCounter" Alias "#1" (ByVal i As Long)
