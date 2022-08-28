@@ -242,10 +242,6 @@ giaTableDecoder(8) = 1   'Соответствует светящейся 8
 giaTableDecoder(9) = 33  'Соответствует светящейся 9
 giaTableDecoder(0) = 129 'Соответствует светящейся 0
 giaTableDecoder(10) = 255 ' Cоответствует погашенному индикатору
-
-frmStart.MSComm1.Settings = "9600,O,8,1"
-  frmStart.MSComm1.CommPort = 2
-  frmStart.MSComm1.PortOpen = True
 End Sub
 
 'Процедура обновляет информацию в окне статистики
