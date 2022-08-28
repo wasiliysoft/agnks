@@ -919,7 +919,7 @@ With frmStart
     .КЭ6(1).Visible = False
   End If
   
-  If gnДатчик(24).Data = 1 Then
+  If gnДатчик(23).Data = 1 Then
     .КЭ7(0).Visible = False
     .КЭ7(1).Visible = True
   Else
