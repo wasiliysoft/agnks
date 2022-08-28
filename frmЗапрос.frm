@@ -125,6 +125,6 @@ Private Sub Form_Load()
     Left = 10
     Top = 10
     ' Включение атрибута TopMost.
-    SetWindowPos Hwnd, conHwndTopmost, 10, 10, 520, 200, conSwpNoActivate Or conSwpShowWindow
+    SetWindowPos hwnd, conHwndTopmost, 10, 10, 520, 200, conSwpNoActivate Or conSwpShowWindow
 End Sub
 

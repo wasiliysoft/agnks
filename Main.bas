@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module4"
+Attribute VB_Name = "Main"
 Option Explicit
 Public Function Convert_Date(ss As String)
     Dim s2          As String
@@ -842,9 +842,16 @@ Public Sub InitAGNKS()
     End If
     ' Для отладки !!!!!!!(отключить)
     ConnectKKM
-    ИниКонтроль
+    Init_Controllers
     ResetExpenseCounter (1)
     ResetExpenseCounter (2)
+End Sub
+
+Private Sub Init_Controllers()
+    'Инициализация платы ACL8113
+    Init_ISO813_Driver
+    'Инициализация платы Pet48DIO
+    Init_DIO_Driver
 End Sub
 
 Public Sub ShowPict()

@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "Config"
 'Все переменные необходимо объявлять заранее
 Option Explicit
 
@@ -117,7 +117,6 @@ Public gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
 Public gnДатчик(48) As Sensor    'состояние датчиков по платам TB-24P и TB-16P8R
 Public ggACL8113(31) As Double   'состояние датчиков платы 8113
 Public gnDif(31)    As Double    ' Уже пересчитанные значения(с ними и идет работа)
-Public gsРезультат  As String
 Public glЗначение   As Long
 Public glАдрес      As Long
 Public glaАдрес     As Long

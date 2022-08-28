@@ -1,4 +1,4 @@
-Attribute VB_Name = "DIO"
+Attribute VB_Name = "IO_Digital"
 Option Explicit
 Global Const DIO_NoError = 0
 Global Const DIO_DriverOpenError = 1
@@ -26,3 +26,32 @@ Declare Sub DIO_OutputByte Lib "DIO.DLL" _
         (ByVal address As Integer, ByVal dataout As Byte)
 Declare Function DIO_InputByte Lib "DIO.DLL" _
         (ByVal address As Integer) As Integer
+
+
+
+
+Public Function Init_DIO_Driver() As String
+    'Инициализация
+    glАдрес = Val("&H2C0")     'Оставляю по умолчанию
+    glРезультат = DIO_DriverInit(1)
+
+    If glРезультат <> DIO_NoError Then
+        MsgBox "Driver DIO Initialize OK!!"
+    Else
+        Init_DIO_Driver = "Плата Pet48DIO в норме"
+        ' Don't forget to close the driver by DIO_DriverClose()
+    End If
+    DIO_OutputByte glАдрес + &H3, &H8B    'Устанавливаем CN1 : A0 -output, B0 & C0 - input
+    DIO_OutputByte glАдрес + &H7, &H8B    'Устанавливаем CN2 : A1 -output, B1 & C1 - input
+
+    DIO_OutputByte glАдрес, 0
+    DIO_OutputByte glАдрес + &H4, 0
+
+    'Выключить реле 0 (порт A1)
+    ' glРезультат = W_48DIO_DO(256, 0)
+
+    'Выключить реле 0 (порт A0)
+    ' glРезультат = W_48DIO_DO(0, 0)
+
+
+End Function

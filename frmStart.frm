@@ -53,32 +53,30 @@ Begin VB.Form frmStart
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
-      TabPicture(0)   =   "Form1.frx":0000
+      TabPicture(0)   =   "frmStart.frx":0000
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Frame1(0)"
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Аналоговые"
-      TabPicture(1)   =   "Form1.frx":001C
+      TabPicture(1)   =   "frmStart.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "Frame1(1)"
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "О программе"
-      TabPicture(2)   =   "Form1.frx":0038
+      TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "Frame1(2)"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).ControlCount=   1
       TabCaption(3)   =   "Схема"
-      TabPicture(3)   =   "Form1.frx":0054
+      TabPicture(3)   =   "frmStart.frx":0054
       Tab(3).ControlEnabled=   -1  'True
       Tab(3).Control(0)=   "Frame1(3)"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
-      TabPicture(4)   =   "Form1.frx":0070
+      TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
       Tab(4).Control(0)=   "Frame1(4)"
-      Tab(4).Control(0).Enabled=   0   'False
       Tab(4).ControlCount=   1
       Begin VB.Frame Frame1 
          BackColor       =   &H00C0C0C0&
@@ -181,7 +179,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -216,7 +214,7 @@ Begin VB.Form frmStart
                Begin VB.Image Температура_ДВС 
                   Height          =   480
                   Left            =   360
-                  Picture         =   "Form1.frx":008C
+                  Picture         =   "frmStart.frx":008C
                   Top             =   720
                   Visible         =   0   'False
                   Width           =   300
@@ -225,7 +223,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   0
                   Left            =   225
-                  Picture         =   "Form1.frx":028E
+                  Picture         =   "frmStart.frx":028E
                   Top             =   540
                   Width           =   600
                End
@@ -233,7 +231,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   1
                   Left            =   225
-                  Picture         =   "Form1.frx":0630
+                  Picture         =   "frmStart.frx":0630
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -242,7 +240,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   2
                   Left            =   225
-                  Picture         =   "Form1.frx":09D2
+                  Picture         =   "frmStart.frx":09D2
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -251,7 +249,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   3
                   Left            =   225
-                  Picture         =   "Form1.frx":0D74
+                  Picture         =   "frmStart.frx":0D74
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -260,7 +258,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   4
                   Left            =   225
-                  Picture         =   "Form1.frx":1116
+                  Picture         =   "frmStart.frx":1116
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -269,7 +267,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   5
                   Left            =   225
-                  Picture         =   "Form1.frx":14B8
+                  Picture         =   "frmStart.frx":14B8
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -313,7 +311,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -350,7 +348,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   0
                   Left            =   180
-                  Picture         =   "Form1.frx":185A
+                  Picture         =   "frmStart.frx":185A
                   Top             =   540
                   Width           =   900
                End
@@ -358,7 +356,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   1
                   Left            =   180
-                  Picture         =   "Form1.frx":1DDC
+                  Picture         =   "frmStart.frx":1DDC
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -367,7 +365,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   2
                   Left            =   180
-                  Picture         =   "Form1.frx":235E
+                  Picture         =   "frmStart.frx":235E
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -376,7 +374,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   3
                   Left            =   180
-                  Picture         =   "Form1.frx":28E0
+                  Picture         =   "frmStart.frx":28E0
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -385,7 +383,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   4
                   Left            =   180
-                  Picture         =   "Form1.frx":2E62
+                  Picture         =   "frmStart.frx":2E62
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -394,7 +392,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   5
                   Left            =   180
-                  Picture         =   "Form1.frx":33E4
+                  Picture         =   "frmStart.frx":33E4
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -438,7 +436,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -499,7 +497,7 @@ Begin VB.Form frmStart
                   EndProperty
                   Font3D          =   4
                   AutoSize        =   1
-                  Picture         =   "Form1.frx":3966
+                  Picture         =   "frmStart.frx":3966
                End
             End
             Begin Threed.SSPanel SSPanel5 
@@ -540,7 +538,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -691,7 +689,7 @@ Begin VB.Form frmStart
                Height          =   240
                Index           =   1
                Left            =   5220
-               Picture         =   "Form1.frx":6538
+               Picture         =   "frmStart.frx":6538
                Top             =   3015
                Width           =   150
             End
@@ -716,7 +714,7 @@ Begin VB.Form frmStart
             Begin VB.Image Image3 
                Height          =   435
                Left            =   4500
-               Picture         =   "Form1.frx":663A
+               Picture         =   "frmStart.frx":663A
                Stretch         =   -1  'True
                Top             =   2115
                Width           =   375
@@ -724,7 +722,7 @@ Begin VB.Form frmStart
             Begin VB.Image Image2 
                Height          =   480
                Left            =   4455
-               Picture         =   "Form1.frx":6F04
+               Picture         =   "frmStart.frx":6F04
                Top             =   2430
                Width           =   480
             End
@@ -753,7 +751,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   1170
-               Picture         =   "Form1.frx":77CE
+               Picture         =   "frmStart.frx":77CE
                Top             =   1935
                Width           =   480
             End
@@ -761,7 +759,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   1170
-               Picture         =   "Form1.frx":7AD8
+               Picture         =   "frmStart.frx":7AD8
                Top             =   1935
                Visible         =   0   'False
                Width           =   480
@@ -779,7 +777,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   765
-               Picture         =   "Form1.frx":7DE2
+               Picture         =   "frmStart.frx":7DE2
                Top             =   2565
                Width           =   480
             End
@@ -787,7 +785,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   720
-               Picture         =   "Form1.frx":80EC
+               Picture         =   "frmStart.frx":80EC
                Top             =   2565
                Visible         =   0   'False
                Width           =   480
@@ -796,7 +794,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   7230
-               Picture         =   "Form1.frx":83F6
+               Picture         =   "frmStart.frx":83F6
                Top             =   400
                Width           =   480
             End
@@ -804,7 +802,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   5520
-               Picture         =   "Form1.frx":8700
+               Picture         =   "frmStart.frx":8700
                Top             =   400
                Width           =   480
             End
@@ -837,7 +835,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   4950
-               Picture         =   "Form1.frx":8A0A
+               Picture         =   "frmStart.frx":8A0A
                Top             =   1485
                Width           =   480
             End
@@ -845,7 +843,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   270
-               Picture         =   "Form1.frx":8D14
+               Picture         =   "frmStart.frx":8D14
                Top             =   1935
                Width           =   480
             End
@@ -853,7 +851,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   270
-               Picture         =   "Form1.frx":901E
+               Picture         =   "frmStart.frx":901E
                Top             =   765
                Width           =   480
             End
@@ -978,7 +976,7 @@ Begin VB.Form frmStart
                Height          =   240
                Index           =   0
                Left            =   3690
-               Picture         =   "Form1.frx":9328
+               Picture         =   "frmStart.frx":9328
                Top             =   3015
                Width           =   150
             End
@@ -1039,7 +1037,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   270
-               Picture         =   "Form1.frx":942A
+               Picture         =   "frmStart.frx":942A
                Top             =   1935
                Visible         =   0   'False
                Width           =   480
@@ -1048,7 +1046,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   270
-               Picture         =   "Form1.frx":9734
+               Picture         =   "frmStart.frx":9734
                Top             =   765
                Visible         =   0   'False
                Width           =   480
@@ -1057,7 +1055,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   4950
-               Picture         =   "Form1.frx":9A3E
+               Picture         =   "frmStart.frx":9A3E
                Top             =   1485
                Visible         =   0   'False
                Width           =   480
@@ -1066,7 +1064,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   5520
-               Picture         =   "Form1.frx":9D48
+               Picture         =   "frmStart.frx":9D48
                Top             =   400
                Visible         =   0   'False
                Width           =   480
@@ -1075,7 +1073,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   7230
-               Picture         =   "Form1.frx":A052
+               Picture         =   "frmStart.frx":A052
                Top             =   400
                Visible         =   0   'False
                Width           =   480
@@ -1084,7 +1082,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   1395
-               Picture         =   "Form1.frx":A35C
+               Picture         =   "frmStart.frx":A35C
                Top             =   1350
                Visible         =   0   'False
                Width           =   480
@@ -1168,7 +1166,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   495
-               Picture         =   "Form1.frx":A666
+               Picture         =   "frmStart.frx":A666
                Top             =   180
                Visible         =   0   'False
                Width           =   480
@@ -1198,7 +1196,7 @@ Begin VB.Form frmStart
             Enabled         =   0   'False
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "Form1.frx":A970
+            Picture         =   "frmStart.frx":A970
          End
          Begin Threed.SSPanel ЗаправленоГаза 
             Height          =   915
@@ -1215,7 +1213,7 @@ Begin VB.Form frmStart
             BackColor       =   0
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "MS Sans Serif"
-               Size            =   26.92
+               Size            =   27
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -1250,7 +1248,7 @@ Begin VB.Form frmStart
             EndProperty
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "Form1.frx":A98C
+            Picture         =   "frmStart.frx":A98C
          End
          Begin Threed.SSCommand SSCommand2 
             Height          =   1275
@@ -1276,7 +1274,7 @@ Begin VB.Form frmStart
             EndProperty
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "Form1.frx":ADDE
+            Picture         =   "frmStart.frx":ADDE
          End
          Begin Threed.SSPanel SSPanel3 
             Height          =   840
@@ -1371,7 +1369,7 @@ Begin VB.Form frmStart
             Enabled         =   0   'False
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "Form1.frx":B230
+            Picture         =   "frmStart.frx":B230
          End
          Begin VB.Label Label6 
             AutoSize        =   -1  'True
@@ -1433,9 +1431,9 @@ Begin VB.Form frmStart
             ForeColor       =   &H0000FFFF&
             Height          =   3765
             Index           =   3
-            ItemData        =   "Form1.frx":B24C
+            ItemData        =   "frmStart.frx":B24C
             Left            =   7080
-            List            =   "Form1.frx":B24E
+            List            =   "frmStart.frx":B24E
             TabIndex        =   136
             Top             =   600
             Width           =   2055
@@ -1445,9 +1443,9 @@ Begin VB.Form frmStart
             ForeColor       =   &H0000FFFF&
             Height          =   3765
             Index           =   2
-            ItemData        =   "Form1.frx":B250
+            ItemData        =   "frmStart.frx":B250
             Left            =   4800
-            List            =   "Form1.frx":B252
+            List            =   "frmStart.frx":B252
             TabIndex        =   135
             Top             =   600
             Width           =   2175
@@ -1457,9 +1455,9 @@ Begin VB.Form frmStart
             ForeColor       =   &H0000FFFF&
             Height          =   3765
             Index           =   1
-            ItemData        =   "Form1.frx":B254
+            ItemData        =   "frmStart.frx":B254
             Left            =   2400
-            List            =   "Form1.frx":B256
+            List            =   "frmStart.frx":B256
             TabIndex        =   134
             Top             =   600
             Width           =   2295
@@ -1469,9 +1467,9 @@ Begin VB.Form frmStart
             ForeColor       =   &H0000FFFF&
             Height          =   3765
             Index           =   0
-            ItemData        =   "Form1.frx":B258
+            ItemData        =   "frmStart.frx":B258
             Left            =   120
-            List            =   "Form1.frx":B25A
+            List            =   "frmStart.frx":B25A
             TabIndex        =   133
             Top             =   600
             Width           =   2175
@@ -1640,7 +1638,7 @@ Begin VB.Form frmStart
             BackColor       =   0
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "MS Sans Serif"
-               Size            =   9.58
+               Size            =   9.75
                Charset         =   204
                Weight          =   700
                Underline       =   0   'False
@@ -1683,14 +1681,14 @@ Begin VB.Form frmStart
             Height          =   480
             Index           =   0
             Left            =   8190
-            Picture         =   "Form1.frx":B25C
+            Picture         =   "frmStart.frx":B25C
             Top             =   2340
             Width           =   480
          End
          Begin VB.Image imgZaryad 
             Height          =   480
             Left            =   7650
-            Picture         =   "Form1.frx":B566
+            Picture         =   "frmStart.frx":B566
             Top             =   2340
             Visible         =   0   'False
             Width           =   480
@@ -1736,7 +1734,7 @@ Begin VB.Form frmStart
          Begin VB.Image Image1 
             Height          =   1365
             Left            =   4455
-            Picture         =   "Form1.frx":B870
+            Picture         =   "frmStart.frx":B870
             Stretch         =   -1  'True
             Top             =   225
             Width           =   825
@@ -3305,7 +3303,7 @@ Private Sub Form_Unload(Cancel As Integer)
     Else
         Set SelectRS = StatDB.OpenRecordset("select MAX(DATA) from stat ")
         temp2.dt = SelectRS(0)
-        s = Module4.Convert_Date(Str(Month(temp2.dt)) & "/" & Day(temp2.dt) & "/" & Year(temp2.dt) & " " & Hour(temp2.dt) & ":" & Minute(temp2.dt) & ":" & Second(temp2.dt))
+        s = Convert_Date(Str(Month(temp2.dt)) & "/" & Day(temp2.dt) & "/" & Year(temp2.dt) & " " & Hour(temp2.dt) & ":" & Minute(temp2.dt) & ":" & Second(temp2.dt))
         Set SelectRS = StatDB.OpenRecordset("SELECT * From stat WHERE stat.data=" & s)
         SelectRS.Edit
         SelectRS("MOTO") = GMC + MotorCount
