@@ -230,21 +230,6 @@ ErrorHandler:        'Если есть какие-нибудь ошибки возвращаем -1
 
 End Function
 
-'Инициируется табло
-Public Sub InitTablo()
-    giaTableDecoder(1) = 243    'Соответствует светящейся 1
-    giaTableDecoder(2) = 73    'Соответствует светящейся 2
-    giaTableDecoder(3) = 97    'Соответствует светящейся 3
-    giaTableDecoder(4) = 51    'Соответствует светящейся 4
-    giaTableDecoder(5) = 37    'Соответствует светящейся 5
-    giaTableDecoder(6) = 5    'Соответствует светящейся 6
-    giaTableDecoder(7) = 241    'Соответствует светящейся 7
-    giaTableDecoder(8) = 1    'Соответствует светящейся 8
-    giaTableDecoder(9) = 33    'Соответствует светящейся 9
-    giaTableDecoder(0) = 129    'Соответствует светящейся 0
-    giaTableDecoder(10) = 255    ' Cоответствует погашенному индикатору
-End Sub
-
 'Процедура обновляет информацию в окне статистики
 Public Sub RefreshStat()
     Dim i           As Integer
@@ -857,7 +842,6 @@ Public Sub InitAGNKS()
     End If
     ' Для отладки !!!!!!!(отключить)
     ConnectKKM
-    InitTablo
     ИниКонтроль
     ResetExpenseCounter (1)
     ResetExpenseCounter (2)

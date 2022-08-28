@@ -176,7 +176,6 @@ Public gbFireTech   As Boolean    'пожар в тех. отсеке
 
 'Болванки
 Public gdTime       As Double    'Время заправки
-Public giaTableDecoder(10) As Integer    ' Таблица перекодировки
 
 'структура для secret file
 Public Type pswd
