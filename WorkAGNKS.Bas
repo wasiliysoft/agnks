@@ -1,5 +1,5 @@
 Attribute VB_Name = "Module4"
-
+Option Explicit
 Public Function Convert_Date(ss As String)
     Dim s2          As String
     Dim i           As Integer
@@ -845,7 +845,6 @@ Public Sub InitAGNKS()
     gbRunDVS = False
     DVSEmul = False
     MFTEmul = False
-    gbHahdControl = False
     gdРасход1 = 0
 
     gdRashAkkEnd = 65
@@ -858,7 +857,6 @@ Public Sub InitAGNKS()
 
     gbStopAGNKS = False
     giMainРасход = 1    'Начинаем добавлять к показанию ИР1
-    giOnlyAkk = False
     err = InitDisk()
     If err = -1 Then
         'Обработка ошибки работы с диском
@@ -868,7 +866,7 @@ Public Sub InitAGNKS()
     ' Для отладки !!!!!!!(отключить)
     ConnectKKM
     InitTablo
-    s = ИниКонтроль()
+    ИниКонтроль
     ResetExpenseCounter (1)
     ResetExpenseCounter (2)
 End Sub
@@ -1129,7 +1127,7 @@ Public Function Verify_Damage()
             gbFireTech = True
             s = ОстановАГНКС
             gbStopAGNKS = True
-            StopOutput (giPost)
+            StopOutput (2)
         End If
 
     End If

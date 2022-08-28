@@ -1,5 +1,5 @@
 Attribute VB_Name = "Module2"
-
+Option Explicit
 Public Function Инициал_ACL8113() As String
 
     Dim i           As Integer

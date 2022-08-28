@@ -113,7 +113,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+Option Explicit
 Private Sub ssClose_Click()
     frmSt.Hide
 End Sub
@@ -124,7 +124,8 @@ Private Sub ssShow_Click()
     Dim s1          As String
     Dim d           As Date
     Dim sum         As Double
-
+    Dim i           As Long
+    
     frmSt.List1.Clear
     sum = 0
     d = frmSt.Calendar1.Value
