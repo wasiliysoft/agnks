@@ -74,7 +74,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
+' ѕеределывать на MSGBOX опасно, нужно убедитьс€ что он не будет блокировать основной поток
 
 Private Sub Command1_Click()
     '≈сли выбрана заправка во врем€ наполнени€ аккумул€торов
