@@ -47,12 +47,6 @@ Begin VB.Form frmStart
       Visible         =   0   'False
       Width           =   2625
    End
-   Begin VB.Timer Timer_Газ 
-      Enabled         =   0   'False
-      Interval        =   150
-      Left            =   2640
-      Top             =   6120
-   End
    Begin VB.Timer Timer_ДВС 
       Interval        =   75
       Left            =   1920
@@ -3669,66 +3663,6 @@ Private Sub ssStat_Click()
     frmSt.Show 0
 End Sub
 
-Private Sub SSTab1_DblClick()
-    frmSt.Show 0
-End Sub
-
-Private Sub Timer_Газ_Timer()
-
-    'Управление "движением газа"
-    Dim i           As Integer
-    Dim n           As Integer
-
-
-    n = 211
-
-    Select Case CN
-        Case 0
-            For i = 0 To n Step 3
-                Shape4(i).Visible = True
-            Next i
-
-            For i = 1 To n Step 3
-                Shape4(i).Visible = False
-            Next i
-
-            For i = 2 To n Step 3
-                Shape4(i).Visible = False
-            Next i
-
-            CN = 1
-        Case 1
-            For i = 0 To n Step 3
-                Shape4(i).Visible = False
-            Next i
-
-            For i = 1 To n Step 3
-                Shape4(i).Visible = True
-            Next i
-
-            For i = 2 To n Step 3
-                Shape4(i).Visible = False
-            Next i
-
-            CN = 2
-
-        Case 2
-            For i = 0 To n Step 3
-                Shape4(i).Visible = False
-            Next i
-
-            For i = 1 To n Step 3
-                Shape4(i).Visible = False
-            Next i
-
-            For i = 2 To n Step 3
-                Shape4(i).Visible = True
-            Next i
-
-            CN = 0
-
-    End Select
-End Sub
 
 Private Sub Timer_ДВС_Timer()
 
