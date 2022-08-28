@@ -82,9 +82,9 @@ Begin VB.Form frmStart
       Tab(2).ControlCount=   1
       TabCaption(3)   =   "Схема"
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "tmrMotor"
+      Tab(3).Control(0)=   "Frame1(3)"
       Tab(3).Control(1)=   "tmrTablo"
-      Tab(3).Control(2)=   "Frame1(3)"
+      Tab(3).Control(2)=   "tmrMotor"
       Tab(3).ControlCount=   3
       TabCaption(4)   =   "Журнал"
       Tab(4).ControlEnabled=   0   'False
@@ -3434,7 +3434,7 @@ Dim temp2 As MyRecType
    ISO813_DriverClose
    frmStart.MSComm1.PortOpen = False
    Unload frmЗапрос
-   Unload frmStat
+
     Unload frmSt
 End Sub
 
@@ -3680,7 +3680,7 @@ Dim s As String
    End If
    tmrTablo.Enabled = False
    Unload frmЗапрос
-   Unload frmStat
+
    j = ExitWindowsEx(1, 0)
    End
    
