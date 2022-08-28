@@ -16,6 +16,8 @@ End Function
 
 'Функция обработки аварийных ситуаций
 Public Function Danger() As String
+    ' TODO АвтоАктивация вкладки СХЕМА
+
     If gnДатчик(29).Data = 1 Then
         'Если перепад во вх. и вых. рукове станет меньше 5 кг
         If Abs(gnDif(6) - gnDif(2)) <= 0.5 Then
