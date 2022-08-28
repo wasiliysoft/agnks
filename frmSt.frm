@@ -1,4 +1,6 @@
-VERSION 4.00
+VERSION 5.00
+Object = "{0BA686C6-F7D3-101A-993E-0000C0EF6F5E}#1.0#0"; "THREED32.OCX"
+Object = "{8E27C92E-1264-101C-8A2F-040224009C02}#7.0#0"; "MSCAL.OCX"
 Begin VB.Form frmSt 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Статистика"
@@ -7,16 +9,13 @@ Begin VB.Form frmSt
    ClientTop       =   585
    ClientWidth     =   6720
    ControlBox      =   0   'False
-   Height          =   5610
-   Left            =   255
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   PaletteMode     =   1  'UseZOrder
    ScaleHeight     =   5205
    ScaleWidth      =   6720
-   Top             =   240
-   Width           =   6840
    Begin VB.ListBox List1 
       Height          =   4935
       Left            =   120
@@ -35,15 +34,6 @@ Begin VB.Form frmSt
       _ExtentY        =   1296
       _StockProps     =   78
       Caption         =   "Закрыть"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   204
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       BevelWidth      =   3
       Font3D          =   1
    End
@@ -58,15 +48,6 @@ Begin VB.Form frmSt
       _ExtentY        =   1296
       _StockProps     =   78
       Caption         =   "Показать"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   204
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       BevelWidth      =   3
       Font3D          =   1
    End
@@ -128,7 +109,9 @@ Begin VB.Form frmSt
    End
 End
 Attribute VB_Name = "frmSt"
+Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub ssClose_Click()

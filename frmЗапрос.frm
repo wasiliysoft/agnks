@@ -1,4 +1,4 @@
-VERSION 4.00
+VERSION 5.00
 Begin VB.Form frmЗапрос 
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Вопрос оператору"
@@ -6,20 +6,17 @@ Begin VB.Form frmЗапрос
    ClientLeft      =   765
    ClientTop       =   1605
    ClientWidth     =   7500
-   Height          =   2910
-   Left            =   705
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   PaletteMode     =   1  'UseZOrder
    ScaleHeight     =   2505
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
-   Top             =   1260
-   Width           =   7620
    Begin VB.CommandButton Command2 
       Cancel          =   -1  'True
       Caption         =   "Нет"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+      BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   24
          Charset         =   204
@@ -37,7 +34,7 @@ Begin VB.Form frmЗапрос
    Begin VB.CommandButton Command1 
       Caption         =   "Да"
       Default         =   -1  'True
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+      BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   24
          Charset         =   204
@@ -54,7 +51,7 @@ Begin VB.Form frmЗапрос
    End
    Begin VB.Label lblВопрос 
       Alignment       =   2  'Center
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+      BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   24
          Charset         =   204
@@ -72,7 +69,9 @@ Begin VB.Form frmЗапрос
    End
 End
 Attribute VB_Name = "frmЗапрос"
+Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 

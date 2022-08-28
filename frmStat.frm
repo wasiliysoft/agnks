@@ -1,4 +1,4 @@
-VERSION 4.00
+VERSION 5.00
 Begin VB.Form frmStat 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Статистика"
@@ -6,21 +6,18 @@ Begin VB.Form frmStat
    ClientLeft      =   1140
    ClientTop       =   1515
    ClientWidth     =   3330
-   Height          =   2370
-   Left            =   1080
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   PaletteMode     =   1  'UseZOrder
    ScaleHeight     =   1965
    ScaleWidth      =   3330
    ShowInTaskbar   =   0   'False
-   Top             =   1170
-   Width           =   3450
    Begin VB.TextBox txtStat 
       Alignment       =   2  'Center
       BackColor       =   &H00000000&
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+      BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   204
@@ -41,7 +38,7 @@ Begin VB.Form frmStat
    Begin VB.TextBox txtStat 
       Alignment       =   2  'Center
       BackColor       =   &H00000000&
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+      BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   204
@@ -87,7 +84,9 @@ Begin VB.Form frmStat
    End
 End
 Attribute VB_Name = "frmStat"
+Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 

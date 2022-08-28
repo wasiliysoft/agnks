@@ -1,4 +1,5 @@
-VERSION 4.00
+VERSION 5.00
+Object = "{0BA686C6-F7D3-101A-993E-0000C0EF6F5E}#1.0#0"; "THREED32.OCX"
 Begin VB.Form frmKKM 
    BackColor       =   &H00000000&
    BorderStyle     =   0  'None
@@ -7,15 +8,12 @@ Begin VB.Form frmKKM
    ClientLeft      =   2445
    ClientTop       =   810
    ClientWidth     =   5985
-   Height          =   6615
-   Left            =   2385
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
+   PaletteMode     =   1  'UseZOrder
    ScaleHeight     =   6210
    ScaleWidth      =   5985
    ShowInTaskbar   =   0   'False
-   Top             =   465
-   Width           =   6105
    Begin Threed.SSPanel sspKKM 
       Height          =   6135
       Left            =   30
@@ -41,7 +39,7 @@ Begin VB.Form frmKKM
       Alignment       =   6
       Begin VB.Frame Frame1 
          Caption         =   "СВОЙСТВА ККМ"
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
             Charset         =   204
@@ -56,7 +54,7 @@ Begin VB.Form frmKKM
          Top             =   3800
          Width           =   5640
          Begin VB.Label lblErrorKKM 
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -72,7 +70,7 @@ Begin VB.Form frmKKM
             Width           =   4500
          End
          Begin VB.Label lblStatusKKM 
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -88,7 +86,7 @@ Begin VB.Form frmKKM
             Width           =   4500
          End
          Begin VB.Label lblTimeKKM 
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -104,7 +102,7 @@ Begin VB.Form frmKKM
             Width           =   4500
          End
          Begin VB.Label lblDateKKM 
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -121,7 +119,7 @@ Begin VB.Form frmKKM
          End
          Begin VB.Label Label4 
             Caption         =   "Ошибки :"
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -138,7 +136,7 @@ Begin VB.Form frmKKM
          End
          Begin VB.Label Label3 
             Caption         =   "Режим :"
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -155,7 +153,7 @@ Begin VB.Form frmKKM
          End
          Begin VB.Label Label2 
             Caption         =   "Время :"
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -173,7 +171,7 @@ Begin VB.Form frmKKM
          Begin VB.Label Label1 
             BackStyle       =   0  'Transparent
             Caption         =   "Дата :"
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   8.25
                Charset         =   204
@@ -192,7 +190,7 @@ Begin VB.Form frmKKM
       Begin VB.CommandButton cmdExitKKM 
          Cancel          =   -1  'True
          Caption         =   "ВЫХОД"
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
             Charset         =   204
@@ -210,7 +208,7 @@ Begin VB.Form frmKKM
       Begin VB.TextBox txtKKM 
          Alignment       =   1  'Right Justify
          BackColor       =   &H00000000&
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   24
             Charset         =   204
@@ -751,7 +749,9 @@ Begin VB.Form frmKKM
    End
 End
 Attribute VB_Name = "frmKKM"
+Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim strKKM As String 'строковое значение выражения
