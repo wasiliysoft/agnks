@@ -18,12 +18,10 @@ Public Sub Обработка_1()
     Dim j           As Integer
     Dim Temp        As Double
     Dim IR          As Double
-    Dim s           As String
+
     'Отобразить состояние датчиков, работающих с платой Pet48DIO
-    s = ""
     For i = 0 To 5
         p = gn48DIO(i)
-        s = s & CStr(p) & " "
         For j = 0 To 7
             r = p Mod 2
             If r = 0 Then
@@ -35,9 +33,7 @@ Public Sub Обработка_1()
         Next j
     Next i
 
-    frmStart.lblPC.Caption = s
     'Пересчёт измеренных значений в ток:
-
     For i = 2 To 13
         gnDif(i) = gKi * (ggACL8113(i))
     Next i
@@ -51,18 +47,18 @@ Public Sub Обработка_1()
     For i = 8 To 13
         'Проверка (i - 4) , если не удовлетворяет то -1
         Temp = (gnDif(i) - 4)
-        If (gnDif(i) - 4) <= 17 And (gnDif(i) - 4) >= -1 Then
+        If Temp <= 17 And Temp >= -1 Then
             Select Case (i)
                 Case 8
                     gnDif(i) = 200 * ((Temp + 1) / 18) - 50
                 Case 9
-                    gnDif(i) = 12.5 * (gnDif(i) - 4) - 50
+                    gnDif(i) = 12.5 * Temp - 50
                 Case 12
-                    gnDif(i) = 6.25 * (gnDif(i) - 4) - 50
+                    gnDif(i) = 6.25 * Temp - 50
                 Case 13
                     gnDif(i) = 150 * ((Temp + 1) / 18) - 50
                 Case Else
-                    gnDif(i) = 6.25 * (gnDif(i) - 4) - 50
+                    gnDif(i) = 6.25 * Temp - 50
             End Select
         Else
             gnDif(i) = -1
@@ -74,8 +70,9 @@ Public Sub Обработка_1()
 
     For i = 4 To 7
         'Проверка (i - 4) , если не удовлетворяет то -1
-        If (gnDif(i) - 4) <= 17 And (gnDif(i) - 4) >= -1 Then
-            gnDif(i) = gKp_1 * (gnDif(i) - 4)
+        Temp = (gnDif(i) - 4)
+        If Temp <= 17 And Temp >= -1 Then
+            gnDif(i) = gKp_1 * Temp
             If gnDif(i) < 0 Then
                 gnDif(i) = 0
             End If
@@ -94,8 +91,9 @@ Public Sub Обработка_1()
 
     'Пересчет для ДД1.1 и ДД1.2
     For i = 2 To 3
-        If (gnDif(i) - 4) <= 17 And (gnDif(i) - 4) >= -1 Then
-            gnDif(i) = (gnDif(i) - 4) * gKp
+        Temp = (gnDif(i) - 4)
+        If Temp <= 17 And Temp >= -1 Then
+            gnDif(i) = Temp * gKp
         Else
             gnDif(i) = -1
         End If
