@@ -11,27 +11,12 @@ Public Sub ОпросПлат()
 End Sub
 
 
-Public Sub Обработка_1()
-    Dim p           As Integer
-    Dim r           As Integer
+Public Sub Обработка_1()   
     Dim i           As Integer
-    Dim j           As Integer
     Dim Temp        As Double
-    Dim IR          As Double
 
     'Отобразить состояние датчиков, работающих с платой Pet48DIO
-    For i = 0 To 5
-        p = gn48DIO(i)
-        For j = 0 To 7
-            r = p Mod 2
-            If r = 0 Then
-                gnДатчик(8 * i + j).Data = 0
-            Else
-                gnДатчик(8 * i + j).Data = 1
-            End If
-            p = Int(p / 2)
-        Next j
-    Next i
+    update_gnДатчик
 
     'Пересчёт измеренных значений в ток:
     For i = 2 To 13
@@ -114,8 +99,7 @@ Public Sub Обработка_1()
     Else
         Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, -(Temp))
     End If
-    IR = GetMass(1)
-    gdИР1 = IR
+    gdИР1 = GetMass(1)
 End Sub
 
 

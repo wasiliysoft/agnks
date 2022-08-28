@@ -78,6 +78,24 @@ Sub update_gn48DIO()
     Next i
 End Sub
 
+Sub update_gnДатчик()
+    Dim p           As Integer
+    Dim r           As Integer
+    Dim i           As Integer
+    Dim j           As Integer
+    For i = 0 To 5
+        p = gn48DIO(i)
+        For j = 0 To 7
+            r = p Mod 2
+            If r = 0 Then
+                gnДатчик(8 * i + j).Data = 0
+            Else
+                gnДатчик(8 * i + j).Data = 1
+            End If
+            p = Int(p / 2)
+        Next j
+    Next i
+End Sub
 
 'Функция выводит в port 0
 Public Function ROff(port As Integer, n As Integer) As Integer
