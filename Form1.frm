@@ -3638,15 +3638,11 @@ Private Sub Timer1_Timer()
     Dim ErrDat      As Boolean
     ErrDat = False
     s = ""
-    'Для отладки !!!!! (отключить)
 
     ОпросПлат
-
     Обработка_1
-    ' Заполнение результатми с платы 48DIO
-
-    'Управление изображением
-    ShowPict
+    
+    ShowPict 'Управление изображением
 
 
     'Работа с диском
@@ -3732,13 +3728,9 @@ Private Sub Timer1_Timer()
     End If
 
 
-
-
-
     lblV.Caption = Format(gnDif(giChanel), "00.0" & " В")
 
     Наработка_ДВС.Caption = Format((GMC + MotorCount) / 60, "00")
-
 
     'Выводим расход на заправку одной машины
     If (gdРасход1 < 0) Then

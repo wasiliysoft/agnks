@@ -2,12 +2,11 @@ Attribute VB_Name = "Module3"
 Option Explicit
 
 
-Public Function ОпросПлат() As String
+Public Sub ОпросПлат()
     Dim i           As Long
     Dim j           As Integer
     Dim s           As String
     Dim f           As Double
-    ОпросПлат = ""
 
     'Прочитать состояние портов платы PET-48DIO
     For i = 0 To 5
@@ -40,14 +39,10 @@ Public Function ОпросПлат() As String
 
         ggACL8113(i) = f
     Next i
+End Sub
 
 
-    If ОпросПлат = "" Then ОпросПлат = "OK"
-
-End Function
-
-
-Public Function Обработка_1()
+Public Sub Обработка_1()
     Dim p           As Integer
     Dim r           As Integer
     Dim i           As Integer
@@ -154,7 +149,7 @@ Public Function Обработка_1()
     End If
     IR = GetMass(1)
     gdИР1 = IR
-End Function
+End Sub
 
 
 
