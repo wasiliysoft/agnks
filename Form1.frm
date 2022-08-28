@@ -3174,222 +3174,222 @@ Option Explicit
 
 
 Private Sub CmdЗаправка_Click(Index As Integer)
-Dim t As Integer
- 'Если идет заправка аккумуляторов
- If gbAkkum = True Then
-   gsMsg = "Пистолет вставлен ?"
-   frmЗапрос.Show 0
-   gbFrmShow = True
-End If
-      giStage = 2
+    Dim t           As Integer
+    'Если идет заправка аккумуляторов
+    If gbAkkum = True Then
+        gsMsg = "Пистолет вставлен ?"
+        frmЗапрос.Show 0
+        gbFrmShow = True
+    End If
+    giStage = 2
 End Sub
 
 
 
 
 Private Sub cmdDanger_Click()
-   frmStart.cmdDanger.Visible = False
-      'закрыть все КЭМы
-   ROff A1, 1
-   'Стоп ДВС, открыть КЭМ4
+    frmStart.cmdDanger.Visible = False
+    'закрыть все КЭМы
+    ROff A1, 1
+    'Стоп ДВС, открыть КЭМ4
     giStage2 = 0
-     giStage = 0 'Переход на этап Исходное Состояние
-     giStage1 = 0
-     gbAkkum = False
-     frmStart.SSCmdStart.Enabled = False
-     gbCmdStart = True
-     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-     gbDVSStopping = True
+    giStage = 0  'Переход на этап Исходное Состояние
+    giStage1 = 0
+    gbAkkum = False
+    frmStart.SSCmdStart.Enabled = False
+    gbCmdStart = True
+    frmStart.SSCmdStart.Caption = "Пуск АГНКС"
+    gbDVSStopping = True
 
     gbStopAGNKS = False
-        
+
 End Sub
 
 Private Sub cmdKKM_Click()
-StatusKKM
-frmKKM.lblErrorKKM.Caption = gsErrorKKM ' = Drvfr.ResultCodeDescription
-frmKKM.lblStatusKKM.Caption = gsРежимККМ '= Drvfr.ECRModeDescription
-frmKKM.Show 1
-    
+    StatusKKM
+    frmKKM.lblErrorKKM.Caption = gsErrorKKM    ' = Drvfr.ResultCodeDescription
+    frmKKM.lblStatusKKM.Caption = gsРежимККМ    '= Drvfr.ECRModeDescription
+    frmKKM.Show 1
+
 
 
 End Sub
 
 Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim s, s1 As String
-      cmdStop.Enabled = False
-        'Закрыть пистолет
-            'Закрыть КЭ5
-            ROff A1, 191
-            gbDontStat = False 'Можно работать с диском
-        gdTime = GetTimeCounter(2)
-        
-            'Заполнить статистику по заправке
-'          giRealCountZ = giRealCountZ + 1
-'          gdaStat1(0).IR1 = giRealCountZ
-          
-'          gdРасход1 = gdИР2
-'          gdaStat1(giRealCountZ).IR2 = gdРасход1
-'          gdaStat1(giRealCountZ).IR1 = gdИР1
-'          gdaStat1(giRealCountZ).dt = Now
- '         gdaStat1(giRealCountZ).Motor = GMC + MotorCount
-'          GMC = gdaStat1(giRealCountZ).Motor
-'          MotorCount = 0
-           '<<<<Прекратить считать расход>>>>
-                      StatRS.AddNew
-  
-           StatRS("DATA") = Now
-           StatRS("GAZ_CAR") = gdРасход1 / gdPlot '* 1.42
-             StopOutput (2)
-           StatRS("GAZ_IR1") = gdИР1
-           StatRS("MOTO") = GMC + MotorCount
-           GMC = GMC + MotorCount
-            MotorCount = 0
-   If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-     Verify
-   End If
-       
-           StatRS.Update
-     
-     s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-     frmStart.lstStat(0).AddItem s
-           
-          gDateRec = Now
-            gbЗаправка = False
-           
-If gbOnlyAkk = True Then
-            'Закрыть КЭ6
-           ROff A1, 127
-           frmStart.SSCmdStart.Enabled = True
-           gbAkkum = True
-          giStage = 1  'Переход на Этап Предпуска
-          giStage1 = 0
-          giStage2 = 0
-Else
-           'ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
-           'Открыть КЭ6
-           ROn A1, 128
-End If
-             
-      'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
-           frmStart.SSCmdStart.Enabled = True
-           gbAkkum = True
-       
+    Dim s, s1       As String
+    cmdStop.Enabled = False
+    'Закрыть пистолет
+    'Закрыть КЭ5
+    ROff A1, 191
+    gbDontStat = False         'Можно работать с диском
+    gdTime = GetTimeCounter(2)
+
+    'Заполнить статистику по заправке
+    '          giRealCountZ = giRealCountZ + 1
+    '          gdaStat1(0).IR1 = giRealCountZ
+
+    '          gdРасход1 = gdИР2
+    '          gdaStat1(giRealCountZ).IR2 = gdРасход1
+    '          gdaStat1(giRealCountZ).IR1 = gdИР1
+    '          gdaStat1(giRealCountZ).dt = Now
+    '         gdaStat1(giRealCountZ).Motor = GMC + MotorCount
+    '          GMC = gdaStat1(giRealCountZ).Motor
+    '          MotorCount = 0
+    '<<<<Прекратить считать расход>>>>
+    StatRS.AddNew
+
+    StatRS("DATA") = Now
+    StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
+    StopOutput (2)
+    StatRS("GAZ_IR1") = gdИР1
+    StatRS("MOTO") = GMC + MotorCount
+    GMC = GMC + MotorCount
+    MotorCount = 0
+    If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
+        Verify
+    End If
+
+    StatRS.Update
+
+    s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
+    frmStart.lstStat(0).AddItem s
+
+    gDateRec = Now
+    gbЗаправка = False
+
+    If gbOnlyAkk = True Then
+        'Закрыть КЭ6
+        ROff A1, 127
+        frmStart.SSCmdStart.Enabled = True
+        gbAkkum = True
+        giStage = 1    'Переход на Этап Предпуска
+        giStage1 = 0
+        giStage2 = 0
+    Else
+        'ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
+        'Открыть КЭ6
+        ROn A1, 128
+    End If
+
+    'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
+    frmStart.SSCmdStart.Enabled = True
+    gbAkkum = True
+
 
 End Sub
 
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-Dim s As String
-Dim s1 As String
+    Dim s           As String
+    Dim s1          As String
 
-'Для ввода поправочного коэффициента
-Dim descr As Integer
-Dim sPath As String
-Dim rec As pswd
+    'Для ввода поправочного коэффициента
+    Dim descr       As Integer
+    Dim sPath       As String
+    Dim rec         As pswd
 
-'реакция на ctrl+alt+home
-On Error Resume Next
-  If ((KeyCode = vbKeyHome) And (Shift = 6)) Then
-    s = InputBox("Введите пароль", "DANGER")
-    If (s = Password) Then
-      s = InputBox("Введите поправочный коэффициент", "DANGER")
-      If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
-       gdK = CDbl(s)
-        sPath = "C:\Winnt\dll32.dll"
-        descr = FreeFile
-        Open sPath For Random As descr Len = Len(rec)
-          rec.pwd = Password
-          rec.PC = gdK
-          Put #descr, 1, rec
-          MsgBox ("Коэффициент введен ")
-         Close #descr
-      End If
-     Else
-        MsgBox "Пароль не верный ", vbCritical
-    End If
-  ElseIf ((KeyCode = vbKeyEnd) And (Shift = 6)) Then
-     s = InputBox("Введите пароль", "DANGER")
-    If (s = Password) Then
-      s = InputBox("Введите новый пароль", "DANGER")
-      If (Len(s) > 0) And (Len(s) <= 7) Then
-        s1 = InputBox("Повторите новый пароль", "DANGER")
-         If (s = s1) Then
-         
-            Password = s
-            sPath = "C:\Winnt\dll32.dll"
-            descr = FreeFile
-            Open sPath For Random As descr Len = Len(rec)
-              rec.pwd = Password
-              rec.PC = gdK
-              Put #descr, 1, rec
-              MsgBox ("Пароль введен ")
-             Close #descr
-          Else
+    'реакция на ctrl+alt+home
+    On Error Resume Next
+    If ((KeyCode = vbKeyHome) And (Shift = 6)) Then
+        s = InputBox("Введите пароль", "DANGER")
+        If (s = Password) Then
+            s = InputBox("Введите поправочный коэффициент", "DANGER")
+            If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
+                gdK = CDbl(s)
+                sPath = "C:\Winnt\dll32.dll"
+                descr = FreeFile
+                Open sPath For Random As descr Len = Len(rec)
+                rec.pwd = Password
+                rec.PC = gdK
+                Put #descr, 1, rec
+                MsgBox ("Коэффициент введен ")
+                Close #descr
+            End If
+        Else
             MsgBox "Пароль не верный ", vbCritical
-          End If
-      End If
-     Else
-        MsgBox "Пароль не верный ", vbCritical
+        End If
+    ElseIf ((KeyCode = vbKeyEnd) And (Shift = 6)) Then
+        s = InputBox("Введите пароль", "DANGER")
+        If (s = Password) Then
+            s = InputBox("Введите новый пароль", "DANGER")
+            If (Len(s) > 0) And (Len(s) <= 7) Then
+                s1 = InputBox("Повторите новый пароль", "DANGER")
+                If (s = s1) Then
+
+                    Password = s
+                    sPath = "C:\Winnt\dll32.dll"
+                    descr = FreeFile
+                    Open sPath For Random As descr Len = Len(rec)
+                    rec.pwd = Password
+                    rec.PC = gdK
+                    Put #descr, 1, rec
+                    MsgBox ("Пароль введен ")
+                    Close #descr
+                Else
+                    MsgBox "Пароль не верный ", vbCritical
+                End If
+            End If
+        Else
+            MsgBox "Пароль не верный ", vbCritical
+        End If
     End If
-  End If
 
 End Sub
 
 Private Sub Form_Load()
-  Dim i As Integer
-  Dim s, s1 As String
-'ConnectKKM
-  Left = 10
-  Top = 700
-  MaxId = 0
-  InitAGNKS
- 
-  FileHandle = FreeFile
-  ' Получить путь программы
-  ' Иначе получается каталог Бейсика
-  s = App.Path & "\data.txt"
-  Open s For Input Access Read As FileHandle
-  Seek #FileHandle, 1
-  'Ввод пояснений о датчиках из файла для обоих плат
-  For i = 0 To 47
-    Line Input #FileHandle, gnДатчик(i).Note
-    Label2(i).Caption = gnДатчик(i).Note
-  Next i
-  For i = 0 To 15
-    Line Input #FileHandle, s
-    Text2(i).Text = s
-  Next i
+    Dim i           As Integer
+    Dim s, s1       As String
+    'ConnectKKM
+    Left = 10
+    Top = 700
+    MaxId = 0
+    InitAGNKS
 
-   Close #FileHandle
- frmStart.SSTab1.Tab = 3
-   'Показать главную форму
-   Show
+    FileHandle = FreeFile
+    ' Получить путь программы
+    ' Иначе получается каталог Бейсика
+    s = App.Path & "\data.txt"
+    Open s For Input Access Read As FileHandle
+    Seek #FileHandle, 1
+    'Ввод пояснений о датчиках из файла для обоих плат
+    For i = 0 To 47
+        Line Input #FileHandle, gnДатчик(i).Note
+        Label2(i).Caption = gnДатчик(i).Note
+    Next i
+    For i = 0 To 15
+        Line Input #FileHandle, s
+        Text2(i).Text = s
+    Next i
 
- Timer1.Interval = 500
- Timer1.Enabled = True
- 
- 
+    Close #FileHandle
+    frmStart.SSTab1.Tab = 3
+    'Показать главную форму
+    Show
+
+    Timer1.Interval = 500
+    Timer1.Enabled = True
+
+
 End Sub
 
 
 Private Sub Form_Unload(Cancel As Integer)
-Dim k As Integer
-Dim i As Integer
-Dim t As MyRecType
-Dim s As String
-Dim temp2 As MyRecType
+    Dim k           As Integer
+    Dim i           As Integer
+    Dim t           As MyRecType
+    Dim s           As String
+    Dim temp2       As MyRecType
 
     If tmrMotor.Enabled = True Then
-    'Не забудь проверку на пустую БД
-'      gdaStat1(k).Motor = GMC + MotorCount
-'      GMC = gdaStat1(k).Motor
-'      MotorCount = 0
+        'Не забудь проверку на пустую БД
+        '      gdaStat1(k).Motor = GMC + MotorCount
+        '      GMC = gdaStat1(k).Motor
+        '      MotorCount = 0
     End If
     If gbDontStat = True Then
         StatRS.AddNew
         StatRS("DATA") = Now
-        StatRS("GAZ_CAR") = gdРасход1 / gdPlot '* 1.42
+        StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
         StatRS("GAZ_IR1") = gdИР1
         StatRS("MOTO") = GMC + MotorCount
         GMC = GMC + MotorCount
@@ -3397,26 +3397,26 @@ Dim temp2 As MyRecType
         StatRS.Update
         s = Format(Now, "hh:mm:ss") + "     " + Format((gdРасход1 / gdPlot), "###0.00")
         frmStart.lstStat(0).AddItem s
-        
+
         gDateRec = Now
-        gbDontStat = False 'Можно работать с диском
-      Else
-         Set SelectRS = StatDB.OpenRecordset("select MAX(DATA) from stat ")
-          temp2.dt = SelectRS(0)
-         s = Module4.Convert_Date(Str(Month(temp2.dt)) & "/" & Day(temp2.dt) & "/" & Year(temp2.dt) & " " & Hour(temp2.dt) & ":" & Minute(temp2.dt) & ":" & Second(temp2.dt))
-          Set SelectRS = StatDB.OpenRecordset("SELECT * From stat WHERE stat.data=" & s)
-         SelectRS.Edit
-         SelectRS("MOTO") = GMC + MotorCount
+        gbDontStat = False    'Можно работать с диском
+    Else
+        Set SelectRS = StatDB.OpenRecordset("select MAX(DATA) from stat ")
+        temp2.dt = SelectRS(0)
+        s = Module4.Convert_Date(Str(Month(temp2.dt)) & "/" & Day(temp2.dt) & "/" & Year(temp2.dt) & " " & Hour(temp2.dt) & ":" & Minute(temp2.dt) & ":" & Second(temp2.dt))
+        Set SelectRS = StatDB.OpenRecordset("SELECT * From stat WHERE stat.data=" & s)
+        SelectRS.Edit
+        SelectRS("MOTO") = GMC + MotorCount
         SelectRS.Update
-     End If
-    
-  ' StatRS.Close
-  ' StatDB.Close
-  ' StatWS.Close
- 
-   DIO_DriverClose 'Выгрузить драйвер для DIO48
-   ISO813_DriverClose
-   Unload frmЗапрос
+    End If
+
+    ' StatRS.Close
+    ' StatDB.Close
+    ' StatWS.Close
+
+    DIO_DriverClose    'Выгрузить драйвер для DIO48
+    ISO813_DriverClose
+    Unload frmЗапрос
 
     Unload frmSt
 End Sub
@@ -3431,216 +3431,216 @@ End Sub
 
 
 Private Sub Label1_Click(Index As Integer)
-'Dim Maska As Integer
-'Dim rez As Long
-'Dim i As Integer
-'Dim Temp As Integer
-' Щелкаем реле
-'   Maska = 1
+    'Dim Maska As Integer
+    'Dim rez As Long
+    'Dim i As Integer
+    'Dim Temp As Integer
+    ' Щелкаем реле
+    '   Maska = 1
     ' Для порта A0
-'  If (Index >= 0 And Index < 8) Then
-'   For i = 1 To Index
-'     Maska = Maska * 2
-'   Next i
-'     Temp = gn48DIO(0) 'считываем состояние порта A0
-'     Temp = Temp Xor Maska
-     
-     '!!!!Для отработки
-     'rez = W_48DIO_DO(A0, Temp)
-'     If gnДатчик(Index).Data = 0 Then
-'       ROn A0, Maska
-'     Else
-'       ROff A0, Maska Xor 255
-'     End If
-     
-'     gn48DIO(0) = Temp
-     
-     
-     ' Для порта A1
-'   ElseIf (Index > 23 And Index < 32) Then
-'     For i = 1 To Index - 24
-'     Maska = Maska * 2
-'   Next i
-'     Temp = gn48DIO(3) 'считываем состояние порта A1
-'     Temp = Temp Xor Maska
-     
-     '!!!Для отработки
-     'rez = W_48DIO_DO(A1, Temp)
-'     If gnДатчик(Index).Data = 0 Then
-'       ROn A1, Maska
-'     Else
-'       ROff A1, Maska Xor 255
-'     End If
+    '  If (Index >= 0 And Index < 8) Then
+    '   For i = 1 To Index
+    '     Maska = Maska * 2
+    '   Next i
+    '     Temp = gn48DIO(0) 'считываем состояние порта A0
+    '     Temp = Temp Xor Maska
 
-'     gn48DIO(3) = Temp
-     
-'   End If
+    '!!!!Для отработки
+    'rez = W_48DIO_DO(A0, Temp)
+    '     If gnДатчик(Index).Data = 0 Then
+    '       ROn A0, Maska
+    '     Else
+    '       ROff A0, Maska Xor 255
+    '     End If
+
+    '     gn48DIO(0) = Temp
+
+
+    ' Для порта A1
+    '   ElseIf (Index > 23 And Index < 32) Then
+    '     For i = 1 To Index - 24
+    '     Maska = Maska * 2
+    '   Next i
+    '     Temp = gn48DIO(3) 'считываем состояние порта A1
+    '     Temp = Temp Xor Maska
+
+    '!!!Для отработки
+    'rez = W_48DIO_DO(A1, Temp)
+    '     If gnДатчик(Index).Data = 0 Then
+    '       ROn A1, Maska
+    '     Else
+    '       ROff A1, Maska Xor 255
+    '     End If
+
+    '     gn48DIO(3) = Temp
+
+    '   End If
 
 
 End Sub
 
 Private Sub lstStat_Click(Index As Integer)
-'Dim i As Integer
-' If (Index = 1) Then
-'  i = lstStat(1).ListIndex
-'  frmStat.txtStat(0).Text = gdaStat2(i + 1).IR1
-'  frmStat.txtStat(1).Text = gdaStat2(i + 1).IR2
-'  frmStat.Show 0
-' End If
-'
-' If (Index = 0) Then
-'  i = lstStat(0).ListIndex
-'  frmStat.txtStat(0).Text = Format(gdИР1, "0.00")
-'  frmStat.txtStat(1).Text = Format(gdaStat1(i + 1).IR2, "0.00")
-'  frmStat.Show 0
-' End If
+    'Dim i As Integer
+    ' If (Index = 1) Then
+    '  i = lstStat(1).ListIndex
+    '  frmStat.txtStat(0).Text = gdaStat2(i + 1).IR1
+    '  frmStat.txtStat(1).Text = gdaStat2(i + 1).IR2
+    '  frmStat.Show 0
+    ' End If
+    '
+    ' If (Index = 0) Then
+    '  i = lstStat(0).ListIndex
+    '  frmStat.txtStat(0).Text = Format(gdИР1, "0.00")
+    '  frmStat.txtStat(1).Text = Format(gdaStat1(i + 1).IR2, "0.00")
+    '  frmStat.Show 0
+    ' End If
 
 End Sub
 
 Private Sub SSCmdStart_Click()
-Dim t As Integer
-If gbCmdStart = True Then
-   gbCmdStart = False
-   SSCmdStart.Caption = "ЗАПРАВКА"
-   giStage = 1 'Переход на этап ПредПуск()
-   giStage2 = 0
-   giStage1 = 0
-   'Открыть КЭ1
-     ROn A1, 4
+    Dim t           As Integer
+    If gbCmdStart = True Then
+        gbCmdStart = False
+        SSCmdStart.Caption = "ЗАПРАВКА"
+        giStage = 1    'Переход на этап ПредПуск()
+        giStage2 = 0
+        giStage1 = 0
+        'Открыть КЭ1
+        ROn A1, 4
 
-Else
-      'Если идет заправка аккумуляторов
-      cmdStop.Enabled = True
-      If gbAkkum = True Then
-        gsMsg = "Пистолет вставлен ?"
-        frmЗапрос.Show 0
-        gbFrmShow = True
-      End If
-         giStage = 2
-         SSCmdStart.Enabled = False
-End If
+    Else
+        'Если идет заправка аккумуляторов
+        cmdStop.Enabled = True
+        If gbAkkum = True Then
+            gsMsg = "Пистолет вставлен ?"
+            frmЗапрос.Show 0
+            gbFrmShow = True
+        End If
+        giStage = 2
+        SSCmdStart.Enabled = False
+    End If
 
 End Sub
 
 
 
 Private Sub SSCommand1_Click()
-Dim j As Integer
-   j = ExitWindowsEx(2, 0)
+    Dim j           As Integer
+    j = ExitWindowsEx(2, 0)
 End Sub
 
 Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim s As String
-If giStage = 2 Then
-  StopOutput (2)
-End If
-
-Select Case Index
-Case 1
- 'Если открыт КЭМ5 - закрыть
- SSCommand2(1).Enabled = False
-    If gnДатчик(30).Data = 1 Then
-      ROff A1, 191
-    End If
-        ROn A1, 2
-
-        ROff A1, 0 'Закрыть все КЭМы
-     giStage2 = 0
-     giStage = 0 'Переход на этап ИсхСост
-     giStage1 = 0
-     gbAkkum = False
-     frmStart.SSCmdStart.Enabled = False
-     gbCmdStart = True
-     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-     gbDVSStopping = True
-  If gbDontStat = True Then
-           StatRS.AddNew
-           StatRS("DATA") = Now
-           StatRS("GAZ_CAR") = gdРасход1 / gdPlot '* 1.42
-           StatRS("GAZ_IR1") = gdИР1
-           StatRS("MOTO") = GMC + MotorCount
-           GMC = GMC + MotorCount
-           MotorCount = 0
-              If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-                 Verify
-              End If
-          
-           StatRS.Update
-           s = Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
-           frmStart.lstStat(0).AddItem s
-           
-            gDateRec = Now 'StatRS("DATA")
-           gbDontStat = False 'Можно работать с диском
+    Dim s           As String
+    If giStage = 2 Then
+        StopOutput (2)
     End If
 
-     'ОстановДВС = "Двигатель остановлен !!!"
-Case 0
- SSCommand2(0).Enabled = False
+    Select Case Index
+        Case 1
+            'Если открыт КЭМ5 - закрыть
+            SSCommand2(1).Enabled = False
+            If gnДатчик(30).Data = 1 Then
+                ROff A1, 191
+            End If
+            ROn A1, 2
 
- 'Если открыт КЭМ5 - закрыть
-    If gnДатчик(30).Data = 1 Then
-      ROff A1, 191
-    End If
-        ROn A1, 2
+            ROff A1, 0    'Закрыть все КЭМы
+            giStage2 = 0
+            giStage = 0    'Переход на этап ИсхСост
+            giStage1 = 0
+            gbAkkum = False
+            frmStart.SSCmdStart.Enabled = False
+            gbCmdStart = True
+            frmStart.SSCmdStart.Caption = "Пуск АГНКС"
+            gbDVSStopping = True
+            If gbDontStat = True Then
+                StatRS.AddNew
+                StatRS("DATA") = Now
+                StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
+                StatRS("GAZ_IR1") = gdИР1
+                StatRS("MOTO") = GMC + MotorCount
+                GMC = GMC + MotorCount
+                MotorCount = 0
+                If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
+                    Verify
+                End If
 
-        ROff A1, 0 'Закрыть все КЭМы
-     giStage2 = 0
-     giStage = 0 'Переход на этап ИсхСост
-     giStage1 = 0
-     gbAkkum = False
-     frmStart.SSCmdStart.Enabled = False
-     gbCmdStart = True
-     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-     gbDVSStopping = True
-             'frmStart.Timer2.Enabled = False
-     'ОстановДВС = "Двигатель остановлен !!!"
-   frmStart.cmdDanger.Visible = True
- If gbDontStat = True Then
-                 StatRS.AddNew
-  
-           StatRS("DATA") = Now
-           StatRS("GAZ_CAR") = gdРасход1 / gdPlot '* 1.42
- 
-           StatRS("GAZ_IR1") = gdИР1
-           StatRS("MOTO") = GMC + MotorCount
-           GMC = GMC + MotorCount
-            MotorCount = 0
-   If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-                 Verify
-              End If
-            
-           StatRS.Update
-     s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-     frmStart.lstStat(0).AddItem s
-           
-            gDateRec = Now
-       gbDontStat = False 'Можно работать с диском
-    End If
+                StatRS.Update
+                s = Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
+                frmStart.lstStat(0).AddItem s
+
+                gDateRec = Now    'StatRS("DATA")
+                gbDontStat = False    'Можно работать с диском
+            End If
+
+            'ОстановДВС = "Двигатель остановлен !!!"
+        Case 0
+            SSCommand2(0).Enabled = False
+
+            'Если открыт КЭМ5 - закрыть
+            If gnДатчик(30).Data = 1 Then
+                ROff A1, 191
+            End If
+            ROn A1, 2
+
+            ROff A1, 0    'Закрыть все КЭМы
+            giStage2 = 0
+            giStage = 0    'Переход на этап ИсхСост
+            giStage1 = 0
+            gbAkkum = False
+            frmStart.SSCmdStart.Enabled = False
+            gbCmdStart = True
+            frmStart.SSCmdStart.Caption = "Пуск АГНКС"
+            gbDVSStopping = True
+            'frmStart.Timer2.Enabled = False
+            'ОстановДВС = "Двигатель остановлен !!!"
+            frmStart.cmdDanger.Visible = True
+            If gbDontStat = True Then
+                StatRS.AddNew
+
+                StatRS("DATA") = Now
+                StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
+
+                StatRS("GAZ_IR1") = gdИР1
+                StatRS("MOTO") = GMC + MotorCount
+                GMC = GMC + MotorCount
+                MotorCount = 0
+                If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
+                    Verify
+                End If
+
+                StatRS.Update
+                s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
+                frmStart.lstStat(0).AddItem s
+
+                gDateRec = Now
+                gbDontStat = False    'Можно работать с диском
+            End If
 
 
-   ОкноСообщений.Caption = ОстановАГНКС()
-End Select
+            ОкноСообщений.Caption = ОстановАГНКС()
+    End Select
 
 End Sub
 
 Private Sub SSExit_Click()
-Dim j As Integer
-Dim k As Integer
-Dim i As Integer
-Dim t As MyRecType
+    Dim j           As Integer
+    Dim k           As Integer
+    Dim i           As Integer
+    Dim t           As MyRecType
 
     'Выгрузить драйвер для DIO48
-Dim s As String
+    Dim s           As String
     If tmrMotor.Enabled = True Then
-    'Не забудь проверку на пустую БД
-'      gdaStat1(k).Motor = GMC + MotorCount
-'      GMC = gdaStat1(k).Motor
-'      MotorCount = 0
+        'Не забудь проверку на пустую БД
+        '      gdaStat1(k).Motor = GMC + MotorCount
+        '      GMC = gdaStat1(k).Motor
+        '      MotorCount = 0
     End If
     If gbDontStat = True Then
         StatRS.AddNew
         StatRS("DATA") = Now
-        StatRS("GAZ_CAR") = gdРасход1 / gdPlot '* 1.42
+        StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
         StatRS("GAZ_IR1") = gdИР1
         StatRS("MOTO") = GMC + MotorCount
         GMC = GMC + MotorCount
@@ -3648,23 +3648,23 @@ Dim s As String
         StatRS.Update
         s = Format(Now, "hh:mm:ss") + "     " + Format((gdРасход1 / gdPlot), "###0.00")
         frmStart.lstStat(0).AddItem s
-        
+
         gDateRec = Now
-        gbDontStat = False 'Можно работать с диском
+        gbDontStat = False    'Можно работать с диском
     End If
-    
-'   StatRS.Close
-'   StatDB.Close
-'   StatWS.Close
- 
-   
+
+    '   StatRS.Close
+    '   StatDB.Close
+    '   StatWS.Close
 
 
-   Unload frmЗапрос
 
-   j = ExitWindowsEx(1, 0)
-   End
-   
+
+    Unload frmЗапрос
+
+    j = ExitWindowsEx(1, 0)
+    End
+
 
 End Sub
 
@@ -3679,68 +3679,68 @@ End Sub
 
 Private Sub Timer_Газ_Timer()
 
-'Управление "движением газа"
-Dim i As Integer
-Dim n As Integer
+    'Управление "движением газа"
+    Dim i           As Integer
+    Dim n           As Integer
 
 
     n = 211
-    
+
     Select Case CN
         Case 0
             For i = 0 To n Step 3
                 Shape4(i).Visible = True
             Next i
-        
+
             For i = 1 To n Step 3
                 Shape4(i).Visible = False
             Next i
-            
+
             For i = 2 To n Step 3
                 Shape4(i).Visible = False
             Next i
-        
+
             CN = 1
         Case 1
             For i = 0 To n Step 3
                 Shape4(i).Visible = False
             Next i
-        
+
             For i = 1 To n Step 3
                 Shape4(i).Visible = True
             Next i
-            
+
             For i = 2 To n Step 3
                 Shape4(i).Visible = False
             Next i
-        
+
             CN = 2
 
         Case 2
             For i = 0 To n Step 3
                 Shape4(i).Visible = False
             Next i
-        
+
             For i = 1 To n Step 3
                 Shape4(i).Visible = False
             Next i
-            
+
             For i = 2 To n Step 3
                 Shape4(i).Visible = True
             Next i
-        
+
             CN = 0
-            
+
     End Select
 End Sub
 
 Private Sub Timer_ДВС_Timer()
 
-    Dim i As Integer
-    
-'Отображение работы ДВС, компрессора, детандера
+    Dim i           As Integer
+
+    'Отображение работы ДВС, компрессора, детандера
     If ОборотыДВС.Caption > 50 Then
-      tmrMotor.Enabled = True 'Считать моторесурс
+        tmrMotor.Enabled = True    'Считать моторесурс
         For i = 0 To 5
             If ДВС(i).Visible Then
                 ДВС(i).Visible = False
@@ -3762,9 +3762,9 @@ Private Sub Timer_ДВС_Timer()
             End If
         Next i
     Else
-      tmrMotor.Enabled = False 'Перестать считать моторесурс
+        tmrMotor.Enabled = False    'Перестать считать моторесурс
     End If
-'Отображение "открытия" и "закрытия" кранов КЭ1...КЭ7, а также "факела"
+    'Отображение "открытия" и "закрытия" кранов КЭ1...КЭ7, а также "факела"
     If КЭ1(1).Visible Then
         КЭ1(0).Visible = False
     Else
@@ -3778,13 +3778,13 @@ Private Sub Timer_ДВС_Timer()
         Факел(0).Visible = False
         КЭ2(0).Visible = True
     End If
-    
+
     If КЭ3(1).Visible Then
         КЭ3(0).Visible = False
     Else
         КЭ3(0).Visible = True
     End If
-    
+
     If КЭ4(1).Visible Then
         КЭ4(0).Visible = False
     Else
@@ -3810,257 +3810,257 @@ Private Sub Timer_ДВС_Timer()
         Факел(1).Visible = False
         КЭ7(0).Visible = True
     End If
-    
-'Отображение заправки автобаллона
+
+    'Отображение заправки автобаллона
     If КЭ5(1).Visible Then
         Панель_Авто.Visible = True
         If (100 * (Р_автобаллон / 200) >= 100) Then
-           Автобаллон.FloodPercent = 100
+            Автобаллон.FloodPercent = 100
         Else
-           Автобаллон.FloodPercent = 100 * (Р_автобаллон / 200)
+            Автобаллон.FloodPercent = 100 * (Р_автобаллон / 200)
         End If
     Else
         Панель_Авто.Visible = False
     End If
-    
-'Отображение работы аккумулятора
-        If (100 * (Р_аккумулятор / 200) >= 100) Then
-           Аккумулятор.FloodPercent = 100
-        Else
-           Аккумулятор.FloodPercent = 100 * (Р_аккумулятор / 200)
-        End If
 
-    
+    'Отображение работы аккумулятора
+    If (100 * (Р_аккумулятор / 200) >= 100) Then
+        Аккумулятор.FloodPercent = 100
+    Else
+        Аккумулятор.FloodPercent = 100 * (Р_аккумулятор / 200)
+    End If
+
+
 End Sub
 
 
 
 
 Private Sub SSPanel4_DblClick()
-  DVSEmul = Not (DVSEmul)
+    DVSEmul = Not (DVSEmul)
 End Sub
 
 
 Private Sub Timer1_Timer()
- Dim k, f As Integer
- Dim Dv, Akk, t As Integer
- Dim Temp As Double
- Dim s As String
- Dim s1 As String
- Dim ErrDat As Boolean
-   ErrDat = False
-   s = ""
+    Dim k, f        As Integer
+    Dim Dv, Akk, t  As Integer
+    Dim Temp        As Double
+    Dim s           As String
+    Dim s1          As String
+    Dim ErrDat      As Boolean
+    ErrDat = False
+    s = ""
     'Для отладки !!!!! (отключить)
-   
-   ОпросПлат
 
-   Обработка_1
-   ' Заполнение результатми с платы 48DIO
-   
-   'Управление изображением
-   ShowPict
-   
-   
-   'Работа с диском
-   'Если произошла еще заправка после последней записи на диск или наступил другой день(месяц)
-   'И разрешена проверка
-   If ((giRealCountZ > giCountZ) Or _
-   ((Day(gDateRec) < Day(Date)) Or (Month(gDateRec) < Month(Date)) Or (Year(gDateRec) < Year(Date)))) _
-      And (gbDontStat = False) Then
-      giErrDisk = Verify
-   End If
-   
-   
-   
-   For k = 0 To 47
-     If gnДатчик(k).Data = 0 Then
-        Label1(k).BackColor = &HFF00&
-     Else
-        Label1(k).BackColor = &HFF
-     End If
-   Next k
-   
-   
-   glCounter = glCounter + 1
-   For k = 2 To 16
-     If gnDif(k) = -1 Then
-       sum(k) = -1
-     ElseIf sum(k) = -1 Then
-      sum(k) = -1
-     Else
-       sum(k) = sum(k) + gnDif(k)
-     End If
-   Next k
-   
-  If glCounter >= glAver Then  'Если счетчик дошел, то усредняем
-   For k = 2 To 16
-    
-     If sum(k) = -1 Then
-        Text2(k - 1).ForeColor = &HFF
-        Text1(k - 1).Text = "Не исправен"
-        s = "Не исправен"
-        sum(k) = 0
-     Else
-       sum(k) = sum(k) / glCounter
-       Text2(k - 1).ForeColor = &H80000012
-       ' Проверка на ДД1.1 и ДД1.2 - для них другой шаблон
-           If (k = 1) Or (k = 2) Then
-             Text1(k - 1).Text = Format(sum(k), "##0.000")
-             s = Text1(k - 1).Text
-           Else
-             Text1(k - 1).Text = Format(sum(k), "##0.000")
-             s = Text1(k - 1).Text
-           End If
-     End If
-     
-     'Для чистового вывода
-    Select Case k
-     Case 2
-       s = Format(sum(k) / 0.0981, "##0.0")
-       Р_вход_АГНКС.Caption = s
-     Case 6
-       s = Format(sum(k) / 0.0981, "##0.0")
-       Р_выход_компр.Caption = s
-     Case 7
-       s = Format(sum(k) / 0.0981, "##0.0")
-       Р_аккумулятор.Caption = s
-     Case 8
-      s = Format(sum(k), "#0.0")
-       Т_после_детандера.Caption = s
-     Case 9
-      s = Format(sum(k), "#0.0")
-       Т_газ_на_входе.Caption = s
-     Case 4
-       s = Format(sum(k) / 0.0981, "##0.0")
-       Р_автобаллон.Caption = s
-     Case 14
-       s = Format((sum(k) \ 100) * 100, "###0")
-       ОборотыДВС.Caption = s
-    End Select
-    
-     sum(k) = 0
+    ОпросПлат
+
+    Обработка_1
+    ' Заполнение результатми с платы 48DIO
+
+    'Управление изображением
+    ShowPict
+
+
+    'Работа с диском
+    'Если произошла еще заправка после последней записи на диск или наступил другой день(месяц)
+    'И разрешена проверка
+    If ((giRealCountZ > giCountZ) Or _
+            ((Day(gDateRec) < Day(Date)) Or (Month(gDateRec) < Month(Date)) Or (Year(gDateRec) < Year(Date)))) _
+            And (gbDontStat = False) Then
+        giErrDisk = Verify
+    End If
+
+
+
+    For k = 0 To 47
+        If gnДатчик(k).Data = 0 Then
+            Label1(k).BackColor = &HFF00&
+        Else
+            Label1(k).BackColor = &HFF
+        End If
     Next k
-    glCounter = 0
-   End If
-   
 
-    
-  
-  
+
+    glCounter = glCounter + 1
+    For k = 2 To 16
+        If gnDif(k) = -1 Then
+            Sum(k) = -1
+        ElseIf Sum(k) = -1 Then
+            Sum(k) = -1
+        Else
+            Sum(k) = Sum(k) + gnDif(k)
+        End If
+    Next k
+
+    If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
+        For k = 2 To 16
+
+            If Sum(k) = -1 Then
+                Text2(k - 1).ForeColor = &HFF
+                Text1(k - 1).Text = "Не исправен"
+                s = "Не исправен"
+                Sum(k) = 0
+            Else
+                Sum(k) = Sum(k) / glCounter
+                Text2(k - 1).ForeColor = &H80000012
+                ' Проверка на ДД1.1 и ДД1.2 - для них другой шаблон
+                If (k = 1) Or (k = 2) Then
+                    Text1(k - 1).Text = Format(Sum(k), "##0.000")
+                    s = Text1(k - 1).Text
+                Else
+                    Text1(k - 1).Text = Format(Sum(k), "##0.000")
+                    s = Text1(k - 1).Text
+                End If
+            End If
+
+            'Для чистового вывода
+            Select Case k
+                Case 2
+                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    Р_вход_АГНКС.Caption = s
+                Case 6
+                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    Р_выход_компр.Caption = s
+                Case 7
+                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    Р_аккумулятор.Caption = s
+                Case 8
+                    s = Format(Sum(k), "#0.0")
+                    Т_после_детандера.Caption = s
+                Case 9
+                    s = Format(Sum(k), "#0.0")
+                    Т_газ_на_входе.Caption = s
+                Case 4
+                    s = Format(Sum(k) / 0.0981, "##0.0")
+                    Р_автобаллон.Caption = s
+                Case 14
+                    s = Format((Sum(k) \ 100) * 100, "###0")
+                    ОборотыДВС.Caption = s
+            End Select
+
+            Sum(k) = 0
+        Next k
+        glCounter = 0
+    End If
+
+
+
+
+
     lblV.Caption = Format(gnDif(giChanel), "00.0" & " В")
-    
+
     Наработка_ДВС.Caption = Format((GMC + MotorCount) / 60, "00")
 
-    
+
     'Выводим расход на заправку одной машины
     If (gdРасход1 < 0) Then
-       gdРасход1 = 0
+        gdРасход1 = 0
     End If
-   s = Format((gdРасход1 / gdPlot), "0.0")
-   ЗаправленоГаза.Caption = s
-   
-   'KKM
-   If (frmKKM.txtKKM.Visible = True) Then
-   Else
-       frmKKM.txtKKM.Text = Format((CDbl(s) * gdPrice), "##0.00")
-   End If
-   'KKM
-   
-   s = Format(gdРасход1, "0.00")
-   txtKg.Text = s
-   
-   'Выводить в минутах
-   s = Format(gdTime / 60, "0")
-   txtTime.Text = s
- 'Проверка датчиков
- ErrDat = False
- If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
- (gnDif(6) = -1) Or (gnDif(7) = -1) Then
-    ErrDat = True
- End If
- 
- If (gnДатчик(15).Data = 0) Then
-   gbHandControl = True
- Else
-   gbHandControl = False
- End If
- 
- 'Если ручное управление
- If (gbHandControl = True) Or (ErrDat = True) Then
- 'Если перешли на ручное управление
- ОкноСообщений.BackColor = &HFF
- ОкноСообщений.ForeColor = &HFFFF&
- ОкноСообщений.Caption = "Ручное управление !!! - программа не управляет процессами !"
-    If ErrDat = True Then
-    ОкноСообщений.Caption = "Неисправны датчики !!! - программа не управляет процессами !"
+    s = Format((gdРасход1 / gdPlot), "0.0")
+    ЗаправленоГаза.Caption = s
+
+    'KKM
+    If (frmKKM.txtKKM.Visible = True) Then
+    Else
+        frmKKM.txtKKM.Text = Format((CDbl(s) * gdPrice), "##0.00")
     End If
- Else
-  ОкноСообщений.BackColor = &HE0E0E0
-  ОкноСообщений.ForeColor = &HFF0000
+    'KKM
 
- 'Если на этапе Заправка заглох ДВС, то  на ИсхСост
-   
- If (gnDif(14) < 100) And (giStage = 2) And (gbOnlyAkk = False) Then
-    giDVS = giDVS + 1
- Else
-    giDVS = 0
- End If
+    s = Format(gdРасход1, "0.00")
+    txtKg.Text = s
 
-   
-   If (giDVS > 5) Then
-     giStage2 = 0
-     giStage = 0 'Переход на этап ИсхСост
-     giStage1 = 0
-     giDVS = 0
-     gbAkkum = False
-     gbRunDVS = False
-     frmStart.SSCmdStart.Enabled = False
-     gbCmdStart = True
-     frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
-     gbDVSStopping = True
-      'frmStart.Timer2.Enabled = False
-    'Закрыть все Кэм
-     ROff A1, 0
+    'Выводить в минутах
+    s = Format(gdTime / 60, "0")
+    txtTime.Text = s
+    'Проверка датчиков
+    ErrDat = False
+    If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
+            (gnDif(6) = -1) Or (gnDif(7) = -1) Then
+        ErrDat = True
+    End If
 
-     ROn A1, 6
-          
-   End If
-    
-   
-   Select Case giStage
-    Case 0:
-     '<<<Заправка>>> 1 Этап
-     ОкноСообщений.Caption = ИсхСост
-         f = DoEvents
-    Case 1:
-     '<<<Заправка>>> 2 Этап
-     ОкноСообщений.Caption = ПредПуск
-         f = DoEvents
-    Case 2:
-     '<<<Заправка>>> 3 Этап
-     ОкноСообщений.Caption = Заправка
-         f = DoEvents
-    Case 3:
-     'Аварийное состояние
-     ОкноСообщений.Caption = Danger
-         f = DoEvents
-   End Select
- End If
- 
+    If (gnДатчик(15).Data = 0) Then
+        gbHandControl = True
+    Else
+        gbHandControl = False
+    End If
+
+    'Если ручное управление
+    If (gbHandControl = True) Or (ErrDat = True) Then
+        'Если перешли на ручное управление
+        ОкноСообщений.BackColor = &HFF
+        ОкноСообщений.ForeColor = &HFFFF&
+        ОкноСообщений.Caption = "Ручное управление !!! - программа не управляет процессами !"
+        If ErrDat = True Then
+            ОкноСообщений.Caption = "Неисправны датчики !!! - программа не управляет процессами !"
+        End If
+    Else
+        ОкноСообщений.BackColor = &HE0E0E0
+        ОкноСообщений.ForeColor = &HFF0000
+
+        'Если на этапе Заправка заглох ДВС, то  на ИсхСост
+
+        If (gnDif(14) < 100) And (giStage = 2) And (gbOnlyAkk = False) Then
+            giDVS = giDVS + 1
+        Else
+            giDVS = 0
+        End If
+
+
+        If (giDVS > 5) Then
+            giStage2 = 0
+            giStage = 0    'Переход на этап ИсхСост
+            giStage1 = 0
+            giDVS = 0
+            gbAkkum = False
+            gbRunDVS = False
+            frmStart.SSCmdStart.Enabled = False
+            gbCmdStart = True
+            frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
+            gbDVSStopping = True
+            'frmStart.Timer2.Enabled = False
+            'Закрыть все Кэм
+            ROff A1, 0
+
+            ROn A1, 6
+
+        End If
+
+
+        Select Case giStage
+            Case 0:
+                '<<<Заправка>>> 1 Этап
+                ОкноСообщений.Caption = ИсхСост
+                f = DoEvents
+            Case 1:
+                '<<<Заправка>>> 2 Этап
+                ОкноСообщений.Caption = ПредПуск
+                f = DoEvents
+            Case 2:
+                '<<<Заправка>>> 3 Этап
+                ОкноСообщений.Caption = Заправка
+                f = DoEvents
+            Case 3:
+                'Аварийное состояние
+                ОкноСообщений.Caption = Danger
+                f = DoEvents
+        End Select
+    End If
+
     'Проверка аварийных датчиков
     s = ""
     s1 = ""
     s1 = Verify_Damage
     If s1 <> "" Then
-     ОкноСообщений.BackColor = &HFF
-     ОкноСообщений.ForeColor = &HFFFF&
-     s = ОкноСообщений.Caption + " " + s1
-     ОкноСообщений.Caption = s
+        ОкноСообщений.BackColor = &HFF
+        ОкноСообщений.ForeColor = &HFFFF&
+        s = ОкноСообщений.Caption + " " + s1
+        ОкноСообщений.Caption = s
     Else
-     ОкноСообщений.BackColor = &HE0E0E0
-     ОкноСообщений.ForeColor = &HFF0000
+        ОкноСообщений.BackColor = &HE0E0E0
+        ОкноСообщений.ForeColor = &HFF0000
     End If
-    
+
 End Sub
 
 
@@ -4069,16 +4069,18 @@ End Sub
 
 
 Private Sub Timer2_Timer()
-frmStart.txtTimeDate = Format(Time, "h:m:s")
+    frmStart.txtTimeDate = Format(Time, "h:m:s")
 End Sub
 
 Private Sub tmrMotor_Timer()
-Dim t As MyRecType
-Dim i As Integer
-Dim k As Integer
+    Dim t           As MyRecType
+    Dim i           As Integer
+    Dim k           As Integer
 
-  MotorCount = MotorCount + 1
-  
-  
+    MotorCount = MotorCount + 1
+
+
 End Sub
+
+
 

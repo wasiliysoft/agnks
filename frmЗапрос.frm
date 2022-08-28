@@ -77,53 +77,54 @@ Option Explicit
 
 
 Private Sub Command1_Click()
-'Если выбрана заправка во время наполнения аккумуляторов
-If gbAkkum = True Then
-  giStage2 = 7
-  Car = 1
-Else
-  giStage2 = giStage2 + 1
-End If
+    'Если выбрана заправка во время наполнения аккумуляторов
+    If gbAkkum = True Then
+        giStage2 = 7
+        Car = 1
+    Else
+        giStage2 = giStage2 + 1
+    End If
 
-If gbOnlyAkk = True Then
-  giStage = 2
-  giStage2 = 8
-End If
+    If gbOnlyAkk = True Then
+        giStage = 2
+        giStage2 = 8
+    End If
 
-giTrigger = 1
-gbFrmShow = False
-frmЗапрос.Hide
+    giTrigger = 1
+    gbFrmShow = False
+    frmЗапрос.Hide
 End Sub
 
 
 Private Sub Command2_Click()
-If gbAkkum = False Then
-  giStage2 = giStage2 + 1
-Else
-  frmStart.SSCmdStart.Enabled = True
-End If
+    If gbAkkum = False Then
+        giStage2 = giStage2 + 1
+    Else
+        frmStart.SSCmdStart.Enabled = True
+    End If
 
-'Если пистолет не вставлен во время заправки только от аккумуляторов, то на ПредПуск
-If gbOnlyAkk = True Then
-  giStage = 1
-  giStage1 = 1
- frmStart.SSCmdStart.Enabled = True
-  'gbAkkum = True
-End If
+    'Если пистолет не вставлен во время заправки только от аккумуляторов, то на ПредПуск
+    If gbOnlyAkk = True Then
+        giStage = 1
+        giStage1 = 1
+        frmStart.SSCmdStart.Enabled = True
+        'gbAkkum = True
+    End If
 
-giTrigger = 0
-gbFrmShow = False
-frmЗапрос.Hide
+    giTrigger = 0
+    gbFrmShow = False
+    frmЗапрос.Hide
 End Sub
 
 
 Private Sub Form_Activate()
-  lblВопрос.Caption = gsMsg
+    lblВопрос.Caption = gsMsg
 End Sub
 
 Private Sub Form_Load()
-Left = 10
-Top = 10
-   ' Включение атрибута TopMost.
- SetWindowPos hwnd, conHwndTopmost, 10, 10, 520, 200, conSwpNoActivate Or conSwpShowWindow
+    Left = 10
+    Top = 10
+    ' Включение атрибута TopMost.
+    SetWindowPos Hwnd, conHwndTopmost, 10, 10, 520, 200, conSwpNoActivate Or conSwpShowWindow
 End Sub
+

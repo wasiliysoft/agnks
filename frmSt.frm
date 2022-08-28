@@ -115,40 +115,41 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub ssClose_Click()
-  frmSt.Hide
+    frmSt.Hide
 End Sub
 
 
 Private Sub ssShow_Click()
-Dim s As String
-Dim s1 As String
-Dim d As Date
-Dim sum As Double
+    Dim s           As String
+    Dim s1          As String
+    Dim d           As Date
+    Dim sum         As Double
 
-frmSt.List1.Clear
-sum = 0
-d = frmSt.Calendar1.Value
-s = Format(d, "mm/dd/yyyy")
-  s = Convert_Date(s)
-  s1 = Format(d + 1, "mm/dd/yyyy")
-  s1 = Convert_Date(s1)
-  'frmShow.MousePointer = vbHourglass
-Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
-If SelectRS.RecordCount >= 1 Then
-    SelectRS.MoveLast
-    SelectRS.MoveFirst
-    
- For i = 0 To SelectRS.RecordCount - 1
-   s = ""
-   s = Format(CStr(SelectRS("Data")), "hh:mm:ss") + "        " + Format(CStr(SelectRS("GAZ_CAR")), "###0.00")
-   sum = sum + SelectRS("GAZ_CAR")
-   frmSt.List1.AddItem (s)
-   SelectRS.MoveNext
- Next i
- frmSt.List1.AddItem ("====================")
- frmSt.List1.AddItem ("Всего:    " & Format(CStr(sum), "###0.00"))
-End If
+    frmSt.List1.Clear
+    sum = 0
+    d = frmSt.Calendar1.Value
+    s = Format(d, "mm/dd/yyyy")
+    s = Convert_Date(s)
+    s1 = Format(d + 1, "mm/dd/yyyy")
+    s1 = Convert_Date(s1)
+    'frmShow.MousePointer = vbHourglass
+    Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
+    If SelectRS.RecordCount >= 1 Then
+        SelectRS.MoveLast
+        SelectRS.MoveFirst
+
+        For i = 0 To SelectRS.RecordCount - 1
+            s = ""
+            s = Format(CStr(SelectRS("Data")), "hh:mm:ss") + "        " + Format(CStr(SelectRS("GAZ_CAR")), "###0.00")
+            sum = sum + SelectRS("GAZ_CAR")
+            frmSt.List1.AddItem (s)
+            SelectRS.MoveNext
+        Next i
+        frmSt.List1.AddItem ("====================")
+        frmSt.List1.AddItem ("Всего:    " & Format(CStr(sum), "###0.00"))
+    End If
 
 End Sub
+
 
 

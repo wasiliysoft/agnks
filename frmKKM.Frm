@@ -754,121 +754,121 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim strKKM As String 'строковое значение выражения
-Dim dKKM As Double 'числовое значение
-Dim bpoint As Boolean 'флаг точки
-Dim dA As Double 'первое число
-Dim dB As Double 'второе число
-Dim dC As Double 'результат
-Dim Process As Byte 'действие:(+ 10);(* 20);(- 30)(= 100);
+Dim strKKM          As String    'строковое значение выражения
+Dim dKKM            As Double    'числовое значение
+Dim bpoint          As Boolean    'флаг точки
+Dim dA              As Double    'первое число
+Dim dB              As Double    'второе число
+Dim dC              As Double    'результат
+Dim Process         As Byte    'действие:(+ 10);(* 20);(- 30)(= 100);
 'Калькулятор выполняет два основных действия сложение и умножение
 Private Sub cmdCalc_Click(Index As Integer)
-Select Case Index
-Case 10 'если точки еще не было, то поднимаем флаг и добавляем справа точку
-    If bpoint = False Then
-        bpoint = True
-        frmKKM.txtKKM.Text = strKKM & ","
-        strKKM = frmKKM.txtKKM.Text
-    End If
-Case 11 'умножение
-    dB = dKKM
-    Select Case Process
-    Case 10
-        dKKM = dA + dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case 20
-        dKKM = dA * dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case 30
-        dKKM = dA - dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case Else
-    End Select
+    Select Case Index
+        Case 10    'если точки еще не было, то поднимаем флаг и добавляем справа точку
+            If bpoint = False Then
+                bpoint = True
+                frmKKM.txtKKM.Text = strKKM & ","
+                strKKM = frmKKM.txtKKM.Text
+            End If
+        Case 11    'умножение
+            dB = dKKM
+            Select Case Process
+                Case 10
+                    dKKM = dA + dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case 20
+                    dKKM = dA * dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case 30
+                    dKKM = dA - dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case Else
+            End Select
 
-    dA = dKKM
-    Process = 20
-'    dKKM = 0
-    bpoint = False
-    strKKM = "0"
-Case 12 'сложение
-    dB = dKKM
-    Select Case Process
-    Case 10
-        dKKM = dA + dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case 20
-        dKKM = dA * dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case 30
-        dKKM = dA - dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case Else
+            dA = dKKM
+            Process = 20
+            '    dKKM = 0
+            bpoint = False
+            strKKM = "0"
+        Case 12    'сложение
+            dB = dKKM
+            Select Case Process
+                Case 10
+                    dKKM = dA + dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case 20
+                    dKKM = dA * dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case 30
+                    dKKM = dA - dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case Else
+            End Select
+
+            dA = dKKM
+            Process = 10
+            '    dKKM = 0
+            bpoint = False
+            strKKM = "0"
+        Case 13    'сброс
+            dA = 0
+            Process = 0
+            dKKM = 0
+            bpoint = False
+            strKKM = "0"
+            frmKKM.txtKKM.Text = "0"
+        Case 14    'равно - выполнение процесса
+            dB = dKKM
+            Select Case Process
+                Case 10
+                    dKKM = dA + dB
+                Case 20
+                    dKKM = dA * dB
+                Case 30
+                    dKKM = dA - dB
+                Case Else
+            End Select
+            '    dA = 0
+            '    dB = 0
+            Process = 0
+            bpoint = False
+            strKKM = "0"
+            frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+        Case 15
+            dB = dKKM
+            Select Case Process
+                Case 10
+                    dKKM = dA + dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case 20
+                    dKKM = dA * dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case 30
+                    dKKM = dA - dB
+                    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
+                Case Else
+            End Select
+
+            dA = dKKM
+            Process = 30
+            '    dKKM = 0
+            bpoint = False
+            strKKM = "0"
+        Case Else
+            'If bpoint = False Then
+            '    dKKM = dKKM * 10 + Index
+            '    frmKKM.txtKKM.Text = CStr(dKKM)
+            '    strKKM = frmKKM.txtKKM.Text
+            'Else
+            If strKKM = "0" Then
+                frmKKM.txtKKM.Text = CStr(Index)
+            Else
+                frmKKM.txtKKM.Text = strKKM & CStr(Index)
+            End If
+            dKKM = CDbl(frmKKM.txtKKM.Text)
+            strKKM = frmKKM.txtKKM.Text
+            'End If
     End Select
-    
-    dA = dKKM
-    Process = 10
-'    dKKM = 0
-    bpoint = False
-    strKKM = "0"
-Case 13 'сброс
-    dA = 0
-    Process = 0
-    dKKM = 0
-    bpoint = False
-    strKKM = "0"
-    frmKKM.txtKKM.Text = "0"
-Case 14 'равно - выполнение процесса
-    dB = dKKM
-    Select Case Process
-    Case 10
-        dKKM = dA + dB
-    Case 20
-        dKKM = dA * dB
-    Case 30
-        dKKM = dA - dB
-    Case Else
-    End Select
-'    dA = 0
-'    dB = 0
-    Process = 0
-    bpoint = False
-    strKKM = "0"
-    frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-Case 15
-    dB = dKKM
-    Select Case Process
-    Case 10
-        dKKM = dA + dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case 20
-        dKKM = dA * dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case 30
-        dKKM = dA - dB
-        frmKKM.txtKKM.Text = Format(dKKM, "###0.00")
-    Case Else
-    End Select
-    
-    dA = dKKM
-    Process = 30
-'    dKKM = 0
-    bpoint = False
-    strKKM = "0"
-Case Else
-    'If bpoint = False Then
-    '    dKKM = dKKM * 10 + Index
-    '    frmKKM.txtKKM.Text = CStr(dKKM)
-    '    strKKM = frmKKM.txtKKM.Text
-    'Else
-    If strKKM = "0" Then
-        frmKKM.txtKKM.Text = CStr(Index)
-    Else
-        frmKKM.txtKKM.Text = strKKM & CStr(Index)
-    End If
-        dKKM = CDbl(frmKKM.txtKKM.Text)
-        strKKM = frmKKM.txtKKM.Text
-    'End If
-End Select
 
 End Sub
 
@@ -890,215 +890,216 @@ Private Sub cmdExitKKM_Click()
 End Sub
 
 Private Sub cmdKKM_Click(Index As Integer)
-Dim i As Integer
-Dim t As Date
+    Dim i           As Integer
+    Dim t           As Date
 
-On Error GoTo err
+    On Error GoTo err
 
-Select Case Index
-Case 0 'продажа
-    'проверка правильного ввода денег
-    If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
-        'Оформление чека продажи
-        DrvFR.Password = pass
-        DrvFR.Quantity = CDbl(frmKKM.txtKKM.Text)
-        DrvFR.Price = 1
-        DrvFR.Department = 1
-        DrvFR.Tax1 = 1
-        DrvFR.Tax2 = 0
-        DrvFR.Tax3 = 0
-        DrvFR.Tax4 = 0
-        DrvFR.StringForPrinting = "Газ природный"
-        DrvFR.Sale
-        'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
-        DrvFR.Password = pass
-        DrvFR.CheckSubTotal 'Подводим итог чека, т.е. в Summ1 заносим все Sale
-        DrvFR.Password = pass
-        DrvFR.Summ1 = CDbl(frmKKM.txtKKM.Text)
-        DrvFR.Summ2 = 0
-        DrvFR.Summ3 = 0
-        DrvFR.Summ4 = 0
-        DrvFR.DiscountOnCheck = 0 'Скидок нет
-        DrvFR.Tax1 = 1
-        DrvFR.Tax2 = 0
-        DrvFR.Tax3 = 0
-        DrvFR.Tax4 = 0
-        DrvFR.StringForPrinting = "===================================="
-        DrvFR.CloseCheck
-        giErrorKKM = DrvFR.ResultCode
-        gsErrorKKM = DrvFR.ResultCodeDescription
-'        If gsРежимККМ <> "" Then
-'           str = gsРежимККМ & "_подрежим " & CStr(giПодРежимККМ) & ":Ошибки " & CStr(giErrorKKM) & "_" & gsErrorKKM
-'        Else
-'           str = CStr(giErrorKKM) & "_" & gsErrorKKM
-'        End If
-        'Если процедура печати безошибочна, то снимаем флаг печати иначе оставляем флаг
-        If (giErrorKKM = 0) Then ''And glOperator <> 0 Then
-'            BaseZaprAdd CDbl(frmKKM.txtKKM.Text), 0, 1, glOperator, 3, 2, 2, 0, 0 'Перед печатью чека запись в базе:на сумму указанную в чеке
-'           ZaprRS.AddNew
-'           ZaprRS("DATE") = Now
-'           ZaprRS("GAS") = CDbl(frmKKM.txtKKM.Text)
-'           ZaprRS("NUMBER") = 10
-'           ZaprRS("PRICE") = 1
-'           ZaprRS("OPERATOR") = glOperator
-'           ZaprRS("TYPEZAPR") = 3 'TYPEZAPR чек без отпуска газа
-'           ZaprRS("TYPEFINISH") = 2 'заправка на сумму
-'           ZaprDN.Update
-        Else
-        '!!!надо бы проанализировать ошибку и принять соответствующие действия!!!
-        End If
-    End If
-    
-Case 1 'продолжить печать после заправки бумаги
-    DrvFR.Password = pass
-'    DrvFR.ContinuePrint 'Переводит ККМ из подрежима 3 в другой
-    DrvFR.CancelCheck
-Case 2 'отрезать чек
-    DrvFR.Password = pass
-    DrvFR.CutType = True
-    DrvFR.CutCheck
+    Select Case Index
+        Case 0    'продажа
+            'проверка правильного ввода денег
+            If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
+                'Оформление чека продажи
+                DrvFR.Password = pass
+                DrvFR.Quantity = CDbl(frmKKM.txtKKM.Text)
+                DrvFR.Price = 1
+                DrvFR.Department = 1
+                DrvFR.Tax1 = 1
+                DrvFR.Tax2 = 0
+                DrvFR.Tax3 = 0
+                DrvFR.Tax4 = 0
+                DrvFR.StringForPrinting = "Газ природный"
+                DrvFR.Sale
+                'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
+                DrvFR.Password = pass
+                DrvFR.CheckSubTotal    'Подводим итог чека, т.е. в Summ1 заносим все Sale
+                DrvFR.Password = pass
+                DrvFR.Summ1 = CDbl(frmKKM.txtKKM.Text)
+                DrvFR.Summ2 = 0
+                DrvFR.Summ3 = 0
+                DrvFR.Summ4 = 0
+                DrvFR.DiscountOnCheck = 0    'Скидок нет
+                DrvFR.Tax1 = 1
+                DrvFR.Tax2 = 0
+                DrvFR.Tax3 = 0
+                DrvFR.Tax4 = 0
+                DrvFR.StringForPrinting = "===================================="
+                DrvFR.CloseCheck
+                giErrorKKM = DrvFR.ResultCode
+                gsErrorKKM = DrvFR.ResultCodeDescription
+                '        If gsРежимККМ <> "" Then
+                '           str = gsРежимККМ & "_подрежим " & CStr(giПодРежимККМ) & ":Ошибки " & CStr(giErrorKKM) & "_" & gsErrorKKM
+                '        Else
+                '           str = CStr(giErrorKKM) & "_" & gsErrorKKM
+                '        End If
+                'Если процедура печати безошибочна, то снимаем флаг печати иначе оставляем флаг
+                If (giErrorKKM = 0) Then    ''And glOperator <> 0 Then
+                    '            BaseZaprAdd CDbl(frmKKM.txtKKM.Text), 0, 1, glOperator, 3, 2, 2, 0, 0 'Перед печатью чека запись в базе:на сумму указанную в чеке
+                    '           ZaprRS.AddNew
+                    '           ZaprRS("DATE") = Now
+                    '           ZaprRS("GAS") = CDbl(frmKKM.txtKKM.Text)
+                    '           ZaprRS("NUMBER") = 10
+                    '           ZaprRS("PRICE") = 1
+                    '           ZaprRS("OPERATOR") = glOperator
+                    '           ZaprRS("TYPEZAPR") = 3 'TYPEZAPR чек без отпуска газа
+                    '           ZaprRS("TYPEFINISH") = 2 'заправка на сумму
+                    '           ZaprDN.Update
+                Else
+                    '!!!надо бы проанализировать ошибку и принять соответствующие действия!!!
+                End If
+            End If
 
-Case 3 'ПРОДОЛЖИТЬ ПЕЧАТЬ 'возврат продажи
-    DrvFR.Password = pass
-    DrvFR.ContinuePrint 'Переводит ККМ из подрежима 3 в другой
-    
-'    'проверка правильного ввода денег
-'    If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
-'        'Оформление чека продажи
-'        DrvFR.Password = pass
-'        DrvFR.Quantity = CDbl(frmKKM.txtKKM.Text)
-'        DrvFR.price = 1
-'        DrvFR.Department = 1
-'        DrvFR.Tax1 = 1
-'        DrvFR.Tax2 = 0
-'        DrvFR.Tax3 = 0
-'        DrvFR.Tax4 = 0
-'        DrvFR.StringForPrinting = "Газ природный"
-'        DrvFR.returnSale
-'        'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
-'        DrvFR.Password = pass
-'        DrvFR.CheckSubTotal 'Подводим итог чека, т.е. в Summ1 заносим все Sale
-'        DrvFR.Password = pass
-'        DrvFR.Summ1 = CDbl(frmKKM.txtKKM.Text)
-'        DrvFR.Summ2 = 0
-'        DrvFR.Summ3 = 0
-'        DrvFR.Summ4 = 0
-'        DrvFR.DiscountOnCheck = 0 'Скидок нет
-'        DrvFR.Tax1 = 1
-'        DrvFR.Tax2 = 0
-'        DrvFR.Tax3 = 0
-'        DrvFR.Tax4 = 0
-'        DrvFR.StringForPrinting = "===================================="
-'        DrvFR.CloseCheck
-'        giErrorKKM = DrvFR.ResultCode
-'        gsErrorKKM = DrvFR.ResultCodeDescription
-''        If gsРежимККМ <> "" Then
-''           str = gsРежимККМ & "_подрежим " & CStr(giПодРежимККМ) & ":Ошибки " & CStr(giErrorKKM) & "_" & gsErrorKKM
-''        Else
-''           str = CStr(giErrorKKM) & "_" & gsErrorKKM
-''        End If
-'        'Если процедура печати безошибочна, то снимаем флаг печати иначе оставляем флаг
-'        If (giErrorKKM = 0) Then ''And glOperator <> 0 Then
-''            BaseZaprAdd CDbl(frmKKM.txtKKM.Text), 0, 1, glOperator, 4, 2, 2, 0, 0 'Перед печатью чека запись в базе:на сумму указанную в чеке
-''           ZaprRS.AddNew
-''           ZaprRS("DATE") = Now
-''           ZaprRS("GAS") = CDbl(frmKKM.txtKKM.Text)
-''           ZaprRS("NUMBER") = 10
-''           ZaprRS("PRICE") = 1
-''           ZaprRS("OPERATOR") = glOperator
-''           ZaprRS("TYPEZAPR") = 4 'TYPEZAPR чек по возврату продажи без отпуска газа
-''           ZaprRS("TYPEFINISH") = 2 'заправка на сумму
-''           ZaprDN.Update
-'        Else
-'        '!!!надо бы проанализировать ошибку и принять соответствующие действия!!!
-'        End If
-'    End If
-Case 4
-    DrvFR.Password = pass
-    DrvFR.DrawerNumber = 0
-    DrvFR.OpenDrawer
-Case 5
-    DrvFR.GetECRStatus
-    DrvFR.Password = txtKKM.Text 'pass
-    DrvFR.PrintReportWithCleaning
-    
-'    If DrvFR.ResultCode = 0 Then
-'        t = DrvFR.Time
-'        GetLocalTime sys_sync
-'        With sys_sync
-'           .wHour = Hour(t)
-'           .wMinute = Minute(t)
-'           .wSecond = Second(t)
-'        End With
-'        SetLocalTime sys_sync
-'    End If
-    StatusKKM
-Case 6
-     DrvFR.Password = txtKKM.Text 'pass
-     DrvFR.PrintReportWithoutCleaning
-     StatusKKM
-Case Else
+        Case 1    'продолжить печать после заправки бумаги
+            DrvFR.Password = pass
+            '    DrvFR.ContinuePrint 'Переводит ККМ из подрежима 3 в другой
+            DrvFR.CancelCheck
+        Case 2    'отрезать чек
+            DrvFR.Password = pass
+            DrvFR.CutType = True
+            DrvFR.CutCheck
 
-End Select
+        Case 3    'ПРОДОЛЖИТЬ ПЕЧАТЬ 'возврат продажи
+            DrvFR.Password = pass
+            DrvFR.ContinuePrint    'Переводит ККМ из подрежима 3 в другой
+
+            '    'проверка правильного ввода денег
+            '    If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
+            '        'Оформление чека продажи
+            '        DrvFR.Password = pass
+            '        DrvFR.Quantity = CDbl(frmKKM.txtKKM.Text)
+            '        DrvFR.price = 1
+            '        DrvFR.Department = 1
+            '        DrvFR.Tax1 = 1
+            '        DrvFR.Tax2 = 0
+            '        DrvFR.Tax3 = 0
+            '        DrvFR.Tax4 = 0
+            '        DrvFR.StringForPrinting = "Газ природный"
+            '        DrvFR.returnSale
+            '        'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
+            '        DrvFR.Password = pass
+            '        DrvFR.CheckSubTotal 'Подводим итог чека, т.е. в Summ1 заносим все Sale
+            '        DrvFR.Password = pass
+            '        DrvFR.Summ1 = CDbl(frmKKM.txtKKM.Text)
+            '        DrvFR.Summ2 = 0
+            '        DrvFR.Summ3 = 0
+            '        DrvFR.Summ4 = 0
+            '        DrvFR.DiscountOnCheck = 0 'Скидок нет
+            '        DrvFR.Tax1 = 1
+            '        DrvFR.Tax2 = 0
+            '        DrvFR.Tax3 = 0
+            '        DrvFR.Tax4 = 0
+            '        DrvFR.StringForPrinting = "===================================="
+            '        DrvFR.CloseCheck
+            '        giErrorKKM = DrvFR.ResultCode
+            '        gsErrorKKM = DrvFR.ResultCodeDescription
+            ''        If gsРежимККМ <> "" Then
+            ''           str = gsРежимККМ & "_подрежим " & CStr(giПодРежимККМ) & ":Ошибки " & CStr(giErrorKKM) & "_" & gsErrorKKM
+            ''        Else
+            ''           str = CStr(giErrorKKM) & "_" & gsErrorKKM
+            ''        End If
+            '        'Если процедура печати безошибочна, то снимаем флаг печати иначе оставляем флаг
+            '        If (giErrorKKM = 0) Then ''And glOperator <> 0 Then
+            ''            BaseZaprAdd CDbl(frmKKM.txtKKM.Text), 0, 1, glOperator, 4, 2, 2, 0, 0 'Перед печатью чека запись в базе:на сумму указанную в чеке
+            ''           ZaprRS.AddNew
+            ''           ZaprRS("DATE") = Now
+            ''           ZaprRS("GAS") = CDbl(frmKKM.txtKKM.Text)
+            ''           ZaprRS("NUMBER") = 10
+            ''           ZaprRS("PRICE") = 1
+            ''           ZaprRS("OPERATOR") = glOperator
+            ''           ZaprRS("TYPEZAPR") = 4 'TYPEZAPR чек по возврату продажи без отпуска газа
+            ''           ZaprRS("TYPEFINISH") = 2 'заправка на сумму
+            ''           ZaprDN.Update
+            '        Else
+            '        '!!!надо бы проанализировать ошибку и принять соответствующие действия!!!
+            '        End If
+            '    End If
+        Case 4
+            DrvFR.Password = pass
+            DrvFR.DrawerNumber = 0
+            DrvFR.OpenDrawer
+        Case 5
+            DrvFR.GetECRStatus
+            DrvFR.Password = txtKKM.Text    'pass
+            DrvFR.PrintReportWithCleaning
+
+            '    If DrvFR.ResultCode = 0 Then
+            '        t = DrvFR.Time
+            '        GetLocalTime sys_sync
+            '        With sys_sync
+            '           .wHour = Hour(t)
+            '           .wMinute = Minute(t)
+            '           .wSecond = Second(t)
+            '        End With
+            '        SetLocalTime sys_sync
+            '    End If
+            StatusKKM
+        Case 6
+            DrvFR.Password = txtKKM.Text    'pass
+            DrvFR.PrintReportWithoutCleaning
+            StatusKKM
+        Case Else
+
+    End Select
 
 err:
 
 End Sub
 
 Private Sub Form_Load()
-Dim i As Integer
+    Dim i           As Integer
 
-pass = 1
-dA = 0
-dB = 0
-dC = 0
-Process = 0
-dKKM = 0
-strKKM = "0"
-bpoint = False
+    pass = 1
+    dA = 0
+    dB = 0
+    dC = 0
+    Process = 0
+    dKKM = 0
+    strKKM = "0"
+    bpoint = False
 
-With frmKKM
+    With frmKKM
 
-    .Left = 2385 '6000
-    .Top = 450 '1700
-    .Height = 6300
-    .Width = 6000
-    .sspKKM.Left = 50
-    .sspKKM.Top = 50
-    .sspKKM.Height = 6200
-    .sspKKM.Width = 5900
+        .Left = 2385    '6000
+        .Top = 450    '1700
+        .Height = 6300
+        .Width = 6000
+        .sspKKM.Left = 50
+        .sspKKM.Top = 50
+        .sspKKM.Height = 6200
+        .sspKKM.Width = 5900
 
-'    For i = 0 To 10
-'      .cmdCalc(i).Height = 600
-'      .cmdCalc(i).Width = 600
-'    Next i
-'    For i = 1 To 7 Step 3
-'      .cmdCalc(i).Left = 200
-'    Next i
-'    For i = 2 To 8 Step 3
-'      .cmdCalc(i).Left = 200 + .cmdCalc(1).Width
-'    Next i
-'    For i = 3 To 9 Step 3
-'      .cmdCalc(i).Left = 200 + .cmdCalc(1).Width * 2
-'    Next i
-'    For i = 1 To 3
-'      .cmdCalc(i).Top = 1200
-'    Next i
-'    For i = 4 To 6
-'      .cmdCalc(i).Top = 1200 + .cmdCalc(1).Width
-'    Next i
-'    For i = 7 To 9
-'      .cmdCalc(i).Top = 1200 + .cmdCalc(1).Width * 2
-'    Next i
-'
-'    .cmdCalc(0).Left = .cmdCalc(1).Left
-'    .cmdCalc(0).Width = .cmdCalc(1).Width * 2
-'    .cmdCalc(0).Top = .cmdCalc(7).Top + .cmdCalc(1).Height
-'    .cmdCalc(10).Left = .cmdCalc(3).Left
-'    .cmdCalc(10).Width = .cmdCalc(1).Width
-'    .cmdCalc(10).Top = .cmdCalc(0).Top
-End With
+        '    For i = 0 To 10
+        '      .cmdCalc(i).Height = 600
+        '      .cmdCalc(i).Width = 600
+        '    Next i
+        '    For i = 1 To 7 Step 3
+        '      .cmdCalc(i).Left = 200
+        '    Next i
+        '    For i = 2 To 8 Step 3
+        '      .cmdCalc(i).Left = 200 + .cmdCalc(1).Width
+        '    Next i
+        '    For i = 3 To 9 Step 3
+        '      .cmdCalc(i).Left = 200 + .cmdCalc(1).Width * 2
+        '    Next i
+        '    For i = 1 To 3
+        '      .cmdCalc(i).Top = 1200
+        '    Next i
+        '    For i = 4 To 6
+        '      .cmdCalc(i).Top = 1200 + .cmdCalc(1).Width
+        '    Next i
+        '    For i = 7 To 9
+        '      .cmdCalc(i).Top = 1200 + .cmdCalc(1).Width * 2
+        '    Next i
+        '
+        '    .cmdCalc(0).Left = .cmdCalc(1).Left
+        '    .cmdCalc(0).Width = .cmdCalc(1).Width * 2
+        '    .cmdCalc(0).Top = .cmdCalc(7).Top + .cmdCalc(1).Height
+        '    .cmdCalc(10).Left = .cmdCalc(3).Left
+        '    .cmdCalc(10).Width = .cmdCalc(1).Width
+        '    .cmdCalc(10).Top = .cmdCalc(0).Top
+    End With
 
 End Sub
+
 
 
