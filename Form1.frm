@@ -3738,7 +3738,8 @@ Private Sub Timer1_Timer()
     End If
     s = Format((gdРасход1 / gdPlot), "0.0")
     ЗаправленоГаза.Caption = s
-
+   ' TODO не нужно обновлять состояние формы ККМ в фоне
+   ' здесь нужно считать сумму заправки
     'KKM
     If (frmKKM.txtKKM.Visible = True) Then
     Else
