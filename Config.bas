@@ -14,34 +14,6 @@ Global Const conHwndTopmost = -1
 Global Const conSwpNoActivate = &H10
 Global Const conSwpShowWindow = &H40
 
-
-'Описание функций для платы ACL-8113
-'*********************************************************************************
-'      The Declare of ISO813.DLL for ISO813 AD Card
-'*********************************************************************************
-
-'****** define the error number *******/
-Global Const ISO813_NoError = 0
-Global Const ISO813_CheckBoardError = 1
-Global Const ISO813_DriverOpenError = 2
-Global Const ISO813_DriverNoOpen = 3
-Global Const ISO813_AdError = 4
-Global Const ISO813_OtherError = 5
-Global Const ISO813_GetDriverVersionError = 6
-Global Const ISO813_TimeOutError = &HFFFF
-
-' Function of Driver
-Declare Function ISO813_DriverInit Lib "ISO813.DLL" () As Integer
-Declare Sub ISO813_DriverClose Lib "ISO813.DLL" ()
-
-' Function of AD
-Declare Function ISO813_AD_Float Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
-        ByVal wGainCode As Integer, ByVal wBipolar As Integer, _
-        ByVal wJmp10v As Integer) As Single
-
-
-
-
 'Описание функции подсчета расхода газа (Шестаков)
 Declare Sub ResetExpenseCounter Lib "MetanCounter" Alias "#1" (ByVal i As Long)
 
@@ -113,23 +85,9 @@ Public sum(31)      As Double
 
 
 Public glРезультат  As Integer
-Public gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
-Public gnДатчик(48) As Sensor    'состояние датчиков по платам TB-24P и TB-16P8R
-Public ggACL8113(31) As Double   'состояние датчиков платы 8113
-Public gnDif(31)    As Double    ' Уже пересчитанные значения(с ними и идет работа)
+
 Public glЗначение   As Long
-Public glАдрес      As Long
-Public glaАдрес     As Long
 
-
-
-
-
-
-
-
-
-Public CN           As Integer
 
 
 Public gbRunDVS     As Boolean

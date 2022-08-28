@@ -3,42 +3,11 @@ Option Explicit
 
 
 Public Sub ОпросПлат()
-    Dim i           As Long
-    Dim j           As Integer
-    Dim s           As String
-    Dim f           As Double
-
     'Прочитать состояние портов платы PET-48DIO
-    For i = 0 To 5
-        If i = 3 Then
-            glЗначение = DIO_InputByte(glАдрес + 4)
-            gn48DIO(i) = CInt(glЗначение)
-        ElseIf i = 0 Then
-            glЗначение = DIO_InputByte(glАдрес)
-            gn48DIO(i) = CInt(glЗначение)
-        ElseIf i < 3 Then
-            glЗначение = DIO_InputByte(glАдрес + i)
-            gn48DIO(i) = Not (CInt(glЗначение))
-        Else
-            glЗначение = DIO_InputByte(glАдрес + 1 + i)
-            gn48DIO(i) = Not (CInt(glЗначение))
-        End If
-    Next i
+    update_gn48DIO
 
     'Опрос каналов платы ACL8113
-    For i = 0 To 16
-        For j = 0 To 3
-            'glaАдрес - I/O port base address
-            'i - номер канала
-            '1 - A/D Gain : 0 0~10 V
-            '               1 0~5 V
-            '0 - Unipolar
-            '1 = 10V     0 = 20 V
-            f = ISO813_AD_Float(glaАдрес, i, 1, 0, 1)
-        Next j
-
-        ggACL8113(i) = f
-    Next i
+    update_ggACL8113
 End Sub
 
 

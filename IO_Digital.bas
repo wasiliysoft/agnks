@@ -1,20 +1,23 @@
 Attribute VB_Name = "IO_Digital"
 Option Explicit
-Global Const DIO_NoError = 0
-Global Const DIO_DriverOpenError = 1
-Global Const DIO_DriverNoOpen = 2
-Global Const DIO_GetDriverVersionError = 3
-Global Const DIO_InstallIrqError = 4
-Global Const DIO_ClearIntCountError = 5
-Global Const DIO_GetIntCountError = 6
-Global Const DIO_ResetError = 7
-Global Const DIO_RemoveIrqError = 8
 
-Global Const DIO_GetTotalBoardError = 9
-Global Const DIO_CardNotFound = 10
-Global Const DIO_GetConfigError = 11
-Global Const DIO_ExceedBoardNumber = 12
- 
+Private Const glАдрес = &H2C0
+
+Private Const DIO_NoError = 0
+Private Const DIO_DriverOpenError = 1
+Private Const DIO_DriverNoOpen = 2
+Private Const DIO_GetDriverVersionError = 3
+Private Const DIO_InstallIrqError = 4
+Private Const DIO_ClearIntCountError = 5
+Private Const DIO_GetIntCountError = 6
+Private Const DIO_ResetError = 7
+Private Const DIO_RemoveIrqError = 8
+
+Private Const DIO_GetTotalBoardError = 9
+Private Const DIO_CardNotFound = 10
+Private Const DIO_GetConfigError = 11
+Private Const DIO_ExceedBoardNumber = 12
+
 
 ' The Driver functions
 Declare Function DIO_DriverInit Lib "DIO.DLL" _
@@ -28,11 +31,12 @@ Declare Function DIO_InputByte Lib "DIO.DLL" _
         (ByVal address As Integer) As Integer
 
 
+Public gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
+Public gnДатчик(48) As Sensor    'состояние датчиков по платам TB-24P и TB-16P8R
 
 
 Public Function Init_DIO_Driver() As String
     'Инициализация
-    glАдрес = Val("&H2C0")     'Оставляю по умолчанию
     glРезультат = DIO_DriverInit(1)
 
     If glРезультат <> DIO_NoError Then
@@ -52,6 +56,102 @@ Public Function Init_DIO_Driver() As String
 
     'Выключить реле 0 (порт A0)
     ' glРезультат = W_48DIO_DO(0, 0)
+End Function
+
+Sub update_gn48DIO()
+    Dim i           As Long
+
+    For i = 0 To 5
+        If i = 3 Then
+            glЗначение = DIO_InputByte(glАдрес + 4)
+            gn48DIO(i) = CInt(glЗначение)
+        ElseIf i = 0 Then
+            glЗначение = DIO_InputByte(glАдрес)
+            gn48DIO(i) = CInt(glЗначение)
+        ElseIf i < 3 Then
+            glЗначение = DIO_InputByte(glАдрес + i)
+            gn48DIO(i) = Not (CInt(glЗначение))
+        Else
+            glЗначение = DIO_InputByte(glАдрес + 1 + i)
+            gn48DIO(i) = Not (CInt(glЗначение))
+        End If
+    Next i
+End Sub
 
 
+'Функция выводит в port 0
+Public Function ROff(port As Integer, n As Integer) As Integer
+    Dim t           As Byte
+    Dim j           As Integer
+
+    Select Case port
+        Case A0
+            j = 0
+        Case B0
+            j = 1
+        Case C0
+            j = 2
+        Case A1
+            j = 4
+        Case B1
+            j = 5
+        Case C1
+            j = 6
+        Case Else    '''Возможно и не надо !!!
+            j = 3
+    End Select
+
+    If j <= 2 Then
+        t = gn48DIO(j)    'считываем состояние порта
+    Else
+        t = gn48DIO(j - 1)    'считываем состояние порта
+    End If
+    'Закрыть
+    t = t And n  ' 0 в n-ый канал
+    ''''Для отладки !!!
+    'W_48DIO_DO port, t
+    DIO_OutputByte glАдрес + j, t
+
+    gn48DIO(j) = t
+    ОпросПлат  'Нужно чтобы узнать ИР2
+    '----------
+    '----------
+End Function
+
+'Функция выводит в port 1
+Public Function ROn(port As Integer, n As Integer) As Integer
+    Dim t           As Byte
+    Dim j           As Integer
+
+    Select Case port
+        Case A0
+            j = 0
+        Case B0
+            j = 1
+        Case C0
+            j = 2
+        Case A1
+            j = 4
+        Case B1
+            j = 5
+        Case C1
+            j = 6
+        Case Else    '''Возможно и не надо !!!
+            j = 3
+    End Select
+    If j <= 2 Then
+        t = gn48DIO(j)    'считываем состояние порта
+    Else
+        t = gn48DIO(j - 1)    'считываем состояние порта
+    End If
+    'Открыть
+    t = t Or n  ' 1 в n-ый канал
+    ''''Для отладки !!!
+    '     W_48DIO_DO port, t
+    't = 2
+    DIO_OutputByte glАдрес + j, t
+
+    gn48DIO(j) = t
+    '----------
+    ОпросПлат
 End Function
