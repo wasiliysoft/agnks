@@ -6,12 +6,12 @@ Private Const configCN1 = glАдрес + &H3  '   707
 Private Const configCN2 = glАдрес + &H7  '   711
 
 Global Const A0 = glАдрес + &H0     'Порты
-Private Const B0 = glАдрес + &H1
-Private Const C0 = glАдрес + &H2
+Global Const B0 = glАдрес + &H1
+Global Const C0 = glАдрес + &H2
 
 Global Const A1 = glАдрес + &H4     'Порты
-Private Const B1 = glАдрес + &H5
-Private Const C1 = glАдрес + &H6
+Global Const B1 = glАдрес + &H5
+Global Const C1 = glАдрес + &H6
 
 ' The Driver functions
 Private Declare Function DIO_DriverInit Lib "DIO.DLL" (wTotalBoards As Integer) As Integer

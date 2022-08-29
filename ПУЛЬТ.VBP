@@ -16,6 +16,7 @@ Form=frmSt.frm
 Form=frmKKM.Frm
 Module=IO_File; IO_File.bas
 Module=IO_Analog; IO_Analog.bas
+Form=frmDebug.Frm
 IconForm="frmStart"
 Startup="frmStart"
 HelpFile=""

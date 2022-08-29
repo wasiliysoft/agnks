@@ -3416,6 +3416,10 @@ Private Sub Form_Load()
     'Показать главную форму
     Show
 
+   If isDebug Then 
+         frmDebug.Show    
+   End If
+
     Timer1.Interval = 500
     Timer1.Enabled = True
 

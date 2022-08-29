@@ -768,8 +768,6 @@ Public Sub InitAGNKS()
     Init_Controllers
     ResetExpenseCounter (1)
     ResetExpenseCounter (2)
-
-    If isDebug Then MsgBox "isDebug = true", vbExclamation, "Отладочная версия"
 End Sub
 
 Private Sub Init_Controllers()
