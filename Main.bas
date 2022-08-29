@@ -764,11 +764,12 @@ Public Sub InitAGNKS()
         'Записать все данные на диск
         'Если была ошибка связанная с журналом, то обнуляем его
     End If
-    ' Для отладки !!!!!!!(отключить)
     ConnectKKM
     Init_Controllers
     ResetExpenseCounter (1)
     ResetExpenseCounter (2)
+
+    If isDebug Then MsgBox "isDebug = true", vbExclamation, "Отладочная версия"
 End Sub
 
 Private Sub Init_Controllers()

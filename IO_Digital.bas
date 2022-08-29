@@ -2,6 +2,16 @@ Attribute VB_Name = "IO_Digital"
 Option Explicit
 
 Private Const glАдрес = &H2C0
+Private Const configCN1 = glАдрес + &H3  '   707
+Private Const configCN2 = glАдрес + &H7  '   711
+
+Global Const A0 = glАдрес + &H0     'Порты
+Private Const B0 = glАдрес + &H1          
+Private Const C0 = glАдрес + &H2     
+
+Global Const A1 = glАдрес + &H4     'Порты
+Private Const B1 = glАдрес + &H5
+Private Const C1 = glАдрес + &H6
 
 Private Const DIO_NoError = 0
 Private Const DIO_DriverOpenError = 1
@@ -31,8 +41,10 @@ Declare Function DIO_InputByte Lib "DIO.DLL" _
         (ByVal address As Integer) As Integer
 
 
-Public gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
 Public gnДатчик(48) As Sensor    'состояние датчиков по платам TB-24P и TB-16P8R
+
+Private gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
+
 
 Public Function Init_DIO_Driver() As String
     'Инициализация
@@ -44,30 +56,26 @@ Public Function Init_DIO_Driver() As String
         Init_DIO_Driver = "Плата Pet48DIO в норме"
         ' Don't forget to close the driver by DIO_DriverClose()
     End If
-    DIO_OutputByte glАдрес + &H3, &H8B    'Устанавливаем CN1 : A0 -output, B0 & C0 - input
-    DIO_OutputByte glАдрес + &H7, &H8B    'Устанавливаем CN2 : A1 -output, B1 & C1 - input
-
-    DIO_OutputByte glАдрес, 0
-    DIO_OutputByte glАдрес + &H4, 0
-
-    'Выключить реле 0 (порт A1)
-    ' glРезультат = W_48DIO_DO(256, 0)
-
-    'Выключить реле 0 (порт A0)
-    ' glРезультат = W_48DIO_DO(0, 0)
+    DIO_OutputByte configCN1, &H8B    'Устанавливаем CN1 : A0 -output, B0 & C0 - input
+    DIO_OutputByte configCN2, &H8B    'Устанавливаем CN2 : A1 -output, B1 & C1 - input
+    
+    ' Выключить реле
+    ' TODO можно переделать на ROff
+    DIO_OutputByte A0, 0
+    DIO_OutputByte A1, 0
 End Function
 
-Sub update_gn48DIO()
-    gn48DIO(0) = CInt(DIO_InputByte(glАдрес))
-    gn48DIO(1) = Not (CInt(DIO_InputByte(glАдрес + 1)))
-    gn48DIO(2) = Not (CInt(DIO_InputByte(glАдрес + 2)))
+Public Sub update_gn48DIO()
+    gn48DIO(0) = CInt(DIO_InputByte(A0))
+    gn48DIO(1) = Not (CInt(DIO_InputByte(B0)))
+    gn48DIO(2) = Not (CInt(DIO_InputByte(C0)))
 
-    gn48DIO(3) = CInt(DIO_InputByte(glАдрес + 4))
-    gn48DIO(4) = Not (CInt(DIO_InputByte(glАдрес + 5)))
-    gn48DIO(5) = Not (CInt(DIO_InputByte(glАдрес + 6)))
+    gn48DIO(3) = CInt(DIO_InputByte(A1))
+    gn48DIO(4) = Not (CInt(DIO_InputByte(B1)))
+    gn48DIO(5) = Not (CInt(DIO_InputByte(C1)))
 End Sub
 
-Sub update_gnДатчик()
+Public Sub update_gnДатчик()
     Dim p           As Integer
     Dim r           As Integer
     Dim i           As Integer
@@ -86,79 +94,109 @@ Sub update_gnДатчик()
     Next i
 End Sub
 
-'Функция выводит в port 0
-Public Function ROff(port As Integer, n As Integer) As Integer
-    Dim t           As Byte
-    Dim j           As Integer
-
-    Select Case port
-        Case A0
-            j = 0
-        Case B0
-            j = 1
-        Case C0
-            j = 2
-        Case A1
-            j = 4
-        Case B1
-            j = 5
-        Case C1
-            j = 6
-        Case Else    '''Возможно и не надо !!!
-            j = 3
-    End Select
-
-    If j <= 2 Then
-        t = gn48DIO(j)    'считываем состояние порта
-    Else
-        t = gn48DIO(j - 1)    'считываем состояние порта
-    End If
-    'Закрыть
-    t = t And n  ' 0 в n-ый канал
-    ''''Для отладки !!!
-    'W_48DIO_DO port, t
-    DIO_OutputByte glАдрес + j, t
-
-    gn48DIO(j) = t
-    ОпросПлат  'Нужно чтобы узнать ИР2
-    '----------
-    '----------
-End Function
-
 'Функция выводит в port 1
-Public Function ROn(port As Integer, n As Integer) As Integer
-    Dim t           As Byte
-    Dim j           As Integer
+Public Sub ROn(port As Integer, n As Integer)
+    Dim b As Byte
+    ' текущее состояние
+    b = getSoftPortState(port)  
+    ' Битовое ИЛИ (1 останутся только если они есть в обоих байтах)
+    ' Битовое ИЛИ (1 останутся из обоих байтов)
+    b = b Or n                  
 
-    Select Case port
-        Case A0
-            j = 0
-        Case B0
-            j = 1
-        Case C0
-            j = 2
-        Case A1
-            j = 4
-        Case B1
-            j = 5
-        Case C1
-            j = 6
-        Case Else    '''Возможно и не надо !!!
-            j = 3
-    End Select
-    If j <= 2 Then
-        t = gn48DIO(j)    'считываем состояние порта
+    If (isDebug) Then
+        Debug.Print "Запись 1 в адрес: " & port & " n: " & n
+        gn48DIO(getIndexByPort(port)) = b
+        Ron_debug port, n
     Else
-        t = gn48DIO(j - 1)    'считываем состояние порта
+        DIO_OutputByte port, b
     End If
-    'Открыть
-    t = t Or n  ' 1 в n-ый канал
-    ''''Для отладки !!!
-    '     W_48DIO_DO port, t
-    't = 2
-    DIO_OutputByte glАдрес + j, t
-
-    gn48DIO(j) = t
-    '----------
+    ' Выполнить опрос платы DIO
     ОпросПлат
+End Sub
+
+'Функция выводит в port 0
+Public Sub ROff(port As Integer, n As Integer)
+    Dim b As Byte
+    ' текущее состояние
+    b = getSoftPortState(port)  
+    ' Битовое И (1 останутся только если они есть в обоих байтах)
+    b = b And n                  
+
+    If (isDebug) Then
+        Debug.Print "Запись 0 в адрес: " & port & " n: " & n
+        gn48DIO(getIndexByPort(port)) = b
+        Ron_debug port, n
+    Else
+        DIO_OutputByte port, b
+    End If
+    ' Выполнить опрос платы DIO
+    ОпросПлат
+End Sub
+
+' Возвращает состояние порта на момент последнего опроса
+Private Function getSoftPortState(port As Integer) As Byte
+    Dim i As Integer: i = getIndexByPort(port)
+    getSoftPortState = gn48DIO(i)
+    'If isDebug Then
+    '    Debug.Print "getSoftPortState", "port " & port, "return " & getSoftPortState
+    'End If
 End Function
+
+Private Function getIndexByPort(port As Integer) As Integer
+    Select Case port
+        Case A0: getIndexByPort = 0
+        Case B0: getIndexByPort = 1
+        Case C0: getIndexByPort = 2
+        Case A1: getIndexByPort = 3
+        Case B1: getIndexByPort = 4
+        Case C1: getIndexByPort = 5
+        Case Else: err.Raise -1, , "Некорректный адрес порта: " & port
+    End Select
+End Function
+
+
+Private Sub Ron_debug(port As Integer, n As Integer)
+    If (port = A1 And n = 4) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 32
+        Debug.Print "КЭ1 открыт"
+    ElseIf (port = A1 And n = 8) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 1
+        Debug.Print "КЭ2 открыт"
+    ElseIf (port = A1 And n = 16) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 2
+        Debug.Print "КЭ3 открыт"
+    ElseIf (port = A1 And n = 32) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 4
+        Debug.Print "КЭ4 открыт"
+    ElseIf (port = A1 And n = 64) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 8
+        Debug.Print "КЭ5 открыт"
+    ElseIf (port = A1 And n = 128) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 16
+        Debug.Print "КЭ6 открыт"
+    ElseIf (port = A0 And n = 2) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 128
+        Debug.Print "КЭ7 открыт"
+    Else
+        Debug.Print "Необработанная команда Открыть", port, n
+    End If
+End Sub
+
+Private Sub Roff_debug(port As Integer, n As Integer)
+    If (port = A1 And n = 239) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (2)
+        Debug.Print "К3 Закрыт"
+    ElseIf (port = A1 And n = 223) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (4)
+        Debug.Print "К4 Закрыт"
+    ElseIf (port = A1 And n = 127) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (8)
+        Debug.Print "К5 Закрыт"
+    ElseIf (port = A1 And n = 191) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (16)
+        Debug.Print "К6 Закрыт"
+    Else
+        Debug.Print "Необработанная команда Закрыть", port, n
+    End If
+End Sub
+

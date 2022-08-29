@@ -2,14 +2,11 @@ Attribute VB_Name = "Config"
 'Все переменные необходимо объявлять заранее
 Option Explicit
 
+Global Const isDebug = true
+
 'Определение констант
 Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
-Global Const A0 = 0
-Global Const A1 = 256
-Global Const B0 = 1          'Порты
-Global Const B1 = 257
-Global Const C0 = 2
-Global Const C1 = 258
+
 Global Const conHwndTopmost = -1
 Global Const conSwpNoActivate = &H10
 Global Const conSwpShowWindow = &H40
