@@ -3880,7 +3880,7 @@ Private Sub Timer1_Timer()
     End If
 
 
-    lblV.Caption = Format(gnDif(giChanel), "00.0" & " В")
+    lblV.Caption = Format(gnDif(16), "00.0" & " В")
 
     Наработка_ДВС.Caption = Format((GMC + MotorCount) / 60, "00")
 

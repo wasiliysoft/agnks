@@ -33,18 +33,6 @@ Public Type Sensor
     Note            As String
 End Type
 
-
-
-'Объявление переменных и массивов
-Public gKv          As Double
-Public gKi          As Double
-Public gKt          As Double
-Public gKp          As Double    'Для ДД1.1 и ДД1.2
-Public gKp_1        As Double    'Для остальных
-Public gKi_1        As Double
-Public gKn          As Double
-
-
 'Для расхода газа
 Public gdИР1        As Double
 Public gdИР2        As Double
@@ -82,7 +70,6 @@ Public sum(31)      As Double
 Public gbRunDVS     As Boolean
 
 Public gdUpLevel    As Double
-Public giChanel     As Integer
 
 Public Type MyRecType
     dt              As Date
