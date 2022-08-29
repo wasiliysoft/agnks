@@ -6,38 +6,21 @@ Private Const configCN1 = glАдрес + &H3  '   707
 Private Const configCN2 = glАдрес + &H7  '   711
 
 Global Const A0 = glАдрес + &H0     'Порты
-Private Const B0 = glАдрес + &H1          
-Private Const C0 = glАдрес + &H2     
+Private Const B0 = glАдрес + &H1
+Private Const C0 = glАдрес + &H2
 
 Global Const A1 = glАдрес + &H4     'Порты
 Private Const B1 = glАдрес + &H5
 Private Const C1 = glАдрес + &H6
 
-Private Const DIO_NoError = 0
-Private Const DIO_DriverOpenError = 1
-Private Const DIO_DriverNoOpen = 2
-Private Const DIO_GetDriverVersionError = 3
-Private Const DIO_InstallIrqError = 4
-Private Const DIO_ClearIntCountError = 5
-Private Const DIO_GetIntCountError = 6
-Private Const DIO_ResetError = 7
-Private Const DIO_RemoveIrqError = 8
-
-Private Const DIO_GetTotalBoardError = 9
-Private Const DIO_CardNotFound = 10
-Private Const DIO_GetConfigError = 11
-Private Const DIO_ExceedBoardNumber = 12
-
-
 ' The Driver functions
-Declare Function DIO_DriverInit Lib "DIO.DLL" _
-        (wTotalBoards As Integer) As Integer
+Private Declare Function DIO_DriverInit Lib "DIO.DLL" (wTotalBoards As Integer) As Integer
 Declare Sub DIO_DriverClose Lib "DIO.DLL" ()
 
 ' The DIO functions
-Declare Sub DIO_OutputByte Lib "DIO.DLL" _
+Private Declare Sub DIO_OutputByte Lib "DIO.DLL" _
         (ByVal address As Integer, ByVal dataout As Byte)
-Declare Function DIO_InputByte Lib "DIO.DLL" _
+Private Declare Function DIO_InputByte Lib "DIO.DLL" _
         (ByVal address As Integer) As Integer
 
 
@@ -47,15 +30,29 @@ Private gn48DIO(5)   As Long    'состояние регистров платы PET-48DIO
 
 
 Public Function Init_DIO_Driver() As String
-    'Инициализация
-    glРезультат = DIO_DriverInit(1)
+    Dim i As Integer
+    Dim msg As String
+    i = DIO_DriverInit(1)
+    Select Case i
+        Case 0: msg = "NoError"
+        Case 1: msg = "DriverOpenError"
+        Case 2: msg = "DriverNoOpen"
+        Case 3: msg = "GetDriverVersionError"
+        Case 4: msg = "InstallIrqError"
+        Case 5: msg = "ClearIntCountError"
+        Case 6: msg = "GetIntCountError"
+        Case 7: msg = "ResetError"
+        Case 8: msg = "RemoveIrqError"
+        Case 9: msg = "GetTotalBoardError"
+        Case 10: msg = "CardNotFound"
+        Case 11: msg = "GetConfigError"
+        Case 12: msg = "ExceedBoardNumber"
+    End Select
 
-    If glРезультат <> DIO_NoError Then
-        MsgBox "Driver DIO Initialize OK!!"
-    Else
-        Init_DIO_Driver = "Плата Pet48DIO в норме"
-        ' Don't forget to close the driver by DIO_DriverClose()
+    If i <> 0 Then
+        MsgBox msg, vbExclamation, "Driver DIO"
     End If
+
     DIO_OutputByte configCN1, &H8B    'Устанавливаем CN1 : A0 -output, B0 & C0 - input
     DIO_OutputByte configCN2, &H8B    'Устанавливаем CN2 : A1 -output, B1 & C1 - input
     
@@ -98,10 +95,10 @@ End Sub
 Public Sub ROn(port As Integer, n As Integer)
     Dim b As Byte
     ' текущее состояние
-    b = getSoftPortState(port)  
+    b = getSoftPortState(port)
     ' Битовое ИЛИ (1 останутся только если они есть в обоих байтах)
     ' Битовое ИЛИ (1 останутся из обоих байтов)
-    b = b Or n                  
+    b = b Or n
 
     If (isDebug) Then
         Debug.Print "Запись 1 в адрес: " & port & " n: " & n
@@ -118,9 +115,9 @@ End Sub
 Public Sub ROff(port As Integer, n As Integer)
     Dim b As Byte
     ' текущее состояние
-    b = getSoftPortState(port)  
+    b = getSoftPortState(port)
     ' Битовое И (1 останутся только если они есть в обоих байтах)
-    b = b And n                  
+    b = b And n
 
     If (isDebug) Then
         Debug.Print "Запись 0 в адрес: " & port & " n: " & n
