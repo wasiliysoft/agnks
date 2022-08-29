@@ -3,22 +3,12 @@ Option Explicit
 
 Private Const glaАдрес = &H220
 
-'****** define the error number *******/
-Private Const ISO813_NoError = 0
-Private Const ISO813_CheckBoardError = 1
-Private Const ISO813_DriverOpenError = 2
-Private Const ISO813_DriverNoOpen = 3
-Private Const ISO813_AdError = 4
-Private Const ISO813_OtherError = 5
-Private Const ISO813_GetDriverVersionError = 6
-Private Const ISO813_TimeOutError = &HFFFF
-
 ' Function of Driver
-Declare Function ISO813_DriverInit Lib "ISO813.DLL" () As Integer
+Private Declare Function ISO813_DriverInit Lib "ISO813.DLL" () As Integer
 Declare Sub ISO813_DriverClose Lib "ISO813.DLL" ()
 
 ' Function of AD
-Declare Function ISO813_AD_Float Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
+Private Declare Function ISO813_AD_Float Lib "ISO813.DLL" (ByVal wBase As Integer, ByVal wChannel As Integer, _
         ByVal wGainCode As Integer, ByVal wBipolar As Integer, _
         ByVal wJmp10v As Integer) As Single
 
@@ -28,15 +18,21 @@ Public gnDif(31)    As Double    ' Уже пересчитанные значения(с ними и идет рабо
 
 
 Public Function Init_ISO813_Driver() As String
-
     Dim i           As Integer
-    glРезультат = ISO813_DriverInit()
-    If glРезультат <> ISO813_NoError Then
-        i = MsgBox("Can not initial Driver!!!", , "ISO813 Card Error")
-    ElseIf glРезультат = 2 Then
-        Init_ISO813_Driver = "Driver open error !"
-    Else
-        Init_ISO813_Driver = "Плата ACL8113 в норме"
+    Dim msg         As String
+    i = ISO813_DriverInit()
+    Select Case i
+        Case 0: msg = "NoError"
+        Case 1: msg = "CheckBoardError"
+        Case 2: msg = "DriverOpenError"
+        Case 3: msg = "DriverNoOpen"
+        Case 4: msg = "AdError"
+        Case 5: msg = "OtherError"
+        Case 6: msg = "GetDriverVersionError"
+        Case &HFFFF: msg = "TimeOutError"
+    End Select
+    If i <> 0 Then
+        MsgBox msg, vbExclamation, "Driver ISO813"
     End If
 End Function
 

@@ -5,7 +5,7 @@ Option Explicit
 Global Const isDebug = true
 
 'Определение констант
-Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
+'Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
 
 Global Const conHwndTopmost = -1
 Global Const conSwpNoActivate = &H10
@@ -13,8 +13,6 @@ Global Const conSwpShowWindow = &H40
 
 'Описание функции подсчета расхода газа (Шестаков)
 Declare Sub ResetExpenseCounter Lib "MetanCounter" Alias "#1" (ByVal i As Long)
-
-
 Declare Sub AddSensorsData Lib "MetanCounter" Alias "#2" (ByVal i As Long, ByVal _
         p1 As Double, ByVal t1 As Double, ByVal p2 As Double, ByVal d As Double, ByVal _
         coef As Double, ByVal CorrExp As Double)
@@ -79,11 +77,6 @@ Public gdRashAkkEnd As Double    'Нижний расход по которому отсекается поток от 
 Public glAver       As Long    ' размер цикла дла усреднения
 Public glCounter    As Long
 Public sum(31)      As Double
-
-
-Public glРезультат  As Integer
-
-
 
 
 Public gbRunDVS     As Boolean
