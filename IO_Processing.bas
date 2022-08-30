@@ -3,18 +3,18 @@ Option Explicit
 
 'масштабный коэффициент пересчёта в напряжение
 'для однополярного входа на 10в
-Private Const gKv = 1    
+Private Const gKv = 1
     
 'масштабный коэффициент пересчёта в ток (миллиамперы)
 'при сопротивлении нагрузки 0,448 кОм
-Private Const gKi = gKv / 0.2   
+Private Const gKi = gKv / 0.2
     
 'масштабный коэффициент пересчёта тока в давление
-Private Const gKp = 1.6 / 16    
-Private Const gKp_1 = 25 / 16   
+Private Const gKp = 1.6 / 16
+Private Const gKp_1 = 25 / 16
 
 'Коэффициент пересчета рабочего напряжения на датчиках
-'Private Const gKn = (2740 + 448) / 448    
+'Private Const gKn = (2740 + 448) / 448
 
 Public Sub ОпросПлат()
     If isDebug Then
@@ -28,7 +28,7 @@ Public Sub ОпросПлат()
 End Sub
 
 
-Public Sub Обработка_1()   
+Public Sub Обработка_1()
     Dim i           As Integer
     Dim Temp        As Double
 
@@ -85,15 +85,18 @@ Public Sub Обработка_1()
 
 
     Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
-    gdИР2 = GetMass(2)
-
+    if not isDebug Then
+        gdИР2 = GetMass(2)
+    end if
     'Считать расход (общий) по ИР1
     Temp = -(GetMassExpense(2))
     If giMainРасход = 1 Then
-        Temp = 0        
+        Temp = 0
     End If
     Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, Temp)
-    gdИР1 = GetMass(1)
+    if not isDebug Then
+        gdИР1 = GetMass(1)
+    End If
 
     If isDebug Then
         Обработка_1_debug
@@ -102,25 +105,11 @@ End Sub
 
 
 Private Sub Обработка_1_debug()
-    Dim i As Integer
-
-    gnDif(4) = 10
-   'Debug.Print "giStage2", giStage2
-    If (giStage2 = 0) Then
-         gnDif(5) = 10
-    End If
-    
+   
     If giStage2 = 9 Then
-        gnDif(4) = gnDif(5) - 0.5
-        gnDif(5) = gnDif(5) + 0.3
-        If (gnDif(5) > 20) Then
-            gnDif(4) = gnDif(5)
-        End If
         gdИР2 = gdИР2 + 0.15
-        
-       ' Debug.Print "gnDif(4)", gnDif(4)
-       ' Debug.Print "gnDif(5)", gnDif(5)
-        
+    Else
+        gdИР2 = 0
     End If
      '0 A0 Output 0-7
 '    gnДатчик(0).Data = 0        ' Управление Реле 1 (контроль)
@@ -172,21 +161,21 @@ Private Sub Обработка_1_debug()
 '    gnДатчик(46).Data = 0       ' Пожар в тех.отсеке
 '    gnДатчик(47).Data = 0       ' Отказ СТМ-10
 
-    gnDif(2) = 1000 ' ДД1.1
-    gnDif(3) = 1000 ' ДД1.2
+'    gnDif(2) = 1000 ' ДД1.1
+'    gnDif(3) = 1000 ' ДД1.2
 '    gnDif(4) = 0 ' ДД2.1
 '    gnDif(5) = 0 ' ДД2.2
-    gnDif(6) = 22 ' ДД6, компрессор
-    gnDif(7) = 20 ' ДД8, аккомулятор
-    gnDif(8) = 10 ' ДТ1, датчик температуры
-    gnDif(9) = 10 ' ДТ1.1, датчик температуры
-    gnDif(10) = 10 ' ДТ2, датчик температуры
-    gnDif(11) = 10 ' ДТ2.1, датчик температуры
-    gnDif(12) = 10 ' ДТ3, датчик температуры
-    gnDif(13) = 10 ' ДТ4, датчик температуры на выходе компрессора
+'    gnDif(6) = 22 ' ДД6, компрессор
+'    gnDif(7) = 20 ' ДД8, аккомулятор
+'    gnDif(8) = 10 ' ДТ1, датчик температуры
+'    gnDif(9) = 10 ' ДТ1.1, датчик температуры
+'    gnDif(10) = 10 ' ДТ2, датчик температуры
+'    gnDif(11) = 10 ' ДТ2.1, датчик температуры
+'    gnDif(12) = 10 ' ДТ3, датчик температуры
+'    gnDif(13) = 10 ' ДТ4, датчик температуры на выходе компрессора
     'gnDif(14) = 0 ' Обороты ДВС
-    gnDif(15) = 230 ' ДД4
-    gnDif(16) = 24.4 ' Напряжение АКБ
+    'gnDif(15) = 230 ' ДД4
+'    gnDif(16) = 24.4 ' Напряжение АКБ
    ' Debug.Print gnDif(0)
 End Sub
 
