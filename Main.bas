@@ -219,6 +219,7 @@ Public Function InitDisk() As Integer
     Line Input #fh, s
     gdPlot = CDbl(s)
     Close #fh
+    frmStart.Label_Price.Caption = gdPrice
     If gdPlot < 0.5 Then gdPlot = 0.7
     If gdPlot > 1 Then gdPlot = 0.7
     frmStart.Caption = frmStart.Caption & " Плотность газа = " & CStr(gdPlot) & " кг/м3"

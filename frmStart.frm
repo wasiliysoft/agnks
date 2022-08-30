@@ -3258,6 +3258,7 @@ End Sub
 
 Private Sub cmdKKM_Click()
     StatusKKM
+    frmKKM.txtKKM.Text = frmStart.Label_Summa.Caption
     frmKKM.lblErrorKKM.Caption = gsErrorKKM    ' = Drvfr.ResultCodeDescription
     frmKKM.lblStatusKKM.Caption = gsРежимККМ    '= Drvfr.ECRModeDescription
     frmKKM.Show 1
@@ -3416,8 +3417,8 @@ Private Sub Form_Load()
     'Показать главную форму
     Show
 
-   If isDebug Then 
-         frmDebug.Show    
+   If isDebug Then
+         frmDebug.Show
    End If
 
     Timer1.Interval = 500
@@ -3890,14 +3891,7 @@ Private Sub Timer1_Timer()
     End If
     s = Format((gdРасход1 / gdPlot), "0.0")
     ЗаправленоГаза.Caption = s
-   ' TODO не нужно обновлять состояние формы ККМ в фоне
-   ' здесь нужно считать сумму заправки
-    'KKM
-    If (frmKKM.txtKKM.Visible = True) Then
-    Else
-        frmKKM.txtKKM.Text = Format((CDbl(s) * gdPrice), "##0.00")
-    End If
-    'KKM
+    frmStart.Label_Summa.Caption = Format((CDbl(s) * gdPrice), "##0.00")
 
     s = Format(gdРасход1, "0.00")
     txtKg.Caption = s
