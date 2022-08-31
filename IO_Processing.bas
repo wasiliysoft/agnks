@@ -103,11 +103,22 @@ Public Sub Обработка_1()
     End If
 End Sub
 
+' флаг ручного управления
+Function gbHandControl() as Boolean
+   If (gnДатчик(15).Data = 0) Then
+        gbHandControl = True
+    Else
+        gbHandControl = False
+    End If
+End Function
+
 
 Private Sub Обработка_1_debug()
    
     If giStage2 = 9 Then
         gdИР2 = gdИР2 + 0.15
+    ElseIf giStage2 = 4 Then
+        gdИР2 = gdИР2 + 0.2
     Else
         gdИР2 = 0
     End If
@@ -124,14 +135,14 @@ Private Sub Обработка_1_debug()
 '    gnДатчик(14).Data = 0
 '    gnДатчик(15).Data = 1          ' Автомат. упр-е
      '2 C0 Input 16-23
-'    gnДатчик(16).Data = 0       ' К2 открыт   0
-'    gnДатчик(17).Data = 0       ' К3 открыт   1
-'    gnДатчик(18).Data = 0       ' К4 открыт   2
-'    gnДатчик(19).Data = 0       ' К5 открыт   3
-'    gnДатчик(20).Data = 0       ' К6 открыт   4
-'    gnДатчик(21).Data = 0       ' К1 открыт   5
-'    gnДатчик(22).Data = 0       '             6
-'    gnДатчик(23).Data = 0       ' К7 открыт   7
+'    gnДатчик(16).Data = 0       ' К2 открыт   0    1
+'    gnДатчик(17).Data = 0       ' К3 открыт   1    2
+'    gnДатчик(18).Data = 0       ' К4 открыт   2    4
+'    gnДатчик(19).Data = 0       ' К5 открыт   3    8
+'    gnДатчик(20).Data = 0       ' К6 открыт   4    16
+'    gnДатчик(21).Data = 0       ' К1 открыт   5    32
+'    gnДатчик(22).Data = 0       '             6    64
+'    gnДатчик(23).Data = 0       ' К7 открыт   7    128
     '3 Config address
     '4 A1 Output 24-31
 '    gnДатчик(24).Data = 0       ' Управление Реле 2 (контроль)
@@ -164,7 +175,7 @@ Private Sub Обработка_1_debug()
 '    gnDif(2) = 1000 ' ДД1.1
 '    gnDif(3) = 1000 ' ДД1.2
 '    gnDif(4) = 0 ' ДД2.1
-'    gnDif(5) = 0 ' ДД2.2
+'    gnDif(5) = 0 ' ДД2.2 Давление в баке машины
 '    gnDif(6) = 22 ' ДД6, компрессор
 '    gnDif(7) = 20 ' ДД8, аккомулятор
 '    gnDif(8) = 10 ' ДТ1, датчик температуры

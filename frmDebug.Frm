@@ -736,7 +736,7 @@ Sub openK5()
    ROn A1, 64
 End Sub
 Sub openK6()
-   ROn A1, 128
+   ROn A1, 128    'Открыть КЭ6
 End Sub
 Sub openK7()
    ROn A0, 2

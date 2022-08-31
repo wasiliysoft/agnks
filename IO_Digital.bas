@@ -5,13 +5,13 @@ Private Const glАдрес = &H2C0
 Private Const configCN1 = glАдрес + &H3  '   707
 Private Const configCN2 = glАдрес + &H7  '   711
 
-Global Const A0 = glАдрес + &H0     'Порты
-Global Const B0 = glАдрес + &H1
-Global Const C0 = glАдрес + &H2
+Global Const A0 = glАдрес + &H0     'Порты 704
+Global Const B0 = glАдрес + &H1     '705
+Global Const C0 = glАдрес + &H2     '706
 
-Global Const A1 = glАдрес + &H4     'Порты
-Global Const B1 = glАдрес + &H5
-Global Const C1 = glАдрес + &H6
+Global Const A1 = glАдрес + &H4     'Порты 708
+Global Const B1 = glАдрес + &H5     '709
+Global Const C1 = glАдрес + &H6     '710
 
 ' The Driver functions
 Private Declare Function DIO_DriverInit Lib "DIO.DLL" (wTotalBoards As Integer) As Integer
@@ -122,7 +122,7 @@ Public Sub ROff(port As Integer, n As Integer)
     If (isDebug) Then
         Debug.Print "Запись 0 в адрес: " & port & " n: " & n
         gn48DIO(getIndexByPort(port)) = b
-        Ron_debug port, n
+        Roff_debug port, n
     Else
         DIO_OutputByte port, b
     End If
@@ -153,7 +153,15 @@ End Function
 
 
 Private Sub Ron_debug(port As Integer, n As Integer)
-    If (port = A1 And n = 4) Then
+    If (port = A1 And n = 2) Then ' Стоп ДВС
+        ggACL8113(14) = 0.8
+        Debug.Print "ДВС остановлен"
+    ElseIf (port = A1 And n = 4) Then ' Открыть К1
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 32
+        Debug.Print "КЭ1 открыт"
+    ElseIf (port = A1 And n = 6) Then ' Открыть К1 и стоп ДВС
+        ggACL8113(14) = 0.8
+        Debug.Print "ДВС остановлен"
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 32
         Debug.Print "КЭ1 открыт"
     ElseIf (port = A1 And n = 8) Then
@@ -162,7 +170,24 @@ Private Sub Ron_debug(port As Integer, n As Integer)
     ElseIf (port = A1 And n = 16) Then
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 2
         Debug.Print "КЭ3 открыт"
+    ElseIf (port = A1 And n = 24) Then ' Открыть К2 и К3
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 1
+        Debug.Print "КЭ2 открыт"
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 2
+        Debug.Print "КЭ3 открыт"
     ElseIf (port = A1 And n = 32) Then
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 4
+        Debug.Print "КЭ4 открыт"
+    ElseIf (port = A1 And n = 34) Then 'Стоп ДВС, открыть КЭМ4
+        ggACL8113(14) = 0.8
+        Debug.Print "ДВС остановлен"
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 4
+        Debug.Print "КЭ4 открыт"
+    ElseIf (port = A1 And n = 42) Then ' Cтоп ДВС, открыть КЭМ2, открыть КЭМ4
+        ggACL8113(14) = 0.8
+        Debug.Print "ДВС остановлен"
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 1
+        Debug.Print "КЭ2 открыт"
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 4
         Debug.Print "КЭ4 открыт"
     ElseIf (port = A1 And n = 64) Then
@@ -174,24 +199,36 @@ Private Sub Ron_debug(port As Integer, n As Integer)
     ElseIf (port = A0 And n = 2) Then
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) Or 128
         Debug.Print "КЭ7 открыт"
+    ElseIf (port = B0 And n = 128) Then
+        Debug.Print "Выкл. ручное упарвление"
+    ElseIf (port = B1 And n = 16) Then
+        Debug.Print "Вкл муфта сцепления"
     Else
         Debug.Print "Необработанная команда Открыть", port, n
     End If
 End Sub
 
 Private Sub Roff_debug(port As Integer, n As Integer)
-    If (port = A1 And n = 239) Then
+    If (port = A1 And n = 0) Then
+        gn48DIO(getIndexByPort(C0)) = 0
+        Debug.Print "Все КМ закрыты"
+    ElseIf (port = A1 And n = 1) Then ' Закрыть все КМ, вкл Реле 2
+        gn48DIO(getIndexByPort(C0)) = 0
+        Debug.Print "Все КМ закрыты, Реле 2 ВКЛ"
+    ElseIf (port = A1 And n = 239) Then ' Закрыть К3
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (2)
         Debug.Print "К3 Закрыт"
-    ElseIf (port = A1 And n = 223) Then
+    ElseIf (port = A1 And n = 223) Then ' Закрыть К4
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (4)
         Debug.Print "К4 Закрыт"
-    ElseIf (port = A1 And n = 127) Then
-        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (8)
-        Debug.Print "К5 Закрыт"
-    ElseIf (port = A1 And n = 191) Then
+    ElseIf (port = A1 And n = 127) Then ' Закрыть К6
         gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (16)
         Debug.Print "К6 Закрыт"
+    ElseIf (port = A1 And n = 191) Then ' Закрыть К5
+        gn48DIO(getIndexByPort(C0)) = getSoftPortState(C0) And Not (8)
+        Debug.Print "К5 Закрыт"
+    ElseIf (port = B1 And n = Not (16)) Then
+        Debug.Print "Выкл муфта сцепления"
     Else
         Debug.Print "Необработанная команда Закрыть", port, n
     End If

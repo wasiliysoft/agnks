@@ -347,7 +347,7 @@ Public Function Заправка()
 
         ROn A1, 64      'Открыть КЭ5
         giStage2 = 9
-        ROn A1, 128
+        ROn A1, 128      'Открыть КЭ6
         gdРасход1 = 0    'Обнуляем расход на одну машину
         ResetExpenseCounter (2)
         StartOutput (2)
@@ -459,8 +459,7 @@ Public Function Заправка()
         gbЗаправка = True
 
         If (gnDif(7) - dFullCar) >= 2 Then    'Разница давлений в аккумуляторах и баке
-            'Открыть КЭ6 - заправка и от аккумуляторов
-            ROn A1, 128
+            ROn A1, 128 'Открыть КЭ6 - заправка и от аккумуляторов
         End If
 
         If gnДатчик(18).Data = 1 Then
@@ -483,25 +482,18 @@ Public Function Заправка()
 
         MaxIR = GetMassExpense(2)
         If (gbAkkum = False) And (((gnДатчик(20).Data = 1) And (((MaxIR * 3600) <= gdRashAkkEnd) _
-                And (MaxIR > 0)) And (GetTimeCounter(2) >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then
-            'Закрыть КЭ6
-            ROff A1, 127
+                And (MaxIR > 0)) And (GetTimeCounter(2) >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then           
+            ROff A1, 127 'Закрыть КЭ6
             'Exit Function
         End If
-        ' Убрал проверку на остановку заправки по минимальному расходу - отключает раньше
-        'If (gbAkkum = False) And ((Not (gnDif(4) >= gdUpLevel)) And (MaxIR * 3600 >= 35)) Then
         If (gbAkkum = False) And ((Not (gnDif(4) >= gdUpLevel))) Then
-
             Заправка = "Идет заправка "
             'Считаем расход на одну машину (за полсекунды)
             gdРасход1 = gdИР2
-
             gdTime = GetTimeCounter(2)
             Exit Function
         ElseIf (gbAkkum = False) Then
-            'Закрыть пистолет
-            'Закрыть КЭ5
-            ROff A1, 191
+            ROff A1, 191 'Закрыть КЭ5 (пистолет)
             gbDontStat = False    'Можно работать с диском
             StopOutput (2)
             gdTime = GetTimeCounter(2)
@@ -528,11 +520,8 @@ Public Function Заправка()
             gDateRec = Now
 
             '<<<<Прекратить считать расход>>>>
-            gbЗаправка = False
-
-            'ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
-            'Открыть КЭ6
-            ROn A1, 128
+            gbЗаправка = False            
+            ROn A1, 128 'Открыть КЭ6 ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
 
             'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
             frmStart.SSCmdStart.Enabled = True
@@ -564,9 +553,8 @@ Public Function Заправка()
 
 
     ' ПОДЭТАП 7  - во время заправки аккумуляторов переход на заправку машин
-    If giStage2 = 7 Then
-        'Открыть КЭ5
-        ROn A1, 64
+    If giStage2 = 7 Then       
+        ROn A1, 64 'Открыть КЭ5
         dFullCar = gnDif(5)    'Запоминаем давление в баке машины
         s = "Переходим на заправку машин"
         ResetExpenseCounter (2)
@@ -713,7 +701,6 @@ Public Function ПредПуск() As String
 End Function
 Public Sub InitAGNKS()
     Dim err         As Integer
-    gdUpLevel = 200 * 0.0981    'Предел давления для заправки
     
     MotorCount = 0
     frmStart.tmrMotor.Interval = 65535

@@ -4,6 +4,9 @@ Option Explicit
 
 Global Const isDebug = true
 
+Global Const gdUpLevel = 200 * 0.0981    'Предел давления для заправки
+
+
 'Определение констант
 'Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
 
@@ -69,7 +72,7 @@ Public sum(31)      As Double
 
 Public gbRunDVS     As Boolean
 
-Public gdUpLevel    As Double
+
 
 Public Type MyRecType
     dt              As Date
@@ -98,7 +101,6 @@ Public giCountZ     As Integer    'Счетчик заправок
 Public giRealCountZ As Integer    'Реальный счетчик заправок
 
 Public gbDontStat   As Boolean    ' флаг заправки (работы)
-Public gbHandControl As Boolean    ' флаг ручного управления
 
 
 'Аварийные ситуации

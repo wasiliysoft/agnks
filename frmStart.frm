@@ -3319,8 +3319,7 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
         giStage2 = 0
     Else
         'ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
-        'Открыть КЭ6
-        ROn A1, 128
+        ROn A1, 128     'Открыть КЭ6
     End If
 
     'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
@@ -3904,12 +3903,6 @@ Private Sub Timer1_Timer()
     If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
             (gnDif(6) = -1) Or (gnDif(7) = -1) Then
         ErrDat = True
-    End If
-
-    If (gnДатчик(15).Data = 0) Then
-        gbHandControl = True
-    Else
-        gbHandControl = False
     End If
 
     'Если ручное управление
