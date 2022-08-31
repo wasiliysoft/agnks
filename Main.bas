@@ -1,5 +1,6 @@
 Attribute VB_Name = "Main"
 Option Explicit
+' TODO вынести в модуль Utils
 Public Function Convert_Date(ss As String)
     Dim s2          As String
     Dim i           As Integer
@@ -33,252 +34,6 @@ Public Function Danger() As String
     frmStart.cmdDanger.Visible = True
 End Function
 
-'Функция инициализации данных, считывание с диска
-Public Function InitDisk() As Integer
-    'Возвращает код ошибки : 0 -нет ошибок
-    Dim i           As Integer
-    Dim j           As Integer
-    Dim j1          As Integer
-
-    Dim k           As Integer
-    Dim t           As MyRecType
-    Dim temp1       As MyRecType
-    Dim temp2       As MyRecType
-    Dim d           As Date
-    Dim sum         As Double
-    Dim idx1, idx2, idx3 As Integer
-    'Для ввода поправочного коэффициента
-    Dim descr       As Integer
-    Dim sPath       As String
-    Dim rec         As pswd
-    Dim s           As String
-    Dim s1          As String
-    Dim v           As Variant
-    On Error Resume Next
-    'Открыть все файлы
-
-    frmStart.MousePointer = vbHourglass
-    s = App.Path + "\base.mdb"
-    Set StatWS = DBEngine.Workspaces(0)
-    Set StatDB = StatWS.OpenDatabase(s)
-    Set StatRS = StatDB.OpenRecordset("stat", dbOpenTable)
-
-    If Not StatRS.EOF Then
-        'Если не пустая база данных
-        ' StatRS.MoveFirst
-        'Получаем самую раннюю дату
-        Set SelectRS = StatDB.OpenRecordset("select MIN(DATA) from stat ")
-        temp1.dt = SelectRS(0)
-        'Получаем самую позднюю дату
-        ' StatRS.MoveLast
-        Set SelectRS = StatDB.OpenRecordset("select MAX(DATA) from stat ")
-        temp2.dt = SelectRS(0)
-        s = Convert_Date(Str(Month(temp2.dt)) & "/" & Day(temp2.dt) & "/" & Year(temp2.dt) & " " & Hour(temp2.dt) & ":" & Minute(temp2.dt) & ":" & Second(temp2.dt))
-
-        Set SelectRS = StatDB.OpenRecordset("SELECT * From stat WHERE stat.data=" & s)
-
-        GMC = SelectRS("MOTO")
-        gDateRec = Now    ' temp2.dt
-
-        'temp2.Motor = SelectRS("MOTO")
-        d = Now
-
-        'Для заполнения 4 колонки в цикле посчитать все суммарные заправки за годы начиная с самого раннего и до предыдущего
-        For i = Year(temp1.dt) To Year(d) - 1
-            s = "1/1/" + CStr(i)
-            s = Convert_Date(s)
-            s1 = "12/31/" + CStr(i)
-            s1 = Convert_Date(s1)
-            Set SelectRS = StatDB.OpenRecordset("select SUM(GAZ_CAR) from stat where (stat.DATA between " & s & " AND " & s1 & ")")
-            If IsNull(SelectRS(0)) Then
-            Else
-                s = Format(CStr(i)) + "        " + Format(CStr(SelectRS(0)), "###0.00")
-                frmStart.lstStat(3).AddItem (s)
-
-            End If
-        Next i
-        'Для заполнения 3 колонки в цикле посчитать все суммарные заправки за месяцы начиная с января этого года и до пред.
-        If Year(temp2.dt) = Year(d) Then
-            For i = 1 To Month(d) - 1
-                s = CStr(i) + "/1/" + CStr(Year(d))
-                s = Convert_Date(s)
-
-                Select Case i
-                    Case 1, 3, 5, 7, 8, 10, 12
-                        s1 = CStr(i) + "/31/" + CStr(Year(d))
-                    Case 2
-                        Select Case Year(d)
-                            Case 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040
-                                s1 = CStr(i) + "/29/" + CStr(Year(d))
-                            Case Else
-                                s1 = CStr(i) + "/28/" + CStr(Year(d))
-                        End Select
-                    Case Else
-                        s1 = CStr(i) + "/30/" + CStr(Year(d))
-                End Select
-
-                s1 = Convert_Date(s1)
-                Set SelectRS = StatDB.OpenRecordset("select SUM(GAZ_CAR) from stat where (stat.DATA between " & s & " AND " & s1 & ")")
-                v = SelectRS(0)
-                If IsNull(v) Then
-                Else
-                    s = Format(CStr(i), "00") + "        " + Format(CStr(SelectRS(0)), "###0.00")
-                    frmStart.lstStat(2).AddItem (s)
-                End If
-            Next i
-        End If
-        'Для заполнения 2 колонки в цикле посчитать все суммарные заправки за дни начиная с 1 этого месяца и до пред.
-
-        frmStart.lblStat(0).Caption = "За " + Format(d, "dd")
-        frmStart.lblStat(1).Caption = "За " + Format(d, "mmmm")
-        frmStart.lblStat(2).Caption = "За " + Format(d, "yyyy")
-
-        If Month(temp2.dt) = Month(d) Then
-            For i = 1 To Day(d) - 1
-                s = CStr(Month(d)) + "/" + CStr(i) + "/" + CStr(Year(d))
-                s = Convert_Date(s)
-                s1 = CStr(Month(d)) + "/" + CStr(i + 1) + "/" + CStr(Year(d))
-                s1 = Convert_Date(s1)
-
-                Set SelectRS = StatDB.OpenRecordset("select SUM(GAZ_CAR) from stat where (stat.DATA between " & s & " AND " & s1 & ")")
-                v = SelectRS(0)
-                If IsNull(v) Then
-                Else
-                    s = Format(CStr(i), "00") + "        " + Format(CStr(SelectRS(0)), "###0.00")
-                    frmStart.lstStat(1).AddItem (s)
-                End If
-            Next i
-        End If
-
-        'Если дата последней заправки = текущей, то в 1 колонку занести заправки за эту дату.
-        s = Format(d, "mm/dd/yyyy")
-        s = Convert_Date(s)
-        s1 = Format(d + 1, "mm/dd/yyyy")
-        s1 = Convert_Date(s1)
-        'frmShow.MousePointer = vbHourglass
-        Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
-        If SelectRS.RecordCount >= 1 Then
-            SelectRS.MoveLast
-            SelectRS.MoveFirst
-
-            For i = 0 To SelectRS.RecordCount - 1
-                s = ""
-                s = Format(CStr(SelectRS("Data")), "hh:mm:ss") + "        " + Format(CStr(SelectRS("GAZ_CAR")), "###0.00")
-                frmStart.lstStat(0).AddItem (s)
-                SelectRS.MoveNext
-            Next i
-        End If
-
-        'GMC присвоить SelectRS("MOTO") последней по дате записи
-        'gDateRec присвоить SelectRS("Data")последней по дате записи
-        '
-        'd = Now
-        'sum = 0
-        'k = Int(gdaStat1(0).IR1) 'количество записей в массиве 1
-        'gDateRec = gdaStat1(1).dt
-        'GMC = gdaStat1(k).Motor
-
-        'RefreshStat
-
-        'Call showfields
-    Else
-        GMC = 0
-        gDateRec = Now    ' temp2.dt
-
-    End If
-
-    gDateRec = Now
-    sPath = "C:\Winnt\dll32.dll"
-    descr = FreeFile
-    Open sPath For Random As descr Len = Len(rec)
-    If FileLen(sPath) = 0 Then
-        rec.pwd = "LAB"
-        rec.PC = 1
-        Put #descr, 1, rec
-        Password = "LAB"
-        gdK = rec.PC
-    Else
-        Get #descr, 1, rec
-        Password = Trim(rec.pwd)
-        gdK = rec.PC
-    End If
-    Close #descr
-
-    InitDisk = 0
-
-
-    frmStart.MousePointer = vbArrow
-    gdPlot = 0.7
-    Dim fh          As Long
-    fh = FreeFile
-    s = App.Path & "\price.txt"
-    Open s For Input Access Read As fh
-    Seek #fh, 1
-    Line Input #fh, s
-    gdPrice = CDbl(s)
-    Line Input #fh, s
-    gdPlot = CDbl(s)
-    Close #fh
-    frmStart.Label_Price.Caption = gdPrice
-    If gdPlot < 0.5 Then gdPlot = 0.7
-    If gdPlot > 1 Then gdPlot = 0.7
-    frmStart.Caption = frmStart.Caption & " Плотность газа = " & CStr(gdPlot) & " кг/м3"
-    Exit Function
-
-ErrorHandler:        'Если есть какие-нибудь ошибки возвращаем -1
-    InitDisk = -1
-    Exit Function
-
-End Function
-
-'Процедура обновляет информацию в окне статистики
-Public Sub RefreshStat()
-    Dim i           As Integer
-    Dim s           As String
-    For i = 0 To 3
-        frmStart.lstStat(i).Clear
-    Next i
-
-    If gdaStat1(1).dt = 0 Then
-        frmStart.lblStat(0).Caption = "За " & Format(Now, "d")
-    Else
-        frmStart.lblStat(0).Caption = "За " & Format(gdaStat1(1).dt, "d")
-    End If
-
-    If gdaStat2(1).dt = 0 Then
-        frmStart.lblStat(1).Caption = "За " & Format(Now, "mmmm")
-    Else
-        frmStart.lblStat(1).Caption = "За " & Format(gdaStat2(1).dt, "mmmm")
-    End If
-
-    If gdaStat3(1).dt = 0 Then
-        frmStart.lblStat(2).Caption = "За " & Format(Now, "yyyy")
-    Else
-        frmStart.lblStat(2).Caption = "За " & Format(gdaStat3(1).dt, "yyyy")
-    End If
-
-
-    For i = 1 To gdaStat1(0).IR1
-        s = Format(gdaStat1(i).dt, "hh:mm:ss") + "     " + Format(gdaStat1(i).IR2, "###0.00")
-        frmStart.lstStat(0).AddItem s
-    Next
-
-    For i = 1 To gdaStat2(0).IR1
-        s = Format(gdaStat2(i).dt, "mmmm d yyyy") + "     " + Format(gdaStat2(i).IR2, "###0.00")
-        frmStart.lstStat(1).AddItem s
-    Next
-
-    For i = 1 To gdaStat3(0).IR1
-        s = Format(gdaStat3(i).dt, "mmmm ") + "     " + Format(gdaStat3(i).IR2, "###0.00")
-        frmStart.lstStat(2).AddItem s
-    Next
-
-    For i = 1 To gdaStat4(0).IR1
-        s = Format(gdaStat4(i).dt, "yyyy") + "     " + Format(gdaStat4(i).IR2, "###0.00")
-        frmStart.lstStat(3).AddItem s
-    Next
-
-End Sub
 
 
 'Функция остановки АГНКС
@@ -723,7 +478,7 @@ Public Sub InitAGNKS()
     gbRunDVS = False
     gdРасход1 = 0
 
-    gdRashAkkEnd = 65
+
     gdK = 1
 
 
@@ -750,82 +505,7 @@ Private Sub Init_Controllers()
     Init_DIO_Driver
 End Sub
 
-Public Sub ShowPict()
-    Dim s           As String
-    With frmStart
-        'Статус кранов
-        .КЭ1(0).Visible = Not (k1_isOpen)
-        .КЭ1(1).Visible = k1_isOpen
 
-        .КЭ2(0).Visible = Not (k2_isOpen)
-        .КЭ2(1).Visible = k2_isOpen
-        .Факел(0).Visible = k2_isOpen
-
-        .КЭ3(0).Visible = Not (k3_isOpen)
-        .КЭ3(1).Visible = k3_isOpen
-
-        .КЭ4(0).Visible = Not (k4_isOpen)
-        .КЭ4(1).Visible = k4_isOpen
-
-        .КЭ5(0).Visible = Not (k5_isOpen)
-        .КЭ5(1).Visible = k5_isOpen
-
-        .КЭ6(0).Visible = Not (k6_isOpen)
-        .КЭ6(1).Visible = k6_isOpen
- 
-        .КЭ7(0).Visible = Not (k7_isOpen)
-        .КЭ7(1).Visible = k7_isOpen
-        .Факел(1).Visible = k7_isOpen
-
-        ' TODO переделать на Visible
-        If isClutchOn Then
-            .Муфта.BackColor = &HFF&
-        Else
-            .Муфта.BackColor = &HC0C0C0
-        End If
-
-        'Повышение температуры охлаждения ДВС
-        'If gnДатчик(33).Data = 1 Then
-        'Else
-        'End If
-
-        'Пожар в отсеке ДВС
-        'If gnДатчик(45).Data = 1 Then
-        'Else
-        'End If
-
-        'Пожар в технологическом отсеке
-        'If gnДатчик(46).Data = 1 Then
-        'Else
-        'End If
-
-        'Газ в отсеке ДВС 10%
-        'If (gnДатчик(41).Data = 1) Then
-        'Else
-        'End If
-        'Газ в отсеке ДВС 20%
-        'If (gnДатчик(42).Data = 1) Then
-        'Else
-        'End If
-
-        'Газ в технологическом отсеке 10%
-        'If (gnДатчик(43).Data = 1) Then
-        'Else
-        'End If
-
-        'Газ в технологическом отсеке 20%
-        'If (gnДатчик(44).Data = 1) Then
-        'Else
-        'End If
-    End With
-
-    ' TODO вынести из этой функции
-    s = Format(gdK, "0.000")
-    s = s + "   - коэффициент"
-    frmStart.lblPC.Caption = s
-
-
-End Sub
 
 
 'Процедура проверки переходов дат
@@ -846,8 +526,6 @@ Public Function Verify()
     sum1 = 0
     sum2 = 0
     sum3 = 0
-    'If gDateRec < d Then
-    '           MsgBox ("Verify" + Str(gDateRec) + Str(d))
 
     If gDateRec < d Then
 
@@ -888,36 +566,10 @@ Public Function Verify()
             frmStart.lstStat(2).Clear
             s = Format(CStr(Year(gDateRec)), "00") + "       " + Format(CStr(sum3), "###0.00")
             frmStart.lstStat(3).AddItem (s)
-        ElseIf (Year(gDateRec) = Year(d)) And (sum2 <> 0) Then
-            's = Format(CStr(Month(gDateRec)), "00") + "       " + Format(CStr(sum2), "###0.00")
-
-            '    s = Format(CStr(Month(d)), "00") + "       " + Format(CStr(sum2), "###0.00")
-            'frmStart.lstStat(2).AddItem (s)
         End If
         gDateRec = Now
 
     End If
-    'End If
-
-
-
-
-    'GMC = temp2.Motor
-    ' If Not StatRS.EOF Then
-    '    gDateRec = temp2.dt
-    ' Else
-    '    gDateRec = Now  ' temp2.dt
-    ' End If
-    ' frmStart.MousePointer = vbArrow
-    'd = Now
-    'sum = 0
-    'k = Int(gdaStat1(0).IR1) 'количество записей в массиве 1
-    'gDateRec = gdaStat1(1).dt
-    'GMC = gdaStat1(k).Motor
-
-    'RefreshStat
-
-    'Call showfields
 End Function
 
 

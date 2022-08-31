@@ -779,9 +779,7 @@ Private Sub Command8_Click()
 openK7
 End Sub
 
-Private Sub Command9_Click()
-   ggACL8113(14) = Val(Text1)
-End Sub
+
 
 Private Sub Form_Load()
     updateState

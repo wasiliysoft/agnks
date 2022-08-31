@@ -3276,17 +3276,6 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     gbDontStat = False         'Можно работать с диском
     gdTime = GetTimeCounter(2)
 
-    'Заполнить статистику по заправке
-    '          giRealCountZ = giRealCountZ + 1
-    '          gdaStat1(0).IR1 = giRealCountZ
-
-    '          gdРасход1 = gdИР2
-    '          gdaStat1(giRealCountZ).IR2 = gdРасход1
-    '          gdaStat1(giRealCountZ).IR1 = gdИР1
-    '          gdaStat1(giRealCountZ).dt = Now
-    '         gdaStat1(giRealCountZ).Motor = GMC + MotorCount
-    '          GMC = gdaStat1(giRealCountZ).Motor
-    '          MotorCount = 0
     '<<<<Прекратить считать расход>>>>
     StatRS.AddNew
 
@@ -3329,7 +3318,7 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
 
 End Sub
 
-
+' TODO вынести в модуль IO_File
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     Dim s           As String
     Dim s1          As String
@@ -3434,12 +3423,6 @@ Private Sub Form_Unload(Cancel As Integer)
     Dim s           As String
     Dim temp2       As MyRecType
 
-    If tmrMotor.Enabled = True Then
-        'Не забудь проверку на пустую БД
-        '      gdaStat1(k).Motor = GMC + MotorCount
-        '      GMC = gdaStat1(k).Motor
-        '      MotorCount = 0
-    End If
     If gbDontStat = True Then
         StatRS.AddNew
         StatRS("DATA") = Now
@@ -3533,23 +3516,6 @@ Private Sub Label1_Click(Index As Integer)
 
 End Sub
 
-Private Sub lstStat_Click(Index As Integer)
-    'Dim i As Integer
-    ' If (Index = 1) Then
-    '  i = lstStat(1).ListIndex
-    '  frmStat.txtStat(0).Text = gdaStat2(i + 1).IR1
-    '  frmStat.txtStat(1).Text = gdaStat2(i + 1).IR2
-    '  frmStat.Show 0
-    ' End If
-    '
-    ' If (Index = 0) Then
-    '  i = lstStat(0).ListIndex
-    '  frmStat.txtStat(0).Text = Format(gdИР1, "0.00")
-    '  frmStat.txtStat(1).Text = Format(gdaStat1(i + 1).IR2, "0.00")
-    '  frmStat.Show 0
-    ' End If
-
-End Sub
 
 Private Sub SSCmdStart_Click()
     Dim t           As Integer
@@ -3576,12 +3542,6 @@ Private Sub SSCmdStart_Click()
 
 End Sub
 
-
-
-Private Sub SSCommand1_Click()
-    Dim j           As Integer
-    j = ExitWindowsEx(2, 0)
-End Sub
 
 Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim s           As String
@@ -3685,12 +3645,7 @@ Private Sub SSExit_Click()
 
     'Выгрузить драйвер для DIO48
     Dim s           As String
-    If tmrMotor.Enabled = True Then
-        'Не забудь проверку на пустую БД
-        '      gdaStat1(k).Motor = GMC + MotorCount
-        '      GMC = gdaStat1(k).Motor
-        '      MotorCount = 0
-    End If
+
     If gbDontStat = True Then
         StatRS.AddNew
         StatRS("DATA") = Now
@@ -3706,7 +3661,7 @@ Private Sub SSExit_Click()
         gDateRec = Now
         gbDontStat = False    'Можно работать с диском
     End If
-
+      ' FIXME корректно закрыть базу
     '   StatRS.Close
     '   StatDB.Close
     '   StatWS.Close
@@ -3814,6 +3769,7 @@ Private Sub Timer1_Timer()
         End If
     Next k
 
+    ' TODO идея с усреднением 
     If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
         For k = 2 To 16
 
@@ -3999,3 +3955,79 @@ End Sub
 
 
 
+Public Sub ShowPict()
+    Dim s           As String
+    With frmStart
+        'Статус кранов
+        .КЭ1(0).Visible = Not (k1_isOpen)
+        .КЭ1(1).Visible = k1_isOpen
+
+        .КЭ2(0).Visible = Not (k2_isOpen)
+        .КЭ2(1).Visible = k2_isOpen
+        .Факел(0).Visible = k2_isOpen
+
+        .КЭ3(0).Visible = Not (k3_isOpen)
+        .КЭ3(1).Visible = k3_isOpen
+
+        .КЭ4(0).Visible = Not (k4_isOpen)
+        .КЭ4(1).Visible = k4_isOpen
+
+        .КЭ5(0).Visible = Not (k5_isOpen)
+        .КЭ5(1).Visible = k5_isOpen
+
+        .КЭ6(0).Visible = Not (k6_isOpen)
+        .КЭ6(1).Visible = k6_isOpen
+ 
+        .КЭ7(0).Visible = Not (k7_isOpen)
+        .КЭ7(1).Visible = k7_isOpen
+        .Факел(1).Visible = k7_isOpen
+
+        ' TODO переделать на Visible
+        If isClutchOn Then
+            .Муфта.BackColor = &HFF&
+        Else
+            .Муфта.BackColor = &HC0C0C0
+        End If
+
+        'Повышение температуры охлаждения ДВС
+        'If gnДатчик(33).Data = 1 Then
+        'Else
+        'End If
+
+        'Пожар в отсеке ДВС
+        'If gnДатчик(45).Data = 1 Then
+        'Else
+        'End If
+
+        'Пожар в технологическом отсеке
+        'If gnДатчик(46).Data = 1 Then
+        'Else
+        'End If
+
+        'Газ в отсеке ДВС 10%
+        'If (gnДатчик(41).Data = 1) Then
+        'Else
+        'End If
+        'Газ в отсеке ДВС 20%
+        'If (gnДатчик(42).Data = 1) Then
+        'Else
+        'End If
+
+        'Газ в технологическом отсеке 10%
+        'If (gnДатчик(43).Data = 1) Then
+        'Else
+        'End If
+
+        'Газ в технологическом отсеке 20%
+        'If (gnДатчик(44).Data = 1) Then
+        'Else
+        'End If
+    End With
+
+    ' TODO вынести из этой функции
+    s = Format(gdK, "0.000")
+    s = s + "   - коэффициент"
+    frmStart.lblPC.Caption = s
+
+
+End Sub

@@ -6,6 +6,7 @@ Global Const isDebug = true
 
 Global Const gdUpLevel = 200 * 0.0981    'Предел давления для заправки
 
+Global Const gdRashAkkEnd = 65    'Нижний расход по которому отсекается поток от аккумуляторов
 
 'Определение констант
 'Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
@@ -62,7 +63,6 @@ Public giMainРасход As Integer    'Флаг для подсчета расхода всего газа:
 '-1 - отнимаем
 
 Public gdK          As Double    'Поправочный коэффициент
-Public gdRashAkkEnd As Double    'Нижний расход по которому отсекается поток от аккумуляторов
 
 ' Переменные для усреднения
 Public glAver       As Long    ' размер цикла дла усреднения
@@ -89,12 +89,7 @@ Public StatDB As Database, StatWS As Workspace
 Public StatRS       As Recordset
 Public SelectRS     As Recordset
 
-'Данные по учету газа (с выводом на диск)
-'0-ой элемент - счетчик
-Public gdaStat1(90) As MyRecType    'массив данных по заправкам за день
-Public gdaStat2(31) As MyRecType    'массив данных по заправкам за месяц
-Public gdaStat3(12) As MyRecType    'массив данных по заправкам за год
-Public gdaStat4(100) As MyRecType    'массив данных по годам
+
 
 Public gDateRec     As Date    'Дата последней записи
 Public giCountZ     As Integer    'Счетчик заправок
