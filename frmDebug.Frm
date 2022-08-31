@@ -717,7 +717,6 @@ End Sub
 
 Private Sub Command1_Click()
    ROn B0, 128
-   'gnДатчик(15).Data = Not gnДатчик(15).Data
 End Sub
 
 Sub openK1()

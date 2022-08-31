@@ -91,6 +91,50 @@ Public Sub update_gnДатчик()
     Next i
 End Sub
 
+' флаг ручного управления, true если ручное управление
+Function isHandControl() As Boolean
+    isHandControl = Not (CBool(gnДатчик(15).Data))
+End Function
+
+' К1 открыт? true если открыт
+Function k1_isOpen() As Boolean
+    k1_isOpen = CBool(gnДатчик(21).Data)
+End Function
+
+' К2 открыт? true если открыт
+Function k2_isOpen() As Boolean
+    k2_isOpen = CBool(gnДатчик(16).Data)
+End Function
+
+' К3 открыт? true если открыт
+Function k3_isOpen() As Boolean
+    k3_isOpen = CBool(gnДатчик(17).Data)
+End Function
+
+' К4 открыт? true если открыт
+Function k4_isOpen() As Boolean
+    k4_isOpen = CBool(gnДатчик(18).Data)
+End Function
+
+' К5 открыт? true если открыт
+Function k5_isOpen() As Boolean
+    k5_isOpen = CBool(gnДатчик(19).Data)
+End Function
+
+' К6 открыт? true если открыт
+Function k6_isOpen() As Boolean
+    k6_isOpen = CBool(gnДатчик(20).Data)
+End Function
+
+' К7 открыт? true если открыт
+Function k7_isOpen() As Boolean
+    k7_isOpen = CBool(gnДатчик(23).Data)
+End Function
+
+' Муфта сцепления вкл?
+Function isClutchOn() As Boolean
+    isClutchOn = CBool(gnДатчик(36).Data)
+End Function
 'Функция выводит в port 1
 Public Sub ROn(port As Integer, n As Integer)
     Dim b As Byte

@@ -17,7 +17,7 @@ End Function
 'Функция обработки аварийных ситуаций
 Public Function Danger() As String
     ' TODO АвтоАктивация вкладки СХЕМА
-
+    ' FIXME выполняется проверка управляющей команды!!!
     If gnДатчик(29).Data = 1 Then
         'Если перепад во вх. и вых. рукове станет меньше 5 кг
         If Abs(gnDif(6) - gnDif(2)) <= 0.5 Then
@@ -310,6 +310,7 @@ End Function
 'Функция остановки ДВС
 Public Function ОстановДВС() As String
     'Если открыт КЭМ5 - закрыть
+    ' FIXME выполняется проверка управляющей команды!!!
     If gnДатчик(30).Data = 1 Then
         ROff A1, 191
     End If
@@ -336,12 +337,10 @@ Public Function Заправка()
     If giStage2 = 8 Then
         'Заправка машин
 
-        If gnДатчик(18).Data = 1 Then
-            'Закрыть КЭ4
-            ROff A1, 223
+        If k4_isOpen Then
+            ROff A1, 223 'Закрыть КЭ4
         Else
-            'Закрыть КЭ3
-            ROff A1, 239
+            ROff A1, 239 'Закрыть КЭ3
         End If
 
 
@@ -462,12 +461,10 @@ Public Function Заправка()
             ROn A1, 128 'Открыть КЭ6 - заправка и от аккумуляторов
         End If
 
-        If gnДатчик(18).Data = 1 Then
-            'Закрыть КЭ4 - Начинает гнать газ компрессор
-            ROff A1, 223
+        If k4_isOpen Then
+            ROff A1, 223 'Закрыть КЭ4 - Начинает гнать газ компрессор
         Else
-            'Закрыть КЭ3 - Начинает гнать газ компрессор
-            ROff A1, 239
+            ROff A1, 239 'Закрыть КЭ3 - Начинает гнать газ компрессор
         End If
 
         giStage2 = 4    'Переходим к подэтапу заправки аккумуляторов
@@ -481,7 +478,7 @@ Public Function Заправка()
 
 
         MaxIR = GetMassExpense(2)
-        If (gbAkkum = False) And (((gnДатчик(20).Data = 1) And (((MaxIR * 3600) <= gdRashAkkEnd) _
+        If (gbAkkum = False) And ((k6_isOpen And (((MaxIR * 3600) <= gdRashAkkEnd) _
                 And (MaxIR > 0)) And (GetTimeCounter(2) >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then           
             ROff A1, 127 'Закрыть КЭ6
             'Exit Function
@@ -588,13 +585,16 @@ Public Function ИсхСост() As String
     s = ""
     norma = True
     gbRunDVS = False
+    ' TODO проверить утверждение ниже, пропущен k7
     'Входные реле включены (порт A0 и A1) ? - неисправны
-    If (gnДатчик(16).Data = 1) Or (gnДатчик(17).Data = 1) Or (gnДатчик(18).Data = 1) Or _
-            (gnДатчик(19).Data = 1) Or (gnДатчик(20).Data = 1) Or (gnДатчик(21).Data = 1) Then
+    If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
+            k5_isOpen Or k6_isOpen Or k1_isOpen Then
         s = "Есть открытые КЭМы !!!"
         norma = False
     End If
 
+    ' FIXME выполняется проверка управляющей команды!!!
+    ' но это тут кажется это не испарвить
     If (gnДатчик(25).Data = 1) Then
         s = s & "Нажата Останов ДВС !!!"
         norma = False
@@ -605,7 +605,7 @@ Public Function ИсхСост() As String
     '   norma = False
     ' End If
 
-    If gnДатчик(36).Data = 1 Then
+    If isClutchOn Then
         s = s & "Включена муфта !!!"
         norma = False
     End If
@@ -660,23 +660,24 @@ Public Function ПредПуск() As String
                 frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
                 'frmStart.Timer2.Enabled = False
                 'Закрыть все Кэм
-                If (gnДатчик(16).Data = 1) Or (gnДатчик(17).Data = 1) Or (gnДатчик(18).Data = 1) Or _
-                        (gnДатчик(19).Data = 1) Or (gnДатчик(20).Data = 1) Or (gnДатчик(21).Data = 1) Or _
+                'TODO проверить коррекность gnДатчик(25)
+                If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
+                        k5_isOpen Or k6_isOpen Or k1_isOpen Or _
                         (gnДатчик(25).Data = 1) Then
                     ROff A1, 1
                 End If
 
             End If
 
-            If gnДатчик(36).Data = 0 Then
-                ПредПуск = "Двигатель готов к запуску !!!"
+            If isClutchOn Then
+                ПредПуск = "Двигатель не готов к запуску !!! Включена муфта "
                 Exit Function
             Else
-                ПредПуск = "Двигатель не готов к запуску !!! Включена муфта "
+                ПредПуск = "Двигатель готов к запуску !!!"
                 Exit Function
             End If
             'Есть обороты ДВС
-        ElseIf gnДатчик(36).Data = 0 Then
+        ElseIf Not (isClutchOn) Then
             ПредПуск = "Двигатель на холостом ходу !!!"
             frmStart.SSCmdStart.Enabled = False
             gbOnlyAkk = False
@@ -752,109 +753,70 @@ End Sub
 Public Sub ShowPict()
     Dim s           As String
     With frmStart
-        'Управление кранами
-        If gnДатчик(21).Data = 1 Then
-            .КЭ1(0).Visible = False
-            .КЭ1(1).Visible = True
-        Else
-            .КЭ1(0).Visible = True
-            .КЭ1(1).Visible = False
-        End If
+        'Статус кранов
+        .КЭ1(0).Visible = Not (k1_isOpen)
+        .КЭ1(1).Visible = k1_isOpen
 
-        If gnДатчик(16).Data = 1 Then
-            .КЭ2(0).Visible = False
-            .КЭ2(1).Visible = True
-            .Факел(0).Visible = True
-        Else
-            .КЭ2(0).Visible = True
-            .КЭ2(1).Visible = False
-            .Факел(0).Visible = False
-        End If
+        .КЭ2(0).Visible = Not (k2_isOpen)
+        .КЭ2(1).Visible = k2_isOpen
+        .Факел(0).Visible = k2_isOpen
 
-        If gnДатчик(17).Data = 1 Then
-            .КЭ3(0).Visible = False
-            .КЭ3(1).Visible = True
-        Else
-            .КЭ3(0).Visible = True
-            .КЭ3(1).Visible = False
-        End If
+        .КЭ3(0).Visible = Not (k3_isOpen)
+        .КЭ3(1).Visible = k3_isOpen
 
-        If gnДатчик(18).Data = 1 Then
-            .КЭ4(0).Visible = False
-            .КЭ4(1).Visible = True
-        Else
-            .КЭ4(0).Visible = True
-            .КЭ4(1).Visible = False
-        End If
+        .КЭ4(0).Visible = Not (k4_isOpen)
+        .КЭ4(1).Visible = k4_isOpen
 
-        If gnДатчик(19).Data = 1 Then
-            .КЭ5(0).Visible = False
-            .КЭ5(1).Visible = True
-        Else
-            .КЭ5(0).Visible = True
-            .КЭ5(1).Visible = False
-        End If
+        .КЭ5(0).Visible = Not (k5_isOpen)
+        .КЭ5(1).Visible = k5_isOpen
 
-        If gnДатчик(20).Data = 1 Then
-            .КЭ6(0).Visible = False
-            .КЭ6(1).Visible = True
-        Else
-            .КЭ6(0).Visible = True
-            .КЭ6(1).Visible = False
-        End If
+        .КЭ6(0).Visible = Not (k6_isOpen)
+        .КЭ6(1).Visible = k6_isOpen
+ 
+        .КЭ7(0).Visible = Not (k7_isOpen)
+        .КЭ7(1).Visible = k7_isOpen
+        .Факел(1).Visible = k7_isOpen
 
-        If gnДатчик(23).Data = 1 Then
-            .КЭ7(0).Visible = False
-            .КЭ7(1).Visible = True
-            .Факел(1).Visible = True
-        Else
-            .КЭ7(0).Visible = True
-            .КЭ7(1).Visible = False
-            .Факел(1).Visible = False
-        End If
-
-
-
-        'Управление муфтой
-        If gnДатчик(36).Data = 1 Then
+        ' TODO переделать на Visible
+        If isClutchOn Then
             .Муфта.BackColor = &HFF&
         Else
             .Муфта.BackColor = &HC0C0C0
         End If
 
         'Повышение температуры охлаждения ДВС
-        If gnДатчик(33).Data = 1 Then
-        Else
-        End If
+        'If gnДатчик(33).Data = 1 Then
+        'Else
+        'End If
 
         'Пожар в отсеке ДВС
-        If gnДатчик(45).Data = 1 Then
-        Else
-        End If
+        'If gnДатчик(45).Data = 1 Then
+        'Else
+        'End If
 
         'Пожар в технологическом отсеке
-        If gnДатчик(46).Data = 1 Then
-        Else
-        End If
+        'If gnДатчик(46).Data = 1 Then
+        'Else
+        'End If
 
         'Газ в отсеке ДВС 10%
-        If (gnДатчик(41).Data = 1) Then
-        Else
-        End If
+        'If (gnДатчик(41).Data = 1) Then
+        'Else
+        'End If
         'Газ в отсеке ДВС 20%
-        If (gnДатчик(42).Data = 1) Then
-        Else
-        End If
+        'If (gnДатчик(42).Data = 1) Then
+        'Else
+        'End If
 
         'Газ в технологическом отсеке 10%
-        If (gnДатчик(43).Data = 1) Then
-        Else
-        End If
+        'If (gnДатчик(43).Data = 1) Then
+        'Else
+        'End If
 
         'Газ в технологическом отсеке 20%
-        If (gnДатчик(44).Data = 1) Then
-        Else
-        End If
+        'If (gnДатчик(44).Data = 1) Then
+        'Else
+        'End If
     End With
 
     ' TODO вынести из этой функции

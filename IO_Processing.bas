@@ -85,16 +85,16 @@ Public Sub Обработка_1()
 
 
     Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
-    if not isDebug Then
+    If Not isDebug Then
         gdИР2 = GetMass(2)
-    end if
+    End If
     'Считать расход (общий) по ИР1
     Temp = -(GetMassExpense(2))
     If giMainРасход = 1 Then
         Temp = 0
     End If
     Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, Temp)
-    if not isDebug Then
+    If Not isDebug Then
         gdИР1 = GetMass(1)
     End If
 
@@ -103,14 +103,6 @@ Public Sub Обработка_1()
     End If
 End Sub
 
-' флаг ручного управления
-Function gbHandControl() as Boolean
-   If (gnДатчик(15).Data = 0) Then
-        gbHandControl = True
-    Else
-        gbHandControl = False
-    End If
-End Function
 
 
 Private Sub Обработка_1_debug()

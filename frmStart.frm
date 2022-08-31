@@ -3592,6 +3592,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
     Select Case Index
         Case 1
             'Если открыт КЭМ5 - закрыть
+            ' FIXME выполняется проверка управляющей команды!!!
             SSCommand2(1).Enabled = False
             If gnДатчик(30).Data = 1 Then
                 ROff A1, 191
@@ -3631,6 +3632,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             SSCommand2(0).Enabled = False
 
             'Если открыт КЭМ5 - закрыть
+            ' FIXME выполняется проверка управляющей команды!!!
             If gnДатчик(30).Data = 1 Then
                 ROff A1, 191
             End If
@@ -3736,18 +3738,18 @@ Private Sub Timer_ДВС_Timer()
         For i = 0 To 5
             If ДВС(i).Visible Then
                 ДВС(i).Visible = False
-                If Муфта.BackColor = &HFF& Then
+                If isClutchOn Then
                     Компрессор(i).Visible = False
                 End If
                 If i < 5 Then
                     ДВС(i + 1).Visible = True
-                    If Муфта.BackColor = &HFF& Then
+                    If isClutchOn Then
                         Компрессор(i + 1).Visible = True
                     End If
                     Exit For
                 Else
                     ДВС(0).Visible = True
-                    If Муфта.BackColor = &HFF& Then
+                    If isClutchOn Then
                         Компрессор(0).Visible = True
                     End If
                 End If
@@ -3758,27 +3760,11 @@ Private Sub Timer_ДВС_Timer()
     End If
 
 
-    'Отображение заправки автобаллона
-    If gnДатчик(19).Data = 1 Then
-        Панель_Авто.Visible = True
-        If (100 * (Р_автобаллон / 200) >= 100) Then
-            Автобаллон.FloodPercent = 100
-        Else
-            Автобаллон.FloodPercent = 100 * (Р_автобаллон / 200)
-        End If
-    Else
-        Панель_Авто.Visible = False
-    End If
-
-    'Отображение работы аккумулятора
-    If (100 * (Р_аккумулятор / 200) >= 100) Then
-        Аккумулятор.FloodPercent = 100
-    Else
-        Аккумулятор.FloodPercent = 100 * (Р_аккумулятор / 200)
-    End If
-
-
+    Панель_Авто.Visible = k5_isOpen      
+    Автобаллон.FloodPercent = getCarPercent
+    Аккумулятор.FloodPercent = getAkkPercent
 End Sub
+
 
 
 Private Sub Timer1_Timer()
@@ -3906,7 +3892,7 @@ Private Sub Timer1_Timer()
     End If
 
     'Если ручное управление
-    If (gbHandControl = True) Or (ErrDat = True) Then
+    If (isHandControl) Or (ErrDat = True) Then
         'Если перешли на ручное управление
         ОкноСообщений.BackColor = &HFF
         ОкноСообщений.ForeColor = &HFFFF&
@@ -3982,7 +3968,23 @@ Private Sub Timer1_Timer()
 
 End Sub
 
+Private Function getAkkPercent() as Integer
+    getAkkPercent = 100 * (Р_аккумулятор / 200) ' TODO вынести 200
+    If ( getAkkPercent > 100) Then 
+        getAkkPercent = 100
+    ElseIf (getAkkPercent<0) Then
+        getAkkPercent = 0
+    End If
+End Function
 
+Private Function getCarPercent() as Integer
+    getCarPercent = 100 * (Р_автобаллон / 200) ' TODO вынести 200
+    If ( getCarPercent > 100) Then 
+        getCarPercent = 100
+    ElseIf (getCarPercent<0) Then
+        getCarPercent = 0
+    End If
+End Function
 
 
 
