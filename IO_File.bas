@@ -1,7 +1,6 @@
 Attribute VB_Name = "IO_File"
 Option Explicit
 
-Private Const gdK_file_name = "\agnks.config"
 Private rec As pswd
 Private Password As String
 
@@ -10,6 +9,10 @@ Public Type pswd
     PC              As Double
     pwd             As String * 7
 End Type
+
+Private  Function gdK_file_name() as String
+   gdK_file_name = App.Path + "\agnks.config"
+End Function
 
 'Функция инициализации данных, считывание с диска
 'TODO Вывести на отдельную вкладку информацию
