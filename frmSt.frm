@@ -129,10 +129,8 @@ Private Sub ssShow_Click()
     frmSt.List1.Clear
     sum = 0
     d = frmSt.Calendar1.Value
-    s = Format(d, "mm/dd/yyyy")
-    s = Convert_Date(s)
-    s1 = Format(d + 1, "mm/dd/yyyy")
-    s1 = Convert_Date(s1)
+    s = Format(d, "\#mm\/dd\/yyyy 00:00:00\#")
+    s1 = Format(d, "\#mm\/dd\/yyyy 23:59:59\#")
     Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
     If SelectRS.RecordCount >= 1 Then
         SelectRS.MoveLast

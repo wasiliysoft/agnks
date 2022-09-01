@@ -101,21 +101,6 @@ Sub load_statistic_from_DB()
     End If 
 End Sub
 
-' TODO вынести в модуль Utils
-Public Function Convert_Date(ss As String)
-    Dim s2          As String
-    Dim i           As Integer
-    s2 = "#"
-    For i = 0 To Len(ss)
-        If Mid(ss, i + 1, 1) = "." Then
-            s2 = s2 & "/"
-        Else
-            s2 = s2 + Mid(ss, i + 1, 1)
-        End If
-    Next i
-    Convert_Date = s2 & "#"
-End Function
-
 Public Function lastDayByMonth(ByVal m, ByVal yyyy) as Integer
     Select Case m
         Case 1, 3, 5, 7, 8, 10, 12
@@ -131,6 +116,7 @@ Public Function lastDayByMonth(ByVal m, ByVal yyyy) as Integer
             lastDayByMonth = 30
     End Select
 End Function
+
 'Public Type StatRowType
 '    dt              As Date
 '    IR1             As Double

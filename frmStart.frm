@@ -71,7 +71,6 @@ Begin VB.Form frmStart
       TabPicture(3)   =   "frmStart.frx":0054
       Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "Frame1(3)"
-      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
@@ -453,7 +452,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -585,7 +584,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -710,7 +709,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -812,7 +811,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -3332,69 +3331,23 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
-    Dim i           As Integer
-    Dim s, s1       As String
-    
-    Left = 10
-    Top = 700
-    frmStart.SSTab1.Tab = 3
-    frmStart.lblStat(1).Caption = "За " + Format(Now, "mmmm")
-    frmStart.lblStat(2).Caption = "За " + Format(Now, "yyyy" ) + " год"
-
-    InitAGNKS  
-
-    'Показать главную форму
-    Show
+   InitAGNKS
 
    If isDebug Then
-         frmDebug.Show
+      frmDebug.Show
    End If
 
-    Timer1.Interval = 500
-    Timer1.Enabled = True
+   Left = 10
+   Top = 700
+   frmStart.SSTab1.Tab = 3
+   frmStart.lblStat(1).Caption = "За " + Format(Now, "mmmm")
+   frmStart.lblStat(2).Caption = "За " + Format(Now, "yyyy") + " год"
 
-
+   Timer1.Interval = 500
+   Timer1.Enabled = True
+   Show
 End Sub
 
-
-Private Sub Form_Unload(Cancel As Integer)
-    Dim s           As String
-    Dim dt          As Date
-
-    If gbDontStat = True Then
-        StatRS.AddNew
-        StatRS("DATA") = Now
-        StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-        StatRS("GAZ_IR1") = gdИР1
-        StatRS("MOTO") = GMC + MotorCount
-        GMC = GMC + MotorCount
-        MotorCount = 0
-        StatRS.Update
-        s = Format(Now, "hh:mm:ss") + "     " + Format((gdРасход1 / gdPlot), "###0.00")
-        frmStart.lstStat(0).AddItem s
-
-        gDateRec = Now
-        gbDontStat = False    'Можно работать с диском
-    Else
-        Set SelectRS = StatDB.OpenRecordset("select MAX(DATA) from stat ")
-        dt = SelectRS(0)
-        s = Convert_Date(Str(Month(dt)) & "/" & Day(dt) & "/" & Year(dt) & " " & Hour(dt) & ":" & Minute(dt) & ":" & Second(dt))
-        Set SelectRS = StatDB.OpenRecordset("SELECT * From stat WHERE stat.data=" & s)
-        SelectRS.Edit
-        SelectRS("MOTO") = GMC + MotorCount
-        SelectRS.Update
-    End If
-
-    ' StatRS.Close
-    ' StatDB.Close
-    ' StatWS.Close
-
-    DIO_DriverClose    'Выгрузить драйвер для DIO48
-    ISO813_DriverClose
-    Unload frmЗапрос
-
-    Unload frmSt
-End Sub
 
 
 Private Sub Label1_Click(Index As Integer)
@@ -3568,38 +3521,36 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
 End Sub
 
 Private Sub SSExit_Click()
-    Dim j           As Integer
     Dim s           As String
-
+    GMC = GMC + MotorCount
+    MotorCount = 0
     If gbDontStat = True Then
         StatRS.AddNew
         StatRS("DATA") = Now
         StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
         StatRS("GAZ_IR1") = gdИР1
-        StatRS("MOTO") = GMC + MotorCount
-        GMC = GMC + MotorCount
-        MotorCount = 0
+        StatRS("MOTO") = GMC
         StatRS.Update
-        s = Format(Now, "hh:mm:ss") + "     " + Format((gdРасход1 / gdPlot), "###0.00")
-        frmStart.lstStat(0).AddItem s
-
-        gDateRec = Now
-        gbDontStat = False    'Можно работать с диском
+        Debug.Print "Сохранено состояние заправки"
+    Else
+       ' Перед выходом сохраняем моточасы в строке с максимальной датой
+        Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
+        SelectRS.Edit
+        SelectRS("MOTO") = GMC
+        SelectRS.Update
+        Debug.Print "Моточасы сохранены"
     End If
-      ' FIXME корректно закрыть базу
-    '   StatRS.Close
-    '   StatDB.Close
-    '   StatWS.Close
 
-
-
-
-    Unload frmЗапрос
-
-    j = ExitWindowsEx(1, 0)
+   ' FIXME корректно закрыть базу
+   '   StatRS.Close
+   '   StatDB.Close
+   '   StatWS.Close
+   
+    DIO_DriverClose
+    ISO813_DriverClose
+   'TODO Закрыть подключение к ККМ
+    ExitWindowsEx 1, 0
     End
-
-
 End Sub
 
 Private Sub ssStat_Click()
