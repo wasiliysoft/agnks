@@ -18,6 +18,7 @@ Module=IO_File; IO_File.bas
 Module=IO_Analog; IO_Analog.bas
 Form=frmDebug.Frm
 Module=DB; DB.bas
+Module=MetanCounter_Helper; MetanCounter_Helper.bas
 IconForm="frmStart"
 Startup="frmStart"
 HelpFile=""

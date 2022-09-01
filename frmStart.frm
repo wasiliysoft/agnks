@@ -3274,7 +3274,7 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     'Закрыть КЭ5
     ROff A1, 191
     gbDontStat = False         'Можно работать с диском
-    gdTime = GetTimeCounter(2)
+    gdTime = GetTimeCounter_2
 
     '<<<<Прекратить считать расход>>>>
     StatRS.AddNew

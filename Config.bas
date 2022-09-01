@@ -15,19 +15,8 @@ Global Const conHwndTopmost = -1
 Global Const conSwpNoActivate = &H10
 Global Const conSwpShowWindow = &H40
 
-'ќписание функции подсчета расхода газа (Ўестаков)
-Declare Sub ResetExpenseCounter Lib "MetanCounter" Alias "#1" (ByVal i As Long)
-Declare Sub AddSensorsData Lib "MetanCounter" Alias "#2" (ByVal i As Long, ByVal _
-        p1 As Double, ByVal t1 As Double, ByVal p2 As Double, ByVal d As Double, ByVal _
-        coef As Double, ByVal CorrExp As Double)
-Declare Function GetMassExpense Lib "MetanCounter" Alias "#4" (ByVal i As Long) As Double
-Declare Function GetMass Lib "MetanCounter" Alias "#5" (ByVal i As Long) As Double
-Declare Function GetTimeCounter Lib "MetanCounter" Alias "#6" (ByVal i As Long) As Double
 Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Public Declare Function ExitWindowsEx Lib "user32" (ByVal uFlags As Long, ByVal dwReserved As Long) As Long
-Declare Sub StartOutput Lib "MetanCounter" Alias "#7" (ByVal i As Long)
-Declare Sub StopOutput Lib "MetanCounter" Alias "#8" (ByVal i As Long)
-
 
 
 'ќбъ€вление пользовательского класса

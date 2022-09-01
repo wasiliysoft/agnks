@@ -101,7 +101,7 @@ Public Function Заправка()
         If (Abs(gnDif(5) - gnDif(4)) > 0.5) Then
             Заправка = "Идет заправка "
             'Считаем расход на одну машину (за полсекунды)
-            gdTime = GetTimeCounter(2)
+            gdTime = GetTimeCounter_2
             gdРасход1 = gdИР2
             Exit Function
         Else
@@ -112,7 +112,7 @@ Public Function Заправка()
             StopOutput (2)
             gbDontStat = False    'Можно работать с диском
 
-            gdTime = GetTimeCounter(2)
+            gdTime = GetTimeCounter_2
 
             'Заполнить статистику по заправке
 
@@ -218,9 +218,9 @@ Public Function Заправка()
         '<<<<Считать расход по ИР2>>>>
 
 
-        MaxIR = GetMassExpense(2)
+        MaxIR = GetMassExpense_2
         If (gbAkkum = False) And ((k6_isOpen And (((MaxIR * 3600) <= gdRashAkkEnd) _
-                And (MaxIR > 0)) And (GetTimeCounter(2) >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then           
+                And (MaxIR > 0)) And (MaxIR >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then           
             ROff A1, 127 'Закрыть КЭ6
             'Exit Function
         End If
@@ -228,13 +228,13 @@ Public Function Заправка()
             Заправка = "Идет заправка "
             'Считаем расход на одну машину (за полсекунды)
             gdРасход1 = gdИР2
-            gdTime = GetTimeCounter(2)
+            gdTime = GetTimeCounter_2
             Exit Function
         ElseIf (gbAkkum = False) Then
             ROff A1, 191 'Закрыть КЭ5 (пистолет)
             gbDontStat = False    'Можно работать с диском
             StopOutput (2)
-            gdTime = GetTimeCounter(2)
+            gdTime = GetTimeCounter_2
 
             'Заполнить статистику по заправке
             StatRS.AddNew
@@ -307,7 +307,7 @@ Public Function Заправка()
         gbAkkum = False
         gdРасход1 = 0    'Обнуляем расход на одну машину
 
-        gdTime = GetTimeCounter(2)
+        gdTime = GetTimeCounter_2
     End If
 
 

@@ -11,3 +11,4 @@ IO_File = 110, 110, 703, 428, C
 IO_Analog = 44, 44, 702, 618, C
 frmDebug = 22, 22, 593, 419, C, 44, 44, 504, 484, C
 DB = 0, 0, 0, 0, C
+MetanCounter_Helper = 22, 22, 545, 341, 

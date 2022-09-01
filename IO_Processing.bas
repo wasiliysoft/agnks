@@ -86,16 +86,16 @@ Public Sub Обработка_1()
 
     Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
     If Not isDebug Then
-        gdИР2 = GetMass(2)
+        gdИР2 = GetMass_2
     End If
     'Считать расход (общий) по ИР1
-    Temp = -(GetMassExpense(2))
+    Temp = -(GetMassExpense_2)
     If giMainРасход = 1 Then
         Temp = 0
     End If
     Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, Temp)
     If Not isDebug Then
-        gdИР1 = GetMass(1)
+        gdИР1 = GetMass_1
     End If
 
     If isDebug Then
