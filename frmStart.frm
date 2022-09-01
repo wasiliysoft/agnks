@@ -3320,58 +3320,12 @@ End Sub
 
 ' TODO вынести в модуль IO_File
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-    Dim s           As String
-    Dim s1          As String
-
-    'Для ввода поправочного коэффициента
-    Dim descr       As Integer
-    Dim sPath       As String
-    Dim rec         As pswd
-
     'реакция на ctrl+alt+home
-    On Error Resume Next
+    'On Error Resume Next
     If ((KeyCode = vbKeyHome) And (Shift = 6)) Then
-        s = InputBox("Введите пароль", "DANGER")
-        If (s = Password) Then
-            s = InputBox("Введите поправочный коэффициент", "DANGER")
-            If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
-                gdK = CDbl(s)
-                sPath = "C:\Winnt\dll32.dll"
-                descr = FreeFile
-                Open sPath For Random As descr Len = Len(rec)
-                rec.pwd = Password
-                rec.PC = gdK
-                Put #descr, 1, rec
-                MsgBox ("Коэффициент введен ")
-                Close #descr
-            End If
-        Else
-            MsgBox "Пароль не верный ", vbCritical
-        End If
+      setting_gdK
     ElseIf ((KeyCode = vbKeyEnd) And (Shift = 6)) Then
-        s = InputBox("Введите пароль", "DANGER")
-        If (s = Password) Then
-            s = InputBox("Введите новый пароль", "DANGER")
-            If (Len(s) > 0) And (Len(s) <= 7) Then
-                s1 = InputBox("Повторите новый пароль", "DANGER")
-                If (s = s1) Then
-
-                    Password = s
-                    sPath = "C:\Winnt\dll32.dll"
-                    descr = FreeFile
-                    Open sPath For Random As descr Len = Len(rec)
-                    rec.pwd = Password
-                    rec.PC = gdK
-                    Put #descr, 1, rec
-                    MsgBox ("Пароль введен ")
-                    Close #descr
-                Else
-                    MsgBox "Пароль не верный ", vbCritical
-                End If
-            End If
-        Else
-            MsgBox "Пароль не верный ", vbCritical
-        End If
+      update_gdK_pass
     End If
 
 End Sub

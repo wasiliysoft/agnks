@@ -107,11 +107,6 @@ Public gbFireTech   As Boolean    'пожар в тех. отсеке
 'Болванки
 Public gdTime       As Double    'Время заправки
 
-'структура для secret file
-Public Type pswd
-    PC              As Double
-    pwd             As String * 7
-End Type
-Public Password     As String
+
 Public giDVS        As Integer
 Public gdPlot       As Double

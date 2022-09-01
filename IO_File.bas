@@ -1,9 +1,18 @@
 Attribute VB_Name = "IO_File"
 Option Explicit
 
+Private Const gdK_file_name = "\agnks.config"
+Private rec As pswd
+Private Password As String
+
+'структура для secret file (gdK_file_name)
+Public Type pswd
+    PC              As Double
+    pwd             As String * 7
+End Type
+
 'Функция инициализации данных, считывание с диска
-'TODO перенести файл  "C:\Winnt\dll32.dll"
-' Вывести на отдельную вкладку информацию 
+'TODO Вывести на отдельную вкладку информацию
 ' о моточасах
 ' поправочный коэфф
 ' цена газа
@@ -24,12 +33,10 @@ Public Function InitDisk() As Integer
     Dim idx1, idx2, idx3 As Integer
     'Для ввода поправочного коэффициента
     Dim descr       As Integer
-    Dim sPath       As String
-    Dim rec         As pswd
     Dim s           As String
     Dim s1          As String
     Dim v           As Variant
-    On Error Resume Next
+   ' On Error Resume Next
     'Открыть все файлы
 
     frmStart.MousePointer = vbHourglass
@@ -149,22 +156,7 @@ Public Function InitDisk() As Integer
     End If
 
     gDateRec = Now
-    sPath = "C:\Winnt\dll32.dll"
-    descr = FreeFile
-    Open sPath For Random As descr Len = Len(rec)
-    If FileLen(sPath) = 0 Then
-        rec.pwd = "LAB"
-        rec.PC = 1
-        Put #descr, 1, rec
-        Password = "LAB"
-        gdK = rec.PC
-    Else
-        Get #descr, 1, rec
-        Password = Trim(rec.pwd)
-        gdK = rec.PC
-    End If
-    Close #descr
-
+    init_gdK_file
     init_price_file
     frmStart.MousePointer = vbArrow
     InitDisk = 0
@@ -173,9 +165,75 @@ Public Function InitDisk() As Integer
 ErrorHandler:        'Если есть какие-нибудь ошибки возвращаем -1
     InitDisk = -1
     Exit Function
-
 End Function
 
+Private Sub init_gdK_file()
+    Dim fh As Long: fh = FreeFile
+    Dim fLen As Long
+    On Error Resume Next
+        fLen = FileLen(gdK_file_name)
+    On Error GoTo 0
+    If fLen = 0 Then
+        Password = "LAB"
+        gdK = 0
+        MsgBox "Отсутвует файл конфигурации АГНКС: " & gdK_file_name, vbExclamation
+    Else
+        Open gdK_file_name For Random As fh Len = Len(rec)
+            Get #fh, 1, rec
+            Password = Trim(rec.pwd)
+            gdK = rec.PC
+        Close #fh
+    End If
+End Sub
+
+'FIXME обработать отмену ввода
+Sub setting_gdK()
+    Dim fh As Long
+    Dim s As String
+    s = InputBox("Введите пароль", "DANGER")
+    If (s = Password) Then
+        s = InputBox("Введите поправочный коэффициент", "DANGER", Format(gdK, "0.000"))
+        If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
+            gdK = CDbl(s)
+            fh = FreeFile
+            Open gdK_file_name For Random As fh Len = Len(rec)
+                rec.pwd = Password
+                rec.PC = gdK
+                Put #fh, 1, rec
+            Close #fh
+            MsgBox "Коэффициент введен", vbInformation
+        End If
+    Else
+        MsgBox "Пароль не верный", vbCritical
+    End If
+End Sub
+
+Sub update_gdK_pass()
+    Dim fh As Long
+    Dim s As String
+    Dim s1 As String
+    s = InputBox("Введите пароль", "DANGER")
+    If (s = Password) Then
+        s = InputBox("Введите новый пароль", "DANGER")
+        If (Len(s) > 0) And (Len(s) <= 7) Then
+            s1 = InputBox("Повторите новый пароль", "DANGER")
+            If (s = s1) Then
+                Password = s1
+                fh = FreeFile
+                Open gdK_file_name For Random As fh Len = Len(rec)
+                    rec.pwd = Password
+                    rec.PC = gdK
+                    Put #fh, 1, rec
+                Close #fh
+                MsgBox "Пароль введен", vbInformation
+            Else
+                MsgBox "Пароли не совпадают", vbCritical
+            End If
+        End If
+    Else
+        MsgBox "Пароль не верный", vbCritical
+    End If
+End Sub
 Private Sub init_price_file()
     Dim fh As Long: fh = FreeFile
     Dim s As String
@@ -191,5 +249,5 @@ Private Sub init_price_file()
     Close #fh
 
     frmStart.Label_Price.Caption = gdPrice
-    If gdPlot < 0.5 or gdPlot > 1 Then gdPlot = 0.7
+    If gdPlot < 0.5 Or gdPlot > 1 Then gdPlot = 0.7
 End Sub
