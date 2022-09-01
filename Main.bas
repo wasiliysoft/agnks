@@ -1,19 +1,6 @@
 Attribute VB_Name = "Main"
 Option Explicit
-' TODO вынести в модуль Utils
-Public Function Convert_Date(ss As String)
-    Dim s2          As String
-    Dim i           As Integer
-    s2 = "#"
-    For i = 0 To Len(ss)
-        If Mid(ss, i + 1, 1) = "." Then
-            s2 = s2 & "/"
-        Else
-            s2 = s2 + Mid(ss, i + 1, 1)
-        End If
-    Next i
-    Convert_Date = s2 & "#"
-End Function
+
 
 'Функция обработки аварийных ситуаций
 Public Function Danger() As String
@@ -130,15 +117,14 @@ Public Function Заправка()
             'Заполнить статистику по заправке
 
             '<<<<Прекратить считать расход>>>>
-            StatRS.AddNew
-
-            StatRS("DATA") = Now
-            StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-
-            StatRS("GAZ_IR1") = gdИР1
-            StatRS("MOTO") = GMC + MotorCount
             GMC = GMC + MotorCount
             MotorCount = 0
+            StatRS.AddNew
+            StatRS("DATA") = Now
+            StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
+            StatRS("GAZ_IR1") = gdИР1
+            StatRS("MOTO") = GMC
+                        
             If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
                 Verify
             End If
@@ -455,43 +441,16 @@ Public Function ПредПуск() As String
         End If
     End If
 End Function
-Public Sub InitAGNKS()
-    Dim err         As Integer
-    
-    MotorCount = 0
+
+Public Sub InitAGNKS()   
     frmStart.tmrMotor.Interval = 65535
     frmStart.tmrMotor.Enabled = False
+    
 
-    ' Инициализация плат
-    giDVS = 0
-
-    giStage = 0  'Инициализация процедуры заправки (Переходим на ИсхСост)
-    giStage1 = 0
-    giStage2 = 0
-    gbFrmShow = False
-    frmStart.SSTab1.Tab = 3
     gbCmdStart = True    'Сначала Пуск АГНКС
-    gbAkkum = False
-    Car = 0
-    glAver = 0
-    glCounter = 0
-    gbRunDVS = False
-    gdРасход1 = 0
-
-
-    gdK = 1
-
-
-    gbDontStat = False
-
-    gbStopAGNKS = False
     giMainРасход = 1    'Начинаем добавлять к показанию ИР1
-    err = InitDisk()
-    If err = -1 Then
-        'Обработка ошибки работы с диском
-        'Записать все данные на диск
-        'Если была ошибка связанная с журналом, то обнуляем его
-    End If
+    
+    InitDisk
     ConnectKKM
     Init_Controllers
     ResetExpenseCounter (1)

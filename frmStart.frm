@@ -49,7 +49,7 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
-      Tab             =   3
+      Tab             =   4
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
@@ -69,14 +69,15 @@ Begin VB.Form frmStart
       Tab(2).ControlCount=   1
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "Frame1(3)"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
-      Tab(4).ControlEnabled=   0   'False
+      Tab(4).ControlEnabled=   -1  'True
       Tab(4).Control(0)=   "Frame1(4)"
+      Tab(4).Control(0).Enabled=   0   'False
       Tab(4).ControlCount=   1
       Begin VB.Frame Frame1 
          BackColor       =   &H00C0C0C0&
@@ -84,7 +85,7 @@ Begin VB.Form frmStart
          Caption         =   "---"
          Height          =   7110
          Index           =   3
-         Left            =   0
+         Left            =   -75000
          TabIndex        =   141
          Top             =   315
          Width           =   9795
@@ -1572,7 +1573,7 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   5355
          Index           =   4
-         Left            =   -75000
+         Left            =   0
          TabIndex        =   132
          Top             =   360
          Width           =   9345
@@ -1710,19 +1711,19 @@ Begin VB.Form frmStart
             Caption         =   "За день"
             BeginProperty Font 
                Name            =   "MS Sans Serif"
-               Size            =   8.25
+               Size            =   9.75
                Charset         =   204
                Weight          =   700
                Underline       =   0   'False
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            Height          =   195
+            Height          =   240
             Index           =   0
-            Left            =   780
+            Left            =   690
             TabIndex        =   137
             Top             =   240
-            Width           =   735
+            Width           =   915
          End
       End
       Begin VB.Frame Frame1 
@@ -3333,29 +3334,15 @@ End Sub
 Private Sub Form_Load()
     Dim i           As Integer
     Dim s, s1       As String
-    'ConnectKKM
+    
     Left = 10
     Top = 700
-    InitAGNKS
-
-    FileHandle = FreeFile
-    ' Получить путь программы
-    ' Иначе получается каталог Бейсика
-    s = App.Path & "\data.txt"
-    Open s For Input Access Read As FileHandle
-    Seek #FileHandle, 1
-    'Ввод пояснений о датчиках из файла для обоих плат
-    For i = 0 To 47
-        Line Input #FileHandle, gnДатчик(i).Note
-        Label2(i).Caption = gnДатчик(i).Note
-    Next i
-    For i = 0 To 15
-        Line Input #FileHandle, s
-        Text2(i).Text = s
-    Next i
-
-    Close #FileHandle
     frmStart.SSTab1.Tab = 3
+    frmStart.lblStat(1).Caption = "За " + Format(Now, "mmmm")
+    frmStart.lblStat(2).Caption = "За " + Format(Now, "yyyy" ) + " год"
+
+    InitAGNKS  
+
     'Показать главную форму
     Show
 
@@ -3371,11 +3358,8 @@ End Sub
 
 
 Private Sub Form_Unload(Cancel As Integer)
-    Dim k           As Integer
-    Dim i           As Integer
-    Dim t           As MyRecType
     Dim s           As String
-    Dim temp2       As MyRecType
+    Dim dt          As Date
 
     If gbDontStat = True Then
         StatRS.AddNew
@@ -3393,8 +3377,8 @@ Private Sub Form_Unload(Cancel As Integer)
         gbDontStat = False    'Можно работать с диском
     Else
         Set SelectRS = StatDB.OpenRecordset("select MAX(DATA) from stat ")
-        temp2.dt = SelectRS(0)
-        s = Convert_Date(Str(Month(temp2.dt)) & "/" & Day(temp2.dt) & "/" & Year(temp2.dt) & " " & Hour(temp2.dt) & ":" & Minute(temp2.dt) & ":" & Second(temp2.dt))
+        dt = SelectRS(0)
+        s = Convert_Date(Str(Month(dt)) & "/" & Day(dt) & "/" & Year(dt) & " " & Hour(dt) & ":" & Minute(dt) & ":" & Second(dt))
         Set SelectRS = StatDB.OpenRecordset("SELECT * From stat WHERE stat.data=" & s)
         SelectRS.Edit
         SelectRS("MOTO") = GMC + MotorCount
@@ -3411,14 +3395,6 @@ Private Sub Form_Unload(Cancel As Integer)
 
     Unload frmSt
 End Sub
-
-
-
-
-
-
-
-
 
 
 Private Sub Label1_Click(Index As Integer)
@@ -3593,11 +3569,6 @@ End Sub
 
 Private Sub SSExit_Click()
     Dim j           As Integer
-    Dim k           As Integer
-    Dim i           As Integer
-    Dim t           As MyRecType
-
-    'Выгрузить драйвер для DIO48
     Dim s           As String
 
     If gbDontStat = True Then
@@ -3669,7 +3640,7 @@ Private Sub Timer_ДВС_Timer()
     End If
 
 
-    Панель_Авто.Visible = k5_isOpen      
+    Панель_Авто.Visible = k5_isOpen
     Автобаллон.FloodPercent = getCarPercent
     Аккумулятор.FloodPercent = getAkkPercent
 End Sub
@@ -3723,7 +3694,7 @@ Private Sub Timer1_Timer()
         End If
     Next k
 
-    ' TODO идея с усреднением 
+    ' TODO идея с усреднением
     If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
         For k = 2 To 16
 
@@ -3878,20 +3849,20 @@ Private Sub Timer1_Timer()
 
 End Sub
 
-Private Function getAkkPercent() as Integer
+Private Function getAkkPercent() As Integer
     getAkkPercent = 100 * (Р_аккумулятор / 200) ' TODO вынести 200
-    If ( getAkkPercent > 100) Then 
+    If (getAkkPercent > 100) Then
         getAkkPercent = 100
-    ElseIf (getAkkPercent<0) Then
+    ElseIf (getAkkPercent < 0) Then
         getAkkPercent = 0
     End If
 End Function
 
-Private Function getCarPercent() as Integer
+Private Function getCarPercent() As Integer
     getCarPercent = 100 * (Р_автобаллон / 200) ' TODO вынести 200
-    If ( getCarPercent > 100) Then 
+    If (getCarPercent > 100) Then
         getCarPercent = 100
-    ElseIf (getCarPercent<0) Then
+    ElseIf (getCarPercent < 0) Then
         getCarPercent = 0
     End If
 End Function

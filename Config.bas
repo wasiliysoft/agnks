@@ -74,20 +74,13 @@ Public gbRunDVS     As Boolean
 
 
 
-Public Type MyRecType
-    dt              As Date
-    IR1             As Double
-    IR2             As Double
-    Motor           As Long
-End Type
+
 
 Public FileHandle   As Integer    'Идентификатор файла с описаниями
 Public MotorCount   As Long    'Счетчик моторесурсов
 Public GMC          As Long    'глобальный счетчик
 
-Public StatDB As Database, StatWS As Workspace
-Public StatRS       As Recordset
-Public SelectRS     As Recordset
+
 
 
 
