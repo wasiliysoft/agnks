@@ -133,7 +133,6 @@ Private Sub ssShow_Click()
     s = Convert_Date(s)
     s1 = Format(d + 1, "mm/dd/yyyy")
     s1 = Convert_Date(s1)
-    'frmShow.MousePointer = vbHourglass
     Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
     If SelectRS.RecordCount >= 1 Then
         SelectRS.MoveLast

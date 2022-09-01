@@ -130,7 +130,6 @@ Public Function InitDisk() As Integer
         s = Convert_Date(s)
         s1 = Format(d + 1, "mm/dd/yyyy")
         s1 = Convert_Date(s1)
-        'frmShow.MousePointer = vbHourglass
         Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
         If SelectRS.RecordCount >= 1 Then
             SelectRS.MoveLast
@@ -166,25 +165,9 @@ Public Function InitDisk() As Integer
     End If
     Close #descr
 
-    InitDisk = 0
-
-
+    init_price_file
     frmStart.MousePointer = vbArrow
-    gdPlot = 0.7
-    Dim fh          As Long
-    fh = FreeFile
-    s = App.Path & "\price.txt"
-    Open s For Input Access Read As fh
-    Seek #fh, 1
-    Line Input #fh, s
-    gdPrice = CDbl(s)
-    Line Input #fh, s
-    gdPlot = CDbl(s)
-    Close #fh
-    frmStart.Label_Price.Caption = gdPrice
-    If gdPlot < 0.5 Then gdPlot = 0.7
-    If gdPlot > 1 Then gdPlot = 0.7
-    frmStart.Caption = frmStart.Caption & " Плотность газа = " & CStr(gdPlot) & " кг/м3"
+    InitDisk = 0
     Exit Function
 
 ErrorHandler:        'Если есть какие-нибудь ошибки возвращаем -1
@@ -192,3 +175,21 @@ ErrorHandler:        'Если есть какие-нибудь ошибки возвращаем -1
     Exit Function
 
 End Function
+
+Private Sub init_price_file()
+    Dim fh As Long: fh = FreeFile
+    Dim s As String
+    
+    s = App.Path & "\price.txt"
+    Open s For Input Access Read As fh
+        Seek #fh, 1
+        Line Input #fh, s
+        gdPrice = CDbl(s)
+        
+        Line Input #fh, s
+        gdPlot = CDbl(s)
+    Close #fh
+
+    frmStart.Label_Price.Caption = gdPrice
+    If gdPlot < 0.5 or gdPlot > 1 Then gdPlot = 0.7
+End Sub
