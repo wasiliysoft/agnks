@@ -11,6 +11,7 @@ Begin VB.Form frmStart
    ControlBox      =   0   'False
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
@@ -18,27 +19,6 @@ Begin VB.Form frmStart
    ScaleMode       =   0  'User
    ScaleWidth      =   800
    Visible         =   0   'False
-   Begin VB.Timer tmrMotor 
-      Enabled         =   0   'False
-      Interval        =   100
-      Left            =   9105
-      Top             =   3225
-   End
-   Begin VB.Timer Timer2 
-      Interval        =   500
-      Left            =   7545
-      Top             =   3225
-   End
-   Begin VB.Timer Timer_ДВС 
-      Interval        =   75
-      Left            =   8745
-      Top             =   3225
-   End
-   Begin VB.Timer Timer1 
-      Enabled         =   0   'False
-      Left            =   7065
-      Top             =   3225
-   End
    Begin TabDlg.SSTab SSTab1 
       Height          =   7395
       Left            =   0
@@ -49,13 +29,13 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
-      Tab             =   4
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
       TabPicture(0)   =   "frmStart.frx":0000
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "Frame1(0)"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Аналоговые"
       TabPicture(1)   =   "frmStart.frx":001C
@@ -74,9 +54,8 @@ Begin VB.Form frmStart
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
-      Tab(4).ControlEnabled=   -1  'True
+      Tab(4).ControlEnabled=   0   'False
       Tab(4).Control(0)=   "Frame1(4)"
-      Tab(4).Control(0).Enabled=   0   'False
       Tab(4).ControlCount=   1
       Begin VB.Frame Frame1 
          BackColor       =   &H00C0C0C0&
@@ -90,7 +69,7 @@ Begin VB.Form frmStart
          Width           =   9795
          Begin Threed.SSCommand cmdDanger 
             Height          =   2310
-            Left            =   3735
+            Left            =   3690
             TabIndex        =   179
             Top             =   4680
             Visible         =   0   'False
@@ -125,12 +104,12 @@ Begin VB.Form frmStart
             Begin VB.Label Label9 
                AutoSize        =   -1  'True
                BackColor       =   &H00C0C0C0&
-               Caption         =   "Время заправки, минут."
+               Caption         =   "Время заправки"
                Height          =   195
                Left            =   180
                TabIndex        =   197
                Top             =   1485
-               Width           =   1845
+               Width           =   1260
             End
             Begin VB.Label Label13 
                AutoSize        =   -1  'True
@@ -158,26 +137,26 @@ Begin VB.Form frmStart
                EndProperty
                ForeColor       =   &H00FFFF00&
                Height          =   330
-               Left            =   2385
+               Left            =   2070
                TabIndex        =   195
                Top             =   990
-               Width           =   645
+               Width           =   960
             End
             Begin VB.Label Label11 
                AutoSize        =   -1  'True
                BackColor       =   &H00C0C0C0&
-               Caption         =   "Расчетное время заправки"
+               Caption         =   "Расчетно осталось"
                Height          =   195
                Left            =   180
                TabIndex        =   194
                Top             =   1935
-               Width           =   2085
+               Width           =   1455
             End
             Begin VB.Label Label_Avg_Left_Time_Car 
                Alignment       =   1  'Right Justify
                BackColor       =   &H00000000&
                BorderStyle     =   1  'Fixed Single
-               Caption         =   "150"
+               Caption         =   "-- : -- : -- "
                BeginProperty Font 
                   Name            =   "MS Sans Serif"
                   Size            =   9.75
@@ -189,16 +168,16 @@ Begin VB.Form frmStart
                EndProperty
                ForeColor       =   &H00FFFF00&
                Height          =   330
-               Left            =   2385
+               Left            =   2070
                TabIndex        =   193
                Top             =   1890
-               Width           =   645
+               Width           =   960
             End
             Begin VB.Label txtTime 
                Alignment       =   1  'Right Justify
                BackColor       =   &H00000000&
                BorderStyle     =   1  'Fixed Single
-               Caption         =   "5.7"
+               Caption         =   "00:30:00"
                BeginProperty Font 
                   Name            =   "MS Sans Serif"
                   Size            =   9.75
@@ -210,10 +189,10 @@ Begin VB.Form frmStart
                EndProperty
                ForeColor       =   &H00FFFF00&
                Height          =   330
-               Left            =   2385
+               Left            =   2070
                TabIndex        =   192
                Top             =   1440
-               Width           =   645
+               Width           =   960
             End
             Begin VB.Label txtKg 
                Alignment       =   1  'Right Justify
@@ -231,10 +210,10 @@ Begin VB.Form frmStart
                EndProperty
                ForeColor       =   &H00FFFF00&
                Height          =   330
-               Left            =   2385
+               Left            =   2070
                TabIndex        =   191
                Top             =   270
-               Width           =   645
+               Width           =   960
             End
             Begin VB.Label Label5 
                AutoSize        =   -1  'True
@@ -414,6 +393,27 @@ Begin VB.Form frmStart
             BevelWidth      =   3
             BevelOuter      =   0
             BevelInner      =   1
+            Begin VB.Timer Timer1 
+               Enabled         =   0   'False
+               Left            =   6750
+               Top             =   2835
+            End
+            Begin VB.Timer Timer_ДВС 
+               Interval        =   75
+               Left            =   8430
+               Top             =   2835
+            End
+            Begin VB.Timer Timer2 
+               Interval        =   500
+               Left            =   7230
+               Top             =   2835
+            End
+            Begin VB.Timer tmrMotor 
+               Enabled         =   0   'False
+               Interval        =   100
+               Left            =   8790
+               Top             =   2835
+            End
             Begin Threed.SSPanel Отсек_ДВС 
                Height          =   1500
                Left            =   1800
@@ -1572,7 +1572,7 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   5355
          Index           =   4
-         Left            =   0
+         Left            =   -75000
          TabIndex        =   132
          Top             =   360
          Width           =   9345
@@ -2245,7 +2245,7 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   5355
          Index           =   0
-         Left            =   -75000
+         Left            =   0
          TabIndex        =   1
          Top             =   315
          Width           =   9345
@@ -3714,8 +3714,7 @@ Private Sub Timer1_Timer()
     txtKg.Caption = s
 
     'Выводить в минутах
-    s = Format(gdTime / 60, "0")
-    txtTime.Caption = s
+    txtTime.Caption = formatSecToHHMMSS(gdTime)
     'Проверка датчиков
     ErrDat = False
     If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
@@ -3799,6 +3798,12 @@ Private Sub Timer1_Timer()
     End If
 
 End Sub
+
+Private Function formatSecToHHMMSS(ByVal s) As String
+   Dim d As Date
+   d = DateAdd("s", s, d)
+   formatSecToHHMMSS = Format(d, "hh:nn:ss")
+End Function
 
 Private Function getAkkPercent() As Integer
     getAkkPercent = 100 * (Р_аккумулятор / 200) ' TODO вынести 200

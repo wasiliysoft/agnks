@@ -90,7 +90,7 @@ Public Function Заправка()
         giStage2 = 9
         ROn A1, 128      'Открыть КЭ6
         gdРасход1 = 0    'Обнуляем расход на одну машину
-        ResetExpenseCounter (2)
+        ResetExpenseCounter_2
         StartOutput (2)
         gbDontStat = True    'Нельзя работать с диском
         Exit Function
@@ -185,7 +185,7 @@ Public Function Заправка()
             ROn A1, 64  'Открыть КЭ5
             giStage2 = 3
             gdРасход1 = 0    'Обнуляем расход на одну машину
-            ResetExpenseCounter (2)
+            ResetExpenseCounter_2
             StartOutput (2)
             gbDontStat = True    'Нельзя работать с диском
             giMainРасход = 1
@@ -295,7 +295,7 @@ Public Function Заправка()
         ROn A1, 64 'Открыть КЭ5
         dFullCar = gnDif(5)    'Запоминаем давление в баке машины
         s = "Переходим на заправку машин"
-        ResetExpenseCounter (2)
+        ResetExpenseCounter_2
         StartOutput (2)
         ОпросПлат
         Обработка_1
@@ -453,8 +453,8 @@ Public Sub InitAGNKS()
     InitDisk
     ConnectKKM
     Init_Controllers
-    ResetExpenseCounter (1)
-    ResetExpenseCounter (2)
+    ResetExpenseCounter_1
+    ResetExpenseCounter_2
 End Sub
 
 Private Sub Init_Controllers()

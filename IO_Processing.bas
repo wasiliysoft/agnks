@@ -83,37 +83,21 @@ Public Sub Обработка_1()
         End If
     Next i
 
-
+    'Считать расход (общий) по ИР2
     Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
-    If Not isDebug Then
-        gdИР2 = GetMass_2
-    End If
+    gdИР2 = GetMass_2
+
     'Считать расход (общий) по ИР1
     Temp = -(GetMassExpense_2)
     If giMainРасход = 1 Then
         Temp = 0
     End If
     Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, Temp)
-    If Not isDebug Then
-        gdИР1 = GetMass_1
-    End If
-
-    If isDebug Then
-        Обработка_1_debug
-    End If
+    gdИР1 = GetMass_1
 End Sub
 
+ 
 
-
-Private Sub Обработка_1_debug()
-   
-    If giStage2 = 9 Then
-        gdИР2 = gdИР2 + 0.15
-    ElseIf giStage2 = 4 Then
-        gdИР2 = gdИР2 + 0.2
-    Else
-        gdИР2 = 0
-    End If
      '0 A0 Output 0-7
 '    gnДатчик(0).Data = 0        ' Управление Реле 1 (контроль)
     'gnДатчик(1).Data = 0        ' Управление К7
@@ -180,6 +164,3 @@ Private Sub Обработка_1_debug()
     'gnDif(15) = 230 ' ДД4
 '    gnDif(16) = 24.4 ' Напряжение АКБ
    ' Debug.Print gnDif(0)
-End Sub
-
-
