@@ -43,6 +43,8 @@ Public Function ОстановАГНКС() As String
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = True
     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
+    StopOutput (2)
+    gbStopAGNKS = True
     ОстановАГНКС = "Останов АГНКС"
 End Function
 
@@ -547,8 +549,6 @@ Public Function Verify_Damage()
         s = s & "Пожар в техн. отсеке ! "
         If gbStopAGNKS = False Then
             s = ОстановАГНКС
-            gbStopAGNKS = True
-            StopOutput (2)
         End If
 
     End If
@@ -557,16 +557,12 @@ Public Function Verify_Damage()
         s = s & "Загазованность 20%(отсек ДВС) ! "
         If gbStopAGNKS = False Then
             s = ОстановАГНКС
-            gbStopAGNKS = True
-            StopOutput (2)
         End If
     End If
     If gnДатчик(44).Data = 1 Then
         s = s & "Загазованность 20%(техн.отсек) ! "
         If gbStopAGNKS = False Then
             s = ОстановАГНКС
-            gbStopAGNKS = True
-            StopOutput (2)
         End If
     End If
     If gnДатчик(40).Data = 1 Then
