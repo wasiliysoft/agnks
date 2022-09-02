@@ -35,9 +35,6 @@ Sub load_statistic_from_DB()
         'пустая база данных
         Exit Sub
     End If
-    'Получаем моточасы с максимальной датой
-    Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
-    GMC = SelectRS("MOTO")
 
     'Получаем самую раннюю дату
     Set SelectRS = StatDB.OpenRecordset("select MIN(DATA) from stat ")
@@ -48,6 +45,7 @@ Sub load_statistic_from_DB()
     
     'Для заполнения 4 колонки в цикле посчитать все суммарные заправки
     'за годы начиная с самого раннего и до предыдущего
+    frmStart.lstStat(3).Clear
     For i = Year(dateMin) To Year(dateNow) - 1
         s = "#1/1/" + CStr(i) + " 00:00:00#"
         s1 = "#12/31/" + CStr(i) + " 23:59:59#"
@@ -60,6 +58,7 @@ Sub load_statistic_from_DB()
 
     'Колонка "За год" в цикле посчитать все суммарные заправки 
     'за месяцы этого года начиная с января и до предыдущего месяца.
+    frmStart.lstStat(2).Clear
     If Year(dateMax) = Year(dateNow) Then
         For i = 1 To Month(dateNow) - 1
             s ="#" & i & "/1/" & Year(dateNow) & " 00:00:00#"
@@ -73,6 +72,7 @@ Sub load_statistic_from_DB()
     End If
 
     'Колонка "За месяц" в цикле посчитать все суммарные заправки за дни начиная с 1 этого месяца и до пред.
+    frmStart.lstStat(1).Clear
     If Month(dateMax) = Month(dateNow) Then
         For i = 1 To Day(dateNow) - 1
             s = "#" & Month(dateNow) & "/" & i & "/" & Year(dateNow) & " 00:00:00#"
@@ -86,6 +86,7 @@ Sub load_statistic_from_DB()
     End If
 
     'Колонка "За сегодня"
+    frmStart.lstStat(0).Clear
     s = Format(dateNow, "\#mm\/dd\/yyyy 00:00:00\#")
     s1 = Format(dateNow, "\#mm\/dd\/yyyy 23:59:59\#")
     Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)

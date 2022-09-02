@@ -24,9 +24,17 @@ End Function
 Public Function InitDisk() As Integer
     'Возвращает код ошибки : 0 -нет ошибок
    ' On Error Resume Next
+   'TODO Добавить смену курсора внутрь функций
     frmStart.MousePointer = vbHourglass
 
     init_Database
+    'Получаем моточасы с максимальной датой
+    'TODO вынести в отдельную функцию
+    Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
+    If Not IsNull(SelectRS(0)) Then
+        GMC = SelectRS("MOTO")
+    End if
+
     load_statistic_from_DB 'TODO вынести из функции инициализации диска?
 
     init_gdK_file

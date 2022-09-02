@@ -29,11 +29,12 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
+      Tab             =   4
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
       TabPicture(0)   =   "frmStart.frx":0000
-      Tab(0).ControlEnabled=   -1  'True
+      Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Frame1(0)"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
@@ -54,8 +55,9 @@ Begin VB.Form frmStart
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
-      Tab(4).ControlEnabled=   0   'False
+      Tab(4).ControlEnabled=   -1  'True
       Tab(4).Control(0)=   "Frame1(4)"
+      Tab(4).Control(0).Enabled=   0   'False
       Tab(4).ControlCount=   1
       Begin VB.Frame Frame1 
          BackColor       =   &H00C0C0C0&
@@ -89,7 +91,7 @@ Begin VB.Form frmStart
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            Enabled         =   1   'False
+            Enabled         =   -1  'True
             BevelWidth      =   4
             Font3D          =   2
             Picture         =   "frmStart.frx":008C
@@ -1572,10 +1574,18 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   5355
          Index           =   4
-         Left            =   -75000
+         Left            =   0
          TabIndex        =   132
          Top             =   360
          Width           =   9345
+         Begin VB.CommandButton cmdUpdateStat 
+            Caption         =   "Обновить журнал"
+            Height          =   690
+            Left            =   7200
+            TabIndex        =   198
+            Top             =   4500
+            Width           =   1950
+         End
          Begin VB.ListBox lstStat 
             BackColor       =   &H00800000&
             ForeColor       =   &H0000FFFF&
@@ -2245,7 +2255,7 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   5355
          Index           =   0
-         Left            =   0
+         Left            =   -75000
          TabIndex        =   1
          Top             =   315
          Width           =   9345
@@ -3295,6 +3305,12 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
 
 End Sub
 
+Private Sub cmdUpdateStat_Click()
+   frmStart.MousePointer = vbHourglass
+   load_statistic_from_DB
+   frmStart.MousePointer = vbArrow
+End Sub
+
 ' TODO вынести в модуль IO_File
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     'реакция на ctrl+alt+home
@@ -3677,7 +3693,7 @@ Private Sub Timer1_Timer()
             'frmStart.Timer2.Enabled = False
 
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
-            ROn A1, 6 ' (2 + 4) Стоп ДВС, октрыть К1 
+            ROn A1, 6 ' (2 + 4) Стоп ДВС, октрыть К1
         End If
 
 
