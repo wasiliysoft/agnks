@@ -1,19 +1,6 @@
 Attribute VB_Name = "IO_Processing"
 Option Explicit
 
-'масштабный коэффициент пересчёта в напряжение
-'для однополярного входа на 10в
-Private Const gKv = 1
-    
-'масштабный коэффициент пересчёта в ток (миллиамперы)
-'при сопротивлении нагрузки 0,448 кОм
-Private Const gKi = gKv / 0.2
-    
-'масштабный коэффициент пересчёта тока в давление
-Private Const gKp = 1.6 / 16
-Private Const gKp_1 = 25 / 16
-
-'Коэффициент пересчета рабочего напряжения на датчиках
 'Private Const gKn = (2740 + 448) / 448
 
 Public Sub ОпросПлат()
@@ -29,70 +16,25 @@ End Sub
 
 
 Public Sub Обработка_1()
-    Dim i           As Integer
-    Dim Temp        As Double
+    Dim i As Integer
+    Dim dTmp As Double
 
     'Отобразить состояние датчиков, работающих с платой Pet48DIO
     update_gnДатчик
 
     'Пересчёт измеренных значений в ток:
-    For i = 2 To 15
-        gnDif(i) = ggACL8113(i) * gKi
-    Next i
-    gnDif(16) = ggACL8113(16) * 11 '((2000 + 200) / 200)
-
-    'Пересчет для ДД1.1 и ДД1.2
-    For i = 2 To 3
-        Temp = (gnDif(i) - 4)
-        If Temp <= 17 And Temp >= -1 Then
-            gnDif(i) = Temp * gKp
-        Else
-            gnDif(i) = -1
-        End If
-    Next i
-
-    For i = 4 To 7
-        'Проверка (i - 4) , если не удовлетворяет то -1
-        Temp = (gnDif(i) - 4)
-        If Temp <= 17 And Temp >= -1 Then
-            gnDif(i) = Temp * gKp_1
-            If gnDif(i) < 0 Then
-                gnDif(i) = 0
-            End If
-        Else
-            gnDif(i) = -1
-        End If
-    Next i
-
-    For i = 8 To 15
-        'Проверка (i - 4) , если не удовлетворяет то -1
-        Temp = (gnDif(i) - 4)
-        If Temp <= 17 And Temp >= -1 Then
-            Select Case (i)
-                Case 8:  gnDif(i) = 200 * ((Temp + 1) / 18) - 50 ' ДТ1, датчик температуры
-                Case 9:  gnDif(i) = 12.5 * Temp - 50    ' ДТ1.1, датчик температуры
-                Case 10: gnDif(i) = 6.25 * Temp - 50    ' ДТ2, датчик температуры
-                Case 11: gnDif(i) = 6.25 * Temp - 50    ' ДТ2.1, датчик температуры
-                Case 12: gnDif(i) = 6.25 * Temp - 50    ' ДТ3, датчик температуры
-                Case 13: gnDif(i) = 150 * ((Temp + 1) / 18) - 50 ' ДТ4, датчик температуры на выходе компрессора
-                Case 14: gnDif(i) = Temp * 200   ' =3200/16 Расчет оборотов ДВС
-                Case 15: gnDif(i) = 0.1 / 16 * Temp     ' ДД4 Аккумуляторы
-            End Select
-        Else
-            gnDif(i) = -1
-        End If
-    Next i
-
+    update_gnDif
+    
     'Считать расход (общий) по ИР2
     Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
     gdИР2 = GetMass_2
 
     'Считать расход (общий) по ИР1
-    Temp = -(GetMassExpense_2)
+    dTmp = -(GetMassExpense_2)
     If giMainРасход = 1 Then
-        Temp = 0
+        dTmp = 0
     End If
-    Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, Temp)
+    Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, dTmp)
     gdИР1 = GetMass_1
 End Sub
 
