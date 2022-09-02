@@ -3221,10 +3221,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-
-
-
-
 Private Sub CmdЗаправка_Click(Index As Integer)
     Dim t           As Integer
     'Если идет заправка аккумуляторов
@@ -3237,13 +3233,10 @@ Private Sub CmdЗаправка_Click(Index As Integer)
 End Sub
 
 
-
-
 Private Sub cmdDanger_Click()
     frmStart.cmdDanger.Visible = False
-    'закрыть все КЭМы
-    ROff A1, 1
-    'Стоп ДВС, открыть КЭМ4
+    ROff A1, 1  'закрыть К 1-6
+    'Стоп ДВС, открыть КЭМ4 'TODO проверить комментарий
     giStage2 = 0
     giStage = 0  'Переход на этап Исходное Состояние
     giStage1 = 0
@@ -3251,9 +3244,7 @@ Private Sub cmdDanger_Click()
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = True
     frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-
     gbStopAGNKS = False
-
 End Sub
 
 Private Sub cmdKKM_Click()
@@ -3270,9 +3261,8 @@ End Sub
 Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim s, s1       As String
     cmdStop.Enabled = False
-    'Закрыть пистолет
-    'Закрыть КЭ5
-    ROff A1, 191
+
+    ROff A1, 191 'Закрыть К5 (пистолет)
     gbDontStat = False         'Можно работать с диском
     gdTime = GetTimeCounter_2
 
@@ -3299,8 +3289,7 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     gbЗаправка = False
 
     If gbOnlyAkk = True Then
-        'Закрыть КЭ6
-        ROff A1, 127
+        ROff A1, 127 'Закрыть К6 (Акк)
         frmStart.SSCmdStart.Enabled = True
         gbAkkum = True
         giStage = 1    'Переход на Этап Предпуска
@@ -3408,9 +3397,7 @@ Private Sub SSCmdStart_Click()
         giStage = 1    'Переход на этап ПредПуск()
         giStage2 = 0
         giStage1 = 0
-        'Открыть КЭ1
-        ROn A1, 4
-
+        ROn A1, 4 'Открыть К1
     Else
         'Если идет заправка аккумуляторов
         cmdStop.Enabled = True
@@ -3434,15 +3421,9 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
 
     Select Case Index
         Case 1
-            'Если открыт КЭМ5 - закрыть
-            ' FIXME выполняется проверка управляющей команды!!!
             SSCommand2(1).Enabled = False
-            If gnДатчик(30).Data = 1 Then
-                ROff A1, 191
-            End If
-            ROn A1, 2
-
-            ROff A1, 0    'Закрыть все КЭМы
+            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
+            ROn A1, 2 ' Стоп ДВС
             giStage2 = 0
             giStage = 0    'Переход на этап ИсхСост
             giStage1 = 0
@@ -3473,15 +3454,9 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             'ОстановДВС = "Двигатель остановлен !!!"
         Case 0
             SSCommand2(0).Enabled = False
+            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
+            ROn A1, 2 ' Стоп ДВС
 
-            'Если открыт КЭМ5 - закрыть
-            ' FIXME выполняется проверка управляющей команды!!!
-            If gnДатчик(30).Data = 1 Then
-                ROff A1, 191
-            End If
-            ROn A1, 2
-
-            ROff A1, 0    'Закрыть все КЭМы
             giStage2 = 0
             giStage = 0    'Переход на этап ИсхСост
             giStage1 = 0
@@ -3755,11 +3730,9 @@ Private Sub Timer1_Timer()
             gbCmdStart = True
             frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
             'frmStart.Timer2.Enabled = False
-            'Закрыть все Кэм
-            ROff A1, 0
 
-            ROn A1, 6
-
+            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
+            ROn A1, 6 ' (2 + 4) Стоп ДВС, октрыть К1 
         End If
 
 

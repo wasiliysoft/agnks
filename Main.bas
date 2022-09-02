@@ -9,12 +9,12 @@ Public Function Danger() As String
     If gnДатчик(29).Data = 1 Then
         'Если перепад во вх. и вых. рукове станет меньше 5 кг
         If Abs(gnDif(6) - gnDif(2)) <= 0.5 Then
-            ROff A1, 223    'Закрыть КЭМ4
+            ROff A1, 223    'Закрыть К4
             If gbFireTech = True Then
-                ROn A1, 24    'И открыть КЭМ3 и КЭМ2
-                ROn A0, 2    'открыть КЭМ7
+                ROn A1, 24 '(16 + 8) Открыть КЭМ3 и КЭМ2
+                ROn A0, 2 'Открыть КЭМ7
             Else
-                ROn A1, 16    'И открыть КЭМ3
+                ROn A1, 16 'Открыть КЭМ3
             End If
         End If
     End If
@@ -26,16 +26,13 @@ End Function
 'Функция остановки АГНКС
 Public Function ОстановАГНКС() As String
     Dim s           As String
-    'закрыть все КЭМы
-    ROff A1, 1
-    'Стоп ДВС, открыть КЭМ2, открыть КЭМ4
+    ROff A1, 1 'Закрыть К 1-6
     'если загазованность 20 %
     If (gnДатчик(42).Data = 1) Or (gnДатчик(44).Data = 1) Then
-        'Стоп ДВС, открыть КЭМ2, открыть КЭМ4
-        ROn A1, 42
-        ROn A0, 2    'Открыть КЭ7
+        ROn A1, 42 '(2+8+32) Стоп ДВС, открыть К2, открыть К4
+        ROn A0, 2  'Открыть К7
     ElseIf gnДатчик(46).Data = 1 Then    'если пожар в техническом отсеке
-        ROn A1, 34    'стоп ДВС, открыть КЭМ4
+        ROn A1, 34 '(2+32) Стоп ДВС, открыть КЭМ4
     End If
 
 
@@ -51,13 +48,10 @@ End Function
 
 'Функция остановки ДВС
 Public Function ОстановДВС() As String
-    'Если открыт КЭМ5 - закрыть
-    ' FIXME выполняется проверка управляющей команды!!!
-    If gnДатчик(30).Data = 1 Then
-        ROff A1, 191
-    End If
-    'Открыть Кэм4
-    ROn A1, 32
+    'TODO Зачем закрывать пистолет при остановке ДВС?
+    ROff A1, 191 'Закрыть К5 (пистолет)
+
+    ROn A1, 32 'Открыть К4
 
     giStage2 = 0
     giStage = 1  'Переход на этап ИсхСост
@@ -80,15 +74,15 @@ Public Function Заправка()
         'Заправка машин
 
         If k4_isOpen Then
-            ROff A1, 223 'Закрыть КЭ4
+            ROff A1, 223 'Закрыть К4
         Else
-            ROff A1, 239 'Закрыть КЭ3
+            ROff A1, 239 'Закрыть К3
         End If
 
 
-        ROn A1, 64      'Открыть КЭ5
+        ROn A1, 64 'Открыть КЭ5
         giStage2 = 9
-        ROn A1, 128      'Открыть КЭ6
+        ROn A1, 128 'Открыть КЭ6
         gdРасход1 = 0    'Обнуляем расход на одну машину
         ResetExpenseCounter_2
         StartOutput (2)
@@ -105,10 +99,8 @@ Public Function Заправка()
             gdРасход1 = gdИР2
             Exit Function
         Else
-            'Закрыть пистолет
-            'Закрыть КЭ5
-            ROff A1, 191
-            ROff A1, 127
+            ROff A1, 191 'Закрыть К5 (пмстолет)
+            ROff A1, 127 'Закрыть К4 (Акк)
             StopOutput (2)
             gbDontStat = False    'Можно работать с диском
 
@@ -199,13 +191,13 @@ Public Function Заправка()
         gbЗаправка = True
 
         If (gnDif(7) - dFullCar) >= 2 Then    'Разница давлений в аккумуляторах и баке
-            ROn A1, 128 'Открыть КЭ6 - заправка и от аккумуляторов
+            ROn A1, 128 'Открыть К6 - заправка и от аккумуляторов
         End If
 
         If k4_isOpen Then
-            ROff A1, 223 'Закрыть КЭ4 - Начинает гнать газ компрессор
+            ROff A1, 223 'Закрыть К4 - Начинает гнать газ компрессор
         Else
-            ROff A1, 239 'Закрыть КЭ3 - Начинает гнать газ компрессор
+            ROff A1, 239 'Закрыть К3 - Начинает гнать газ компрессор
         End If
 
         giStage2 = 4    'Переходим к подэтапу заправки аккумуляторов
@@ -221,7 +213,7 @@ Public Function Заправка()
         MaxIR = GetMassExpense_2
         If (gbAkkum = False) And ((k6_isOpen And (((MaxIR * 3600) <= gdRashAkkEnd) _
                 And (MaxIR > 0)) And (MaxIR >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then           
-            ROff A1, 127 'Закрыть КЭ6
+            ROff A1, 127 'Закрыть К6 (Акк)
             'Exit Function
         End If
         If (gbAkkum = False) And ((Not (gnDif(4) >= gdUpLevel))) Then
@@ -231,7 +223,7 @@ Public Function Заправка()
             gdTime = GetTimeCounter_2
             Exit Function
         ElseIf (gbAkkum = False) Then
-            ROff A1, 191 'Закрыть КЭ5 (пистолет)
+            ROff A1, 191 'Закрыть К5 (пистолет)
             gbDontStat = False    'Можно работать с диском
             StopOutput (2)
             gdTime = GetTimeCounter_2
@@ -271,8 +263,7 @@ Public Function Заправка()
             Заправка = "Заправка аккумуляторов"
             Exit Function
         Else
-            'Закрыть КЭ6
-            ROff A1, 127
+            ROff A1, 127 'Закрыть К6 (Акк)
         End If
         'Если выведена форма запроса о заправке машины
         If gbFrmShow = True Then
@@ -373,11 +364,9 @@ Public Function ПредПуск() As String
     If giStage1 = 0 Then
         'Если есть давление в выходном трубопроводе , то открыть КЭМ4
         If (gnDif(6) - gnDif(2)) >= 0.25 Then
-            'Открыть КЭ4
-            ROn A1, 32
+            ROn A1, 32 'Открыть К4
         Else
-            'Открыть КЭ3 - для запуска ДВС
-            ROn A1, 16
+            ROn A1, 16 'Открыть К3 - для запуска ДВС
         End If
         gbAkkum = True
         giStage1 = 1    ' Пререход на второй подэтап
@@ -400,12 +389,11 @@ Public Function ПредПуск() As String
                 gbCmdStart = True
                 frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
                 'frmStart.Timer2.Enabled = False
-                'Закрыть все Кэм
                 'TODO проверить коррекность gnДатчик(25)
                 If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
                         k5_isOpen Or k6_isOpen Or k1_isOpen Or _
                         (gnДатчик(25).Data = 1) Then
-                    ROff A1, 1
+                    ROff A1, 1 'закрыть К 1-6
                 End If
 
             End If
@@ -540,12 +528,9 @@ Public Function Verify_Damage()
     If gnДатчик(45).Data = 1 Then
         s = s & "Пожар в отсеке ДВС ! "
         If gbStopAGNKS = False Then
-
-            'закрыть все КЭМы
-            ROff A1, 1
-            ROff A0, 0
-            'Стоп ДВС
-            ROn A1, 2
+            ROff A1, 1 'закрыть К 1-6
+            ROff A0, 0 'Закрыть К7, ВЫКЛ Реле 1
+            ROn A1, 2  'Стоп ДВС
             gbFireDVS = True
             giStage2 = 0
             giStage = 3    'Переход на этап Danger

@@ -278,3 +278,7 @@ Private Sub Roff_debug(port As Integer, n As Integer)
     End If
 End Sub
 
+
+
+' TODO Проверить корректность
+' ROff A1, 1 Не только закрывает К1-6, но и ВЫКЛЮЧАЕТ реле "СТОП ДВИГ"
