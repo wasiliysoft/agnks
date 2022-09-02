@@ -28,12 +28,8 @@ Public Function InitDisk() As Integer
     frmStart.MousePointer = vbHourglass
 
     init_Database
-    'Получаем моточасы с максимальной датой
-    'TODO вынести в отдельную функцию
-    Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
-    If Not IsNull(SelectRS(0)) Then
-        GMC = SelectRS("MOTO")
-    End if
+    'Получаем моточасы из базы
+    GMC = getGMC_from_DB
 
     load_statistic_from_DB 'TODO вынести из функции инициализации диска?
 

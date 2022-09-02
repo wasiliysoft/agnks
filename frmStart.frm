@@ -3333,9 +3333,6 @@ Private Sub Form_Load()
    Left = 10
    Top = 700
    frmStart.SSTab1.Tab = 3
-   frmStart.lblStat(1).Caption = "За " + Format(Now, "mmmm")
-   frmStart.lblStat(2).Caption = "За " + Format(Now, "yyyy") + " год"
-
    Timer1.Interval = 500
    Timer1.Enabled = True
    Show
@@ -3478,13 +3475,8 @@ Private Sub SSExit_Click()
         StatRS_Insert
         Debug.Print "Сохранено состояние заправки"
     Else
-       ' Перед выходом сохраняем моточасы в строке с максимальной датой
-        Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
-        SelectRS.Edit
-        GMC = GMC + MotorCount
-        MotorCount = 0
-        SelectRS("MOTO") = GMC
-        SelectRS.Update
+       ' Перед выходом сохраняем моточасы
+        saveGMC_in_DB
         Debug.Print "Моточасы сохранены"
     End If
 

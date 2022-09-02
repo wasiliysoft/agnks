@@ -3,8 +3,8 @@ Option Explicit
 
 
 Public StatDB       As Database 
-Public StatRS       As Recordset
 Public SelectRS     As Recordset
+Private StatRS       As Recordset
 Private StatWS       As Workspace
 
 
@@ -17,7 +17,27 @@ Sub init_Database()
     'TODO создать базу если пустая
 End Sub
 
+Function getGMC_from_DB() as Long
+    Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
+    If Not IsNull(SelectRS(0)) Then
+        getGMC_from_DB = SelectRS("MOTO")
+    Else
+        getGMC_from_DB = 0
+    End if
+    SelectRS.Close
+    Set SelectRS = Nothing
+End Function
 
+Sub saveGMC_in_DB()
+    Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
+    SelectRS.Edit
+    GMC = GMC + MotorCount
+    MotorCount = 0
+    SelectRS("MOTO") = GMC
+    SelectRS.Update
+    SelectRS.Close
+    Set SelectRS = Nothing
+End Sub
 Sub load_statistic_from_DB()
 '
 ' Заполняет вкладку "Жарнал" данными из базы.
@@ -30,6 +50,9 @@ Sub load_statistic_from_DB()
 
     Dim s           As String
     Dim s1          As String
+
+   frmStart.lblStat(1).Caption = "За " + Format(Now, "mmmm")
+   frmStart.lblStat(2).Caption = "За " + Format(Now, "yyyy") + " год"
 
     If  StatRS.EOF Then 
         'пустая база данных
