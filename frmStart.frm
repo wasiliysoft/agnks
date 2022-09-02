@@ -89,7 +89,7 @@ Begin VB.Form frmStart
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            Enabled         =   0   'False
+            Enabled         =   1   'False
             BevelWidth      =   4
             Font3D          =   2
             Picture         =   "frmStart.frx":008C
@@ -3420,7 +3420,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
     End If
 
     Select Case Index
-        Case 1
+        Case 1 ' Нажата Стоп ДВС
             SSCommand2(1).Enabled = False
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
             ROn A1, 2 ' Стоп ДВС
@@ -3452,7 +3452,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             End If
 
             'ОстановДВС = "Двигатель остановлен !!!"
-        Case 0
+        Case 0 ' Нажата Стоп АГНКС
             SSCommand2(0).Enabled = False
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
             ROn A1, 2 ' Стоп ДВС

@@ -34,7 +34,11 @@ Public gdИР2        As Double
 'Для заправки
 Public gbOnlyAkk    As Boolean    'Флаг заправки только от аккумуляторов
 'Только когда не работает ДВС
-Public giStage      As Integer    'Этапы заправки
+ 'Этапы заправки
+ ' 0 - Исходное состояние
+ ' 1 - Предпуск
+ ' 2 - Заправка
+Public giStage      As Integer   
 Public giStage1     As Integer    'ПодЭтапы предпускового этапа
 Public giStage2     As Integer    'ПодЭтапы этапа Заправки
 Public gbFrmShow    As Boolean
