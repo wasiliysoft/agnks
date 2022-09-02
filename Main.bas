@@ -111,24 +111,10 @@ Public Function Заправка()
             'Заполнить статистику по заправке
 
             '<<<<Прекратить считать расход>>>>
-            GMC = GMC + MotorCount
-            MotorCount = 0
-            StatRS.AddNew
-            StatRS("DATA") = Now
-            StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-            StatRS("GAZ_IR1") = gdИР1
-            StatRS("MOTO") = GMC
-                        
-            If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-                Verify
-            End If
-
-            StatRS.Update
+            StatRS_Insert
 
             s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
             frmStart.lstStat(0).AddItem s
-
-            gDateRec = Now
 
             gbЗаправка = False
 
@@ -229,27 +215,11 @@ Public Function Заправка()
             gbDontStat = False    'Можно работать с диском
             StopOutput (2)
             gdTime = GetTimeCounter_2
-
             'Заполнить статистику по заправке
-            StatRS.AddNew
-            StatRS("DATA") = Now
-            StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-
-            StatRS("GAZ_IR1") = gdИР1
-            StatRS("MOTO") = GMC + MotorCount
-            GMC = GMC + MotorCount
-            MotorCount = 0
-            If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-                Verify
-            End If
-
-            StatRS.Update
+            StatRS_Insert
 
             s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
             frmStart.lstStat(0).AddItem s
-
-
-            gDateRec = Now
 
             '<<<<Прекратить считать расход>>>>
             gbЗаправка = False            
@@ -452,75 +422,6 @@ Private Sub Init_Controllers()
     'Инициализация платы Pet48DIO
     Init_DIO_Driver
 End Sub
-
-
-
-
-'Процедура проверки переходов дат
-Public Function Verify()
-    Dim i           As Integer
-    Dim j           As Integer
-    Dim k           As Integer
-    Dim d           As Date
-    Dim sum1        As Double
-    Dim sum2        As Double
-    Dim sum3        As Double
-    Dim Old         As String
-    Dim s           As String
-    Dim s1          As String
-
-    'Проверка перехода даты
-    d = Now
-    sum1 = 0
-    sum2 = 0
-    sum3 = 0
-
-    If gDateRec < d Then
-
-        For i = 0 To frmStart.lstStat(0).ListCount - 1
-            s1 = frmStart.lstStat(0).List(i)
-            s = Mid(s1, 17, Len(frmStart.lstStat(0).List(i)) - 1)
-            sum1 = sum1 + CDbl(s)
-        Next i
-        'Строка послдней заправки
-        Old = s1
-        frmStart.lblStat(0).Caption = "За " + Format(d, "dd")
-        frmStart.lblStat(1).Caption = "За " + Format(d, "mmmm")
-        frmStart.lblStat(2).Caption = "За " + Format(d, "yyyy")
-
-        frmStart.lstStat(0).Clear
-        If (Month(gDateRec) < Month(d)) Or ((Month(gDateRec) > Month(d)) And (Year(gDateRec) < Year(d))) Then
-            For i = 0 To frmStart.lstStat(1).ListCount - 1
-                s1 = frmStart.lstStat(1).List(i)
-                s = Mid(s1, 11, Len(frmStart.lstStat(1).List(i)) - 1)
-                sum2 = sum2 + CDbl(s)
-            Next i
-            frmStart.lstStat(1).Clear
-            If (sum1 + sum2) <> 0 Then
-                s = Format(CStr(Month(gDateRec)), "00") + "        " + Format(CStr(sum2 + sum1), "###0.00")
-                frmStart.lstStat(2).AddItem (s)
-            End If
-        ElseIf (Month(gDateRec) = Month(d)) And (sum1 <> 0) Then
-            s = Format(CStr(Day(d - 1)), "00") + "       " + Format(CStr(sum1), "###0.00")
-            frmStart.lstStat(1).AddItem (s)
-        End If
-
-        If Year(gDateRec) < Year(d) Then
-            For i = 0 To frmStart.lstStat(2).ListCount - 1
-                s1 = frmStart.lstStat(2).List(i)
-                s = Mid(s1, 11, Len(frmStart.lstStat(2).List(i)) - 1)
-                sum3 = sum3 + CDbl(s)
-            Next i
-            frmStart.lstStat(2).Clear
-            s = Format(CStr(Year(gDateRec)), "00") + "       " + Format(CStr(sum3), "###0.00")
-            frmStart.lstStat(3).AddItem (s)
-        End If
-        gDateRec = Now
-
-    End If
-End Function
-
-
 
 Public Function Verify_Damage()
     Dim s           As String

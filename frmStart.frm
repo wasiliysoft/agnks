@@ -3267,25 +3267,13 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     gdTime = GetTimeCounter_2
 
     '<<<<Прекратить считать расход>>>>
-    StatRS.AddNew
-
-    StatRS("DATA") = Now
-    StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
     StopOutput (2)
-    StatRS("GAZ_IR1") = gdИР1
-    StatRS("MOTO") = GMC + MotorCount
-    GMC = GMC + MotorCount
-    MotorCount = 0
-    If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-        Verify
-    End If
-
-    StatRS.Update
+    StatRS_Insert
 
     s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
     frmStart.lstStat(0).AddItem s
 
-    gDateRec = Now
+
     gbЗаправка = False
 
     If gbOnlyAkk = True Then
@@ -3432,22 +3420,9 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             gbCmdStart = True
             frmStart.SSCmdStart.Caption = "Пуск АГНКС"
             If gbDontStat = True Then
-                StatRS.AddNew
-                StatRS("DATA") = Now
-                StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-                StatRS("GAZ_IR1") = gdИР1
-                StatRS("MOTO") = GMC + MotorCount
-                GMC = GMC + MotorCount
-                MotorCount = 0
-                If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-                    Verify
-                End If
-
-                StatRS.Update
+                StatRS_Insert
                 s = Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
                 frmStart.lstStat(0).AddItem s
-
-                gDateRec = Now    'StatRS("DATA")
                 gbDontStat = False    'Можно работать с диском
             End If
 
@@ -3468,24 +3443,10 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             'ОстановДВС = "Двигатель остановлен !!!"
             frmStart.cmdDanger.Visible = True
             If gbDontStat = True Then
-                StatRS.AddNew
-
-                StatRS("DATA") = Now
-                StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-
-                StatRS("GAZ_IR1") = gdИР1
-                StatRS("MOTO") = GMC + MotorCount
-                GMC = GMC + MotorCount
-                MotorCount = 0
-                If (Day(gDateRec) < Day(Now)) Or (Month(gDateRec) < Month(Now)) Or (Year(gDateRec) < Year(Now)) Then
-                    Verify
-                End If
-
-                StatRS.Update
+                StatRS_Insert
                 s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
                 frmStart.lstStat(0).AddItem s
 
-                gDateRec = Now
                 gbDontStat = False    'Можно работать с диском
             End If
 
@@ -3497,20 +3458,15 @@ End Sub
 
 Private Sub SSExit_Click()
     Dim s           As String
-    GMC = GMC + MotorCount
-    MotorCount = 0
     If gbDontStat = True Then
-        StatRS.AddNew
-        StatRS("DATA") = Now
-        StatRS("GAZ_CAR") = gdРасход1 / gdPlot    '* 1.42
-        StatRS("GAZ_IR1") = gdИР1
-        StatRS("MOTO") = GMC
-        StatRS.Update
+        StatRS_Insert
         Debug.Print "Сохранено состояние заправки"
     Else
        ' Перед выходом сохраняем моточасы в строке с максимальной датой
         Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
         SelectRS.Edit
+        GMC = GMC + MotorCount
+        MotorCount = 0
         SelectRS("MOTO") = GMC
         SelectRS.Update
         Debug.Print "Моточасы сохранены"
@@ -3587,17 +3543,6 @@ Private Sub Timer1_Timer()
     Обработка_1
     
     ShowPict 'Управление изображением
-
-
-    'Работа с диском
-    'Если произошла еще заправка после последней записи на диск или наступил другой день(месяц)
-    'И разрешена проверка
-    If ((giRealCountZ > giCountZ) Or _
-            ((Day(gDateRec) < Day(Date)) Or (Month(gDateRec) < Month(Date)) Or (Year(gDateRec) < Year(Date)))) _
-            And (gbDontStat = False) Then
-         Verify
-    End If
-
 
 
     For k = 0 To 47

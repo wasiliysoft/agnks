@@ -101,6 +101,30 @@ Sub load_statistic_from_DB()
     End If 
 End Sub
 
+Sub StatRS_Insert()
+    GMC = GMC + MotorCount
+    MotorCount = 0
+    StatRS.AddNew
+    StatRS("DATA") = Now
+    StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
+    StatRS("GAZ_IR1") = gdИР1
+    StatRS("MOTO") = GMC 
+    StatRS.Update
+
+    ' FIXME после добавления в базу нужно обновить
+    ' колонки "За сегодня", "За месяц", "За год"
+    ' при этом учитывать возможность работы 24/7
+    ' если произойдет смена даты или месяца 
+    ' то и колонки должны обновится
+    ' 
+    ' Так-же не обновляется заправка за текущее число
+    ' в колонке месяц и сумма за год
+
+    ' Возможно добавить на вкладку "Журнал"
+    ' кнопку "Обновить" которая перезагрузит
+    ' данные из базы
+    ' 
+End Sub
 Public Function lastDayByMonth(ByVal m, ByVal yyyy) as Integer
     Select Case m
         Case 1, 3, 5, 7, 8, 10, 12

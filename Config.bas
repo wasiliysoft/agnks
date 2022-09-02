@@ -74,10 +74,6 @@ Public MotorCount   As Long    'Счетчик моторесурсов
 Public GMC          As Long    'глобальный счетчик
 
 
-
-
-
-Public gDateRec     As Date    'Дата последней записи
 Public giCountZ     As Integer    'Счетчик заправок
 Public giRealCountZ As Integer    'Реальный счетчик заправок
 

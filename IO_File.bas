@@ -29,7 +29,6 @@ Public Function InitDisk() As Integer
     init_Database
     load_statistic_from_DB 'TODO вынести из функции инициализации диска?
 
-    gDateRec = Now
     init_gdK_file
     init_price_file
     init_data_file
