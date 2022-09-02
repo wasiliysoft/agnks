@@ -10,7 +10,7 @@ Public Function Danger() As String
         'Если перепад во вх. и вых. рукове станет меньше 5 кг
         If Abs(gnDif(6) - gnDif(2)) <= 0.5 Then
             ROff A1, 223    'Закрыть К4
-            If gbFireTech = True Then
+            If isFireTech Then
                 ROn A1, 24 '(16 + 8) Открыть КЭМ3 и КЭМ2
                 ROn A0, 2 'Открыть КЭМ7
             Else
@@ -31,7 +31,7 @@ Public Function ОстановАГНКС() As String
     If (gnДатчик(42).Data = 1) Or (gnДатчик(44).Data = 1) Then
         ROn A1, 42 '(2+8+32) Стоп ДВС, открыть К2, открыть К4
         ROn A0, 2  'Открыть К7
-    ElseIf gnДатчик(46).Data = 1 Then    'если пожар в техническом отсеке
+    ElseIf isFireTech Then    'если пожар в техническом отсеке
         ROn A1, 34 '(2+32) Стоп ДВС, открыть КЭМ4
     End If
 
@@ -312,8 +312,7 @@ Public Function ИсхСост() As String
     Dim norma       As Boolean
     frmStart.SSCommand2(1).Enabled = True
     frmStart.SSCommand2(0).Enabled = True
-    gbFireDVS = False
-    gbFireTech = False
+
     s = ""
     norma = True
     gbRunDVS = False
@@ -531,7 +530,6 @@ Public Function Verify_Damage()
             ROff A1, 1 'закрыть К 1-6
             ROff A0, 0 'Закрыть К7, ВЫКЛ Реле 1
             ROn A1, 2  'Стоп ДВС
-            gbFireDVS = True
             giStage2 = 0
             giStage = 3    'Переход на этап Danger
             giStage1 = 0
@@ -545,11 +543,9 @@ Public Function Verify_Damage()
         End If
     End If
 
-    If gnДатчик(46).Data = 1 Then
+    If isFireTech Then
         s = s & "Пожар в техн. отсеке ! "
-
         If gbStopAGNKS = False Then
-            gbFireTech = True
             s = ОстановАГНКС
             gbStopAGNKS = True
             StopOutput (2)

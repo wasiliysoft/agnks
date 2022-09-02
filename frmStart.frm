@@ -3854,7 +3854,7 @@ Public Sub ShowPict()
         'End If
 
         'Пожар в технологическом отсеке
-        'If gnДатчик(46).Data = 1 Then
+        'If isFireTech Then
         'Else
         'End If
 

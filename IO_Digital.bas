@@ -135,6 +135,10 @@ End Function
 Function isClutchOn() As Boolean
     isClutchOn = CBool(gnДатчик(36).Data)
 End Function
+
+Function isFireTech() as Boolean
+    isFireTech  = CBool(gnДатчик(46).Data)
+End Function
 'Функция выводит в port 1
 Public Sub ROn(port As Integer, n As Integer)
     Dim b As Byte

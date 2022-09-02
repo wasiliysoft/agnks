@@ -86,9 +86,6 @@ Public gbDontStat   As Boolean    ' флаг заправки (работы)
 
 'Аварийные ситуации
 Public gbStopAGNKS  As Boolean    ' флаг Останова АГНКС
-Public gbFireDVS    As Boolean    'пожар в отсеке ДВС
-Public gbFireTech   As Boolean    'пожар в тех. отсеке
-
 
 'Болванки
 Public gdTime       As Double    'Время заправки
