@@ -51,6 +51,7 @@ Begin VB.Form frmЗапрос
    End
    Begin VB.Label lblВопрос 
       Alignment       =   2  'Center
+      Caption         =   "Пистолет вставлен ?"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   24
@@ -76,6 +77,7 @@ Attribute VB_Exposed = False
 Option Explicit
 ' Переделывать на MSGBOX опасно, нужно убедиться что он не будет блокировать основной поток
 
+' Пистолет вставлен
 Private Sub Command1_Click()
     'Если выбрана заправка во время наполнения аккумуляторов
     If gbAkkum = True Then
@@ -95,7 +97,7 @@ Private Sub Command1_Click()
     frmЗапрос.Hide
 End Sub
 
-
+' Пистолет не вставлен
 Private Sub Command2_Click()
     If gbAkkum = False Then
         giStage2 = giStage2 + 1
@@ -117,9 +119,7 @@ Private Sub Command2_Click()
 End Sub
 
 
-Private Sub Form_Activate()
-    lblВопрос.Caption = gsMsg
-End Sub
+
 
 Private Sub Form_Load()
     Left = 10

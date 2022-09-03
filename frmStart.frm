@@ -396,7 +396,8 @@ Begin VB.Form frmStart
             BevelOuter      =   0
             BevelInner      =   1
             Begin VB.Timer Timer1 
-               Enabled         =   0   'False
+               Enabled         =   1   'True
+               Interval        =   500
                Left            =   6750
                Top             =   2835
             End
@@ -3231,18 +3232,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub CmdЗаправка_Click(Index As Integer)
-    Dim t           As Integer
-    'Если идет заправка аккумуляторов
-    If gbAkkum = True Then
-        gsMsg = "Пистолет вставлен ?"
-        frmЗапрос.Show 0
-        gbFrmShow = True
-    End If
-    giStage = 2
-End Sub
-
-
 Private Sub cmdDanger_Click()
     frmStart.cmdDanger.Visible = False
     ROff A1, 1  'закрыть К 1-6
@@ -3253,7 +3242,6 @@ Private Sub cmdDanger_Click()
     gbAkkum = False
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = True
-    frmStart.SSCmdStart.Caption = "Пуск АГНКС"
     gbStopAGNKS = False
 End Sub
 
@@ -3262,10 +3250,7 @@ Private Sub cmdKKM_Click()
     frmKKM.txtKKM.Text = frmStart.Label_Summa.Caption
     frmKKM.lblErrorKKM.Caption = gsErrorKKM    ' = Drvfr.ResultCodeDescription
     frmKKM.lblStatusKKM.Caption = gsРежимККМ    '= Drvfr.ECRModeDescription
-    frmKKM.Show 1
-
-
-
+    frmKKM.Show vbModal
 End Sub
 
 Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -3327,14 +3312,12 @@ Private Sub Form_Load()
    InitAGNKS
 
    If isDebug Then
-      frmDebug.Show
+      frmDebug.Show vbModeless
    End If
 
    Left = 10
    Top = 700
    frmStart.SSTab1.Tab = 3
-   Timer1.Interval = 500
-   Timer1.Enabled = True
    Show
 End Sub
 
@@ -3394,7 +3377,6 @@ Private Sub SSCmdStart_Click()
     Dim t           As Integer
     If gbCmdStart = True Then
         gbCmdStart = False
-        SSCmdStart.Caption = "ЗАПРАВКА"
         giStage = 1    'Переход на этап ПредПуск()
         giStage2 = 0
         giStage1 = 0
@@ -3403,8 +3385,7 @@ Private Sub SSCmdStart_Click()
         'Если идет заправка аккумуляторов
         cmdStop.Enabled = True
         If gbAkkum = True Then
-            gsMsg = "Пистолет вставлен ?"
-            frmЗапрос.Show 0
+            frmЗапрос.Show vbModeless
             gbFrmShow = True
         End If
         giStage = 2
@@ -3431,7 +3412,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             gbAkkum = False
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
-            frmStart.SSCmdStart.Caption = "Пуск АГНКС"
             If gbDontStat = True Then
                 StatRS_Insert
                 s = Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
@@ -3451,7 +3431,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             gbAkkum = False
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
-            frmStart.SSCmdStart.Caption = "Пуск АГНКС"
             'frmStart.Timer2.Enabled = False
             'ОстановДВС = "Двигатель остановлен !!!"
             frmStart.cmdDanger.Visible = True
@@ -3494,7 +3473,7 @@ End Sub
 
 Private Sub ssStat_Click()
     frmSt.Calendar1.Value = Now
-    frmSt.Show 0
+    frmSt.Show vbModeless
 End Sub
 
 
@@ -3536,7 +3515,7 @@ Private Sub Timer_ДВС_Timer()
 End Sub
 
 
-
+' 500 мсек
 Private Sub Timer1_Timer()
     Dim k, f        As Integer
     Dim Dv, Akk, t  As Integer
@@ -3681,7 +3660,6 @@ Private Sub Timer1_Timer()
             gbRunDVS = False
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
-            frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
             'frmStart.Timer2.Enabled = False
 
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
@@ -3723,6 +3701,11 @@ Private Sub Timer1_Timer()
         ОкноСообщений.ForeColor = &HFF0000
     End If
 
+   if (gbCmdStart) Then
+      frmStart.SSCmdStart.Caption = "Пуск АГНКС"
+   Else
+      frmStart.SSCmdStart.Caption = "ЗАПРАВКА"
+   End If
 End Sub
 
 Private Function formatSecToHHMMSS(ByVal s) As String

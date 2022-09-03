@@ -38,14 +38,35 @@ Public gbOnlyAkk    As Boolean    'Флаг заправки только от аккумуляторов
  ' 0 - Исходное состояние
  ' 1 - Предпуск
  ' 2 - Заправка
+ ' 3 - Danger
 Public giStage      As Integer   
-Public giStage1     As Integer    'ПодЭтапы предпускового этапа
+
+'Этапы предпуска
+' 0 - 
+' 1 - 
+Public giStage1     As Integer
+
+' 0 - 
+' 1 - 
+' 2 - Если вставлен пистолет то открывает К5 и переход на этап 3
+' 3 - Если в АКК достоачно давления то окрыть К6, переход на этап 4
+' 4 - Заправка АКК и Авто
+' 5 - 
+' 6 - 
+' 7 - Во время заправки АКК переход к заправке АВТО (Окрывает К5, переход на этап 4)
+' 8 - Старт зааправки только от АКК (Открывает К5 и К6, переход на этап 9)
+' 9 - Запрвка только от АКК (ожидает перепад абсолютный перепад между ДД2.1 и ДД2.2)
 Public giStage2     As Integer    'ПодЭтапы этапа Заправки
+
 Public gbFrmShow    As Boolean
+
+' gbCmdStart = true
+' giStage = 3,0
+' gbCmdStart = false
+' giStage = 1
 Public gbCmdStart   As Boolean    'Вид кнопки Пуск\Заправка
 Public gbAkkum      As Boolean
 Public giTrigger    As Integer    ' Для формы Запроса
-Public gsMsg        As String
 Public Car          As Integer
 Public gbЗаправка   As Boolean    'Показывает когда нужно в главном цикле считать расход
 'газа на заправку одного автомобиля

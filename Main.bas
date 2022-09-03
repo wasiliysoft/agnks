@@ -42,7 +42,6 @@ Public Function ОстановАГНКС() As String
     gbAkkum = False
     frmStart.SSCmdStart.Enabled = False
     gbCmdStart = True
-    frmStart.SSCmdStart.Caption = "Пуск АГНКС"
     StopOutput (2)
     gbStopAGNKS = True
     ОстановАГНКС = "Останов АГНКС"
@@ -66,7 +65,6 @@ Public Function ОстановДВС() As String
 End Function
 'Сама процедура заправки
 Public Function Заправка()
-    Dim dFullCar    As Double    'Здесь запоминаем давление в баке автомобиля
     Dim s, s1       As String
     Dim MaxIR       As Double    'Запоминаем max расход при открытии КЭМ6
     Dim p           As Double
@@ -132,8 +130,7 @@ Public Function Заправка()
 
     ' ПОДЭТАП 1
     If (giStage2 = 0) And (gbFrmShow = False) Then
-        gsMsg = "Пистолет вставлен ?"
-        frmЗапрос.Show 0
+        frmЗапрос.Show vbModeless
         gbFrmShow = True
         Заправка = "Выведен диалог (пистолет)"
         Exit Function
@@ -141,7 +138,7 @@ Public Function Заправка()
 
     ' ПОДЭТАП 2
     If (giStage2 = 1) And (gbFrmShow = False) Then
-        If giTrigger = 0 Then
+        If giTrigger = 0 Then ' Пистолет не вставлен
             giStage2 = 0
             gbЗаправка = True
             gbAkkum = False
@@ -150,7 +147,7 @@ Public Function Заправка()
 
             Заправка = "Переход на этап ПредПуск"
             Exit Function
-        Else
+        Else ' Пистолет вставлен
             giStage2 = 2
             Car = 1
             s = "Заправка машин"
@@ -161,7 +158,6 @@ Public Function Заправка()
     If giStage2 = 2 Then
         If Car = 1 Then
             'Заправка машин
-
             ROn A1, 64  'Открыть КЭ5
             giStage2 = 3
             gdРасход1 = 0    'Обнуляем расход на одну машину
@@ -174,11 +170,10 @@ Public Function Заправка()
 
     ' ПОДЭТАП 4
     If giStage2 = 3 Then
-        dFullCar = gnDif(5)    'Запоминаем давление в баке машины
         'Считать расход заправки автомобиля
         gbЗаправка = True
 
-        If (gnDif(7) - dFullCar) >= 2 Then    'Разница давлений в аккумуляторах и баке
+        If (gnDif(7) - gnDif(5)) >= 2 Then    'Разница давлений в аккумуляторах и баке
             ROn A1, 128 'Открыть К6 - заправка и от аккумуляторов
         End If
 
@@ -256,7 +251,6 @@ Public Function Заправка()
     ' ПОДЭТАП 7  - во время заправки аккумуляторов переход на заправку машин
     If giStage2 = 7 Then       
         ROn A1, 64 'Открыть КЭ5
-        dFullCar = gnDif(5)    'Запоминаем давление в баке машины
         s = "Переходим на заправку машин"
         ResetExpenseCounter_2
         StartOutput (2)
@@ -358,7 +352,7 @@ Public Function ПредПуск() As String
                 gbRunDVS = False
                 frmStart.SSCmdStart.Enabled = False
                 gbCmdStart = True
-                frmStart.SSCmdStart.Caption = "ПУСК АГНКС"
+
                 'frmStart.Timer2.Enabled = False
                 'TODO проверить коррекность gnДатчик(25)
                 If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
@@ -439,8 +433,6 @@ Public Function Verify_Damage()
             gbAkkum = False
             frmStart.SSCmdStart.Enabled = False
             gbCmdStart = True
-            frmStart.SSCmdStart.Caption = "Пуск АГНКС"
-            frmStart.SSCmdStart.Visible = True
             StopOutput (2)
             gbStopAGNKS = True
         End If

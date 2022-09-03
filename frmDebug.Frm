@@ -2,8 +2,8 @@ VERSION 5.00
 Begin VB.Form frmDebug 
    Caption         =   "isDebug = true"
    ClientHeight    =   6030
-   ClientLeft      =   1335
-   ClientTop       =   2415
+   ClientLeft      =   8865
+   ClientTop       =   5715
    ClientWidth     =   10140
    LinkTopic       =   "Form1"
    PaletteMode     =   1  'UseZOrder
