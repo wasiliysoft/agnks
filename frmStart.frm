@@ -396,7 +396,6 @@ Begin VB.Form frmStart
             BevelOuter      =   0
             BevelInner      =   1
             Begin VB.Timer Timer1 
-               Enabled         =   1   'True
                Interval        =   500
                Left            =   6750
                Top             =   2835
@@ -3254,7 +3253,7 @@ Private Sub cmdKKM_Click()
 End Sub
 
 Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim s, s1       As String
+    Dim s1       As String
     cmdStop.Enabled = False
 
     ROff A1, 191 'Закрыть К5 (пистолет)
@@ -3265,8 +3264,7 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     StopOutput (2)
     StatRS_Insert
 
-    s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-    frmStart.lstStat(0).AddItem s
+    frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
 
 
     gbЗаправка = False
@@ -3396,7 +3394,6 @@ End Sub
 
 
 Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim s           As String
     If giStage = 2 Then
         StopOutput (2)
     End If
@@ -3414,8 +3411,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             gbCmdStart = True
             If gbDontStat = True Then
                 StatRS_Insert
-                s = Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
-                frmStart.lstStat(0).AddItem s
+                frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
                 gbDontStat = False    'Можно работать с диском
             End If
 
@@ -3436,9 +3432,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             frmStart.cmdDanger.Visible = True
             If gbDontStat = True Then
                 StatRS_Insert
-                s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-                frmStart.lstStat(0).AddItem s
-
+                frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
                 gbDontStat = False    'Можно работать с диском
             End If
 
@@ -3449,7 +3443,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
 End Sub
 
 Private Sub SSExit_Click()
-    Dim s           As String
     If gbDontStat = True Then
         StatRS_Insert
         Debug.Print "Сохранено состояние заправки"
@@ -3458,7 +3451,6 @@ Private Sub SSExit_Click()
         saveGMC_in_DB
         Debug.Print "Моточасы сохранены"
     End If
-
    ' FIXME корректно закрыть базу
    '   StatRS.Close
    '   StatDB.Close
@@ -3517,15 +3509,13 @@ End Sub
 
 ' 500 мсек
 Private Sub Timer1_Timer()
-    Dim k, f        As Integer
+    Dim k           As Integer
     Dim Dv, Akk, t  As Integer
     Dim Temp        As Double
-    Dim s           As String
     Dim s1          As String
     Dim ErrDat      As Boolean
     ErrDat = False
-    s = ""
-
+    Dim V            As Double ' Объем заправленного газа
     ОпросПлат
     Обработка_1
     
@@ -3555,73 +3545,47 @@ Private Sub Timer1_Timer()
     ' TODO идея с усреднением
     If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
         For k = 2 To 16
-
             If sum(k) = -1 Then
+                sum(k) = 0
                 Text2(k - 1).ForeColor = &HFF
                 Text1(k - 1).Text = "Не исправен"
-                s = "Не исправен"
-                sum(k) = 0
             Else
                 sum(k) = sum(k) / glCounter
                 Text2(k - 1).ForeColor = &H80000012
-                ' Проверка на ДД1.1 и ДД1.2 - для них другой шаблон
-                If (k = 1) Or (k = 2) Then
-                    Text1(k - 1).Text = Format(sum(k), "##0.000")
-                    s = Text1(k - 1).Text
-                Else
-                    Text1(k - 1).Text = Format(sum(k), "##0.000")
-                    s = Text1(k - 1).Text
-                End If
+                Text1(k - 1).Text = Format(sum(k), "##0.000")
             End If
 
             'Для чистового вывода
             Select Case k
-                Case 2
-                    s = Format(sum(k) / 0.0981, "##0.0")
-                    Р_вход_АГНКС.Caption = s
-                Case 6
-                    s = Format(sum(k) / 0.0981, "##0.0")
-                    Р_выход_компр.Caption = s
-                Case 7
-                    s = Format(sum(k) / 0.0981, "##0.0")
-                    Р_аккумулятор.Caption = s
-                Case 8
-                    s = Format(sum(k), "#0.0")
-                    Т_после_детандера.Caption = s
-                Case 9
-                    s = Format(sum(k), "#0.0")
-                    Т_газ_на_входе.Caption = s
-                Case 4
-                    s = Format(sum(k) / 0.0981, "##0.0")
-                    Р_автобаллон.Caption = s
-                Case 14
-                    s = Format((sum(k) \ 100) * 100, "###0")
-                    ОборотыДВС.Caption = s
+                Case 2: Р_вход_АГНКС.Caption = Format(sum(k) / 0.0981, "##0.0")
+                Case 6: Р_выход_компр.Caption = Format(sum(k) / 0.0981, "##0.0")
+                Case 7: Р_аккумулятор.Caption = Format(sum(k) / 0.0981, "##0.0")
+                Case 8: Т_после_детандера.Caption = Format(sum(k), "#0.0")
+                Case 9: Т_газ_на_входе.Caption = Format(sum(k), "#0.0")
+                Case 4: Р_автобаллон.Caption = Format(sum(k) / 0.0981, "##0.0")
+                Case 14: ОборотыДВС.Caption = Format((sum(k) \ 100) * 100, "###0")
             End Select
-
             sum(k) = 0
         Next k
         glCounter = 0
     End If
 
 
-    lblV.Caption = Format(gnDif(16), "00.0" & " В")
-
+    lblV.Caption = Format(gnDif(16), "00.0" & " В") ' Напряжение
     Наработка_ДВС.Caption = Format((GMC + MotorCount) / 60, "00")
 
     'Выводим расход на заправку одной машины
-    If (gdРасход1 < 0) Then
-        gdРасход1 = 0
-    End If
-    s = Format((gdРасход1 / gdPlot), "0.0")
-    ЗаправленоГаза.Caption = s
-    frmStart.Label_Summa.Caption = Format((CDbl(s) * gdPrice), "##0.00")
+    If (gdРасход1 < 0) Then gdРасход1 = 0
 
-    s = Format(gdРасход1, "0.00")
-    txtKg.Caption = s
+    txtKg.Caption = Format(gdРасход1, "0.00")
 
-    'Выводить в минутах
-    txtTime.Caption = formatSecToHHMMSS(gdTime)
+    V = Round(gdРасход1 / gdPlot, 1) ' Округление до десятых
+    ЗаправленоГаза.Caption = Format(V, "0.0")
+    frmStart.Label_Summa.Caption = Format(V * gdPrice, "##0.00")
+
+    txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
+
+
     'Проверка датчиков
     ErrDat = False
     If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
@@ -3671,37 +3635,35 @@ Private Sub Timer1_Timer()
             Case 0:
                 '<<<Заправка>>> 1 Этап
                 ОкноСообщений.Caption = ИсхСост
-                f = DoEvents
+                DoEvents
             Case 1:
                 '<<<Заправка>>> 2 Этап
                 ОкноСообщений.Caption = ПредПуск
-                f = DoEvents
+                DoEvents
             Case 2:
                 '<<<Заправка>>> 3 Этап
                 ОкноСообщений.Caption = Заправка
-                f = DoEvents
+                DoEvents
             Case 3:
                 'Аварийное состояние
                 ОкноСообщений.Caption = Danger
-                f = DoEvents
+                DoEvents
         End Select
     End If
 
     'Проверка аварийных датчиков
-    s = ""
     s1 = ""
     s1 = Verify_Damage
     If s1 <> "" Then
         ОкноСообщений.BackColor = &HFF
         ОкноСообщений.ForeColor = &HFFFF&
-        s = ОкноСообщений.Caption + " " + s1
-        ОкноСообщений.Caption = s
+        ОкноСообщений.Caption = ОкноСообщений.Caption + " " + s1
     Else
         ОкноСообщений.BackColor = &HE0E0E0
         ОкноСообщений.ForeColor = &HFF0000
     End If
 
-   if (gbCmdStart) Then
+   If (gbCmdStart) Then
       frmStart.SSCmdStart.Caption = "Пуск АГНКС"
    Else
       frmStart.SSCmdStart.Caption = "ЗАПРАВКА"
@@ -3746,7 +3708,6 @@ End Sub
 
 
 Public Sub ShowPict()
-    Dim s           As String
     With frmStart
         'Статус кранов
         .КЭ1(0).Visible = Not (k1_isOpen)
@@ -3813,11 +3774,4 @@ Public Sub ShowPict()
         'Else
         'End If
     End With
-
-    ' TODO вынести из этой функции
-    s = Format(gdK, "0.000")
-    s = s + "   - коэффициент"
-    frmStart.lblPC.Caption = s
-
-
 End Sub

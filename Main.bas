@@ -402,7 +402,7 @@ Public Sub InitAGNKS()
 
     gbCmdStart = True    'Сначала Пуск АГНКС
     giMainРасход = 1    'Начинаем добавлять к показанию ИР1
-    
+
     InitDisk
     ConnectKKM
     Init_Controllers

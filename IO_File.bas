@@ -62,15 +62,17 @@ Private Sub init_gdK_file()
             gdK = rec.PC
         Close #fh
     End If
+    frmStart.lblPC.Caption = Format(gdK, "0.000") + "   - коэффициент"
 End Sub
 
 'FIXME обработать отмену ввода
 Sub setting_gdK()
     Dim fh As Long
     Dim s As String
-    s = InputBox("Введите пароль", "DANGER")
+    Dim title As String: title = "DANGER - Обновление поправочного коэффициента"
+    s = InputBox("Введите пароль", title)
     If (s = Password) Then
-        s = InputBox("Введите поправочный коэффициент", "DANGER", Format(gdK, "0.000"))
+        s = InputBox("Введите поправочный коэффициент", title, Format(gdK, "0.000"))
         If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
             gdK = CDbl(s)
             fh = FreeFile
@@ -84,17 +86,19 @@ Sub setting_gdK()
     Else
         MsgBox "Пароль не верный", vbCritical
     End If
+    init_gdK_file
 End Sub
 
 Sub update_gdK_pass()
     Dim fh As Long
     Dim s As String
     Dim s1 As String
-    s = InputBox("Введите пароль", "DANGER")
+    Dim title As String: title = "DANGER - Обновление пароля"
+    s = InputBox("Введите текущий пароль", title)
     If (s = Password) Then
-        s = InputBox("Введите новый пароль", "DANGER")
+        s = InputBox("Введите новый пароль", title)
         If (Len(s) > 0) And (Len(s) <= 7) Then
-            s1 = InputBox("Повторите новый пароль", "DANGER")
+            s1 = InputBox("Повторите новый пароль", title)
             If (s = s1) Then
                 Password = s1
                 fh = FreeFile
@@ -111,6 +115,7 @@ Sub update_gdK_pass()
     Else
         MsgBox "Пароль не верный", vbCritical
     End If
+    init_gdK_file
 End Sub
 
 Private Sub init_price_file()
@@ -141,9 +146,6 @@ Private Sub init_price_file()
 End Sub
 
 Private Sub init_data_file()
-'
-' Загружает информацию о датчиках.
-'
     Dim fh As Long: fh = FreeFile
     Dim s As String
     Dim i As Integer

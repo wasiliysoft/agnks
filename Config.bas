@@ -8,7 +8,10 @@ Global Const gdUpLevel = 200 * 0.0981    'Предел давления для заправки
 
 Global Const gdRashAkkEnd = 65    'Нижний расход по которому отсекается поток от аккумуляторов
 
-'Определение констант
+' размер цикла дла усреднения аналоговых показаний чистового вывода
+Global Const glAver = 2 
+
+
 'Global Const ggMinPress = 197    ' Минимальное давление в аккумуляторах
 
 Global Const conHwndTopmost = -1
@@ -79,7 +82,6 @@ Public giMainРасход As Integer    'Флаг для подсчета расхода всего газа:
 Public gdK          As Double    'Поправочный коэффициент
 
 ' Переменные для усреднения
-Public glAver       As Long    ' размер цикла дла усреднения
 Public glCounter    As Long
 Public sum(31)      As Double
 
