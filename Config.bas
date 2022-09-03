@@ -4,7 +4,7 @@ Option Explicit
 
 Global Const isDebug = true
 
-Global Const gdUpLevel = 200 * 0.0981    'Предел давления для заправки
+Global Const gdUpLevel = 200 * 0.0981    'Предел давления для заправки АКК
 
 Global Const gdRashAkkEnd = 65    'Нижний расход по которому отсекается поток от аккумуляторов
 

@@ -4,18 +4,17 @@ Option Explicit
 'Private Const gKn = (2740 + 448) / 448
 
 Public Sub ОпросПлат()
-    If isDebug Then
-        Exit Sub
+    If Not isDebug Then
+        'Прочитать состояние портов платы PET-48DIO
+        update_gn48DIO
+        'Опрос каналов платы ACL8113
+        update_ggACL8113
     End If
-    'Прочитать состояние портов платы PET-48DIO
-    update_gn48DIO
 
-    'Опрос каналов платы ACL8113
-    update_ggACL8113
+    Обработка_1
 End Sub
 
-
-Public Sub Обработка_1()
+Private Sub Обработка_1()
     Dim i As Integer
     Dim dTmp As Double
 

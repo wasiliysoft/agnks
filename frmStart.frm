@@ -3502,8 +3502,6 @@ Private Sub Timer_ДВС_Timer()
 
 
     Панель_Авто.Visible = k5_isOpen
-    Автобаллон.FloodPercent = getCarPercent
-    Аккумулятор.FloodPercent = getAkkPercent
 End Sub
 
 
@@ -3514,10 +3512,8 @@ Private Sub Timer1_Timer()
     Dim Temp        As Double
     Dim s1          As String
     Dim ErrDat      As Boolean
-    ErrDat = False
-    Dim V            As Double ' Объем заправленного газа
+    Dim V           As Double ' Объем заправленного газа
     ОпросПлат
-    Обработка_1
     
     ShowPict 'Управление изображением
 
@@ -3530,7 +3526,7 @@ Private Sub Timer1_Timer()
         End If
     Next k
 
-
+    ' Цикл для суммирования аналоговых значений
     glCounter = glCounter + 1
     For k = 2 To 16
         If gnDif(k) = -1 Then
@@ -3542,7 +3538,6 @@ Private Sub Timer1_Timer()
         End If
     Next k
 
-    ' TODO идея с усреднением
     If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
         For k = 2 To 16
             If sum(k) = -1 Then
@@ -3559,10 +3554,14 @@ Private Sub Timer1_Timer()
             Select Case k
                 Case 2: Р_вход_АГНКС.Caption = Format(sum(k) / 0.0981, "##0.0")
                 Case 6: Р_выход_компр.Caption = Format(sum(k) / 0.0981, "##0.0")
-                Case 7: Р_аккумулятор.Caption = Format(sum(k) / 0.0981, "##0.0")
+                Case 7
+                  Р_аккумулятор.Caption = Format(sum(k) / 0.0981, "##0.0")
+                  Аккумулятор.FloodPercent = getP_As_Percent(sum(k))
                 Case 8: Т_после_детандера.Caption = Format(sum(k), "#0.0")
                 Case 9: Т_газ_на_входе.Caption = Format(sum(k), "#0.0")
-                Case 4: Р_автобаллон.Caption = Format(sum(k) / 0.0981, "##0.0")
+                Case 4
+                  Р_автобаллон.Caption = Format(sum(k) / 0.0981, "##0.0")
+                  Автобаллон.FloodPercent = getP_As_Percent(sum(k))
                 Case 14: ОборотыДВС.Caption = Format((sum(k) \ 100) * 100, "###0")
             End Select
             sum(k) = 0
@@ -3669,30 +3668,6 @@ Private Sub Timer1_Timer()
       frmStart.SSCmdStart.Caption = "ЗАПРАВКА"
    End If
 End Sub
-
-Private Function formatSecToHHMMSS(ByVal s) As String
-   Dim d As Date
-   d = DateAdd("s", s, d)
-   formatSecToHHMMSS = Format(d, "hh:nn:ss")
-End Function
-
-Private Function getAkkPercent() As Integer
-    getAkkPercent = 100 * (Р_аккумулятор / 200) ' TODO вынести 200
-    If (getAkkPercent > 100) Then
-        getAkkPercent = 100
-    ElseIf (getAkkPercent < 0) Then
-        getAkkPercent = 0
-    End If
-End Function
-
-Private Function getCarPercent() As Integer
-    getCarPercent = 100 * (Р_автобаллон / 200) ' TODO вынести 200
-    If (getCarPercent > 100) Then
-        getCarPercent = 100
-    ElseIf (getCarPercent < 0) Then
-        getCarPercent = 0
-    End If
-End Function
 
 
 
