@@ -2,13 +2,13 @@ Attribute VB_Name = "DB"
 Option Explicit
 
 
-Public StatDB       As Database 
+Public StatDB       As Database
 Public SelectRS     As Recordset
 Private StatRS       As Recordset
 Private StatWS       As Workspace
 
 
-Sub init_Database()    
+Sub init_Database()
     Dim s As String
     s = App.Path + "\base.mdb"
     Set StatWS = DBEngine.Workspaces(0)
@@ -17,13 +17,13 @@ Sub init_Database()
     'TODO создать базу если пустая
 End Sub
 
-Function getGMC_from_DB() as Long
+Function getGMC_from_DB() As Long
     Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
     If Not IsNull(SelectRS(0)) Then
         getGMC_from_DB = SelectRS("MOTO")
     Else
         getGMC_from_DB = 0
-    End if
+    End If
     SelectRS.Close
     Set SelectRS = Nothing
 End Function
@@ -54,7 +54,7 @@ Sub load_statistic_from_DB()
    frmStart.lblStat(1).Caption = "За " + Format(Now, "mmmm")
    frmStart.lblStat(2).Caption = "За " + Format(Now, "yyyy") + " год"
 
-    If  StatRS.EOF Then 
+    If StatRS.EOF Then
         'пустая база данных
         Exit Sub
     End If
@@ -79,13 +79,13 @@ Sub load_statistic_from_DB()
         End If
     Next i
 
-    'Колонка "За год" в цикле посчитать все суммарные заправки 
+    'Колонка "За год" в цикле посчитать все суммарные заправки
     'за месяцы этого года начиная с января и до предыдущего месяца.
     frmStart.lstStat(2).Clear
     If Year(dateMax) = Year(dateNow) Then
         For i = 1 To Month(dateNow) - 1
-            s ="#" & i & "/1/" & Year(dateNow) & " 00:00:00#"
-            s1 ="#" & i & "/" & lastDayByMonth(i,Year(dateNow)) & "/" & Year(dateNow) & " 23:59:59#"
+            s = "#" & i & "/1/" & Year(dateNow) & " 00:00:00#"
+            s1 = "#" & i & "/" & lastDayByMonth(i, Year(dateNow)) & "/" & Year(dateNow) & " 23:59:59#"
             Set SelectRS = StatDB.OpenRecordset("select SUM(GAZ_CAR) from stat where (stat.DATA between " & s & " AND " & s1 & ")")
             If Not IsNull(SelectRS(0)) Then
                 s = Format(i, "00") + "        " + Format(SelectRS(0), "###0.00")
@@ -99,7 +99,7 @@ Sub load_statistic_from_DB()
     If Month(dateMax) = Month(dateNow) Then
         For i = 1 To Day(dateNow) - 1
             s = "#" & Month(dateNow) & "/" & i & "/" & Year(dateNow) & " 00:00:00#"
-            s1 = "#" & Month(dateNow) & "/" & (i + 1) & "/" &  Year(dateNow) & " 23:59:59#"
+            s1 = "#" & Month(dateNow) & "/" & (i + 1) & "/" & Year(dateNow) & " 23:59:59#"
             Set SelectRS = StatDB.OpenRecordset("select SUM(GAZ_CAR) from stat where (stat.DATA between " & s & " AND " & s1 & ")")
             If Not IsNull(SelectRS(0)) Then
                 s = Format(i, "00") + "        " + Format(SelectRS(0), "###0.00")
@@ -109,9 +109,15 @@ Sub load_statistic_from_DB()
     End If
 
     'Колонка "За сегодня"
+    update_Journal_col_1
+End Sub
+
+Private Sub update_Journal_col_1()
+    Dim s As String, s1 As String
+    Dim i As Long
     frmStart.lstStat(0).Clear
-    s = Format(dateNow, "\#mm\/dd\/yyyy 00:00:00\#")
-    s1 = Format(dateNow, "\#mm\/dd\/yyyy 23:59:59\#")
+    s = Format(Now, "\#mm\/dd\/yyyy 00:00:00\#")
+    s1 = Format(Now, "\#mm\/dd\/yyyy 23:59:59\#")
     Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
     If SelectRS.RecordCount >= 1 Then
         SelectRS.MoveLast
@@ -122,11 +128,11 @@ Sub load_statistic_from_DB()
             frmStart.lstStat(0).AddItem (s)
             SelectRS.MoveNext
         Next i
-    End If 
+    End If
 End Sub
 
 Sub StatRS_Insert()
-    Dim v as Double: v = gdРасход1 / gdPlot 
+    Dim v As Double: v = gdРасход1 / gdPlot
     If v > 0.1 Then ' Защита от околонулевых записей заправок
         GMC = GMC + MotorCount
         MotorCount = 0
@@ -134,26 +140,18 @@ Sub StatRS_Insert()
         StatRS("DATA") = Now
         StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
         StatRS("GAZ_IR1") = gdИР1
-        StatRS("MOTO") = GMC 
+        StatRS("MOTO") = GMC
         StatRS.Update
-        
-        frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
+        update_Journal_col_1
     End If
     ' FIXME после добавления в базу нужно обновить
-    ' колонки "За сегодня", "За месяц", "За год"
+    ' колонки "За месяц", "За год"
     ' при этом учитывать возможность работы 24/7
-    ' если произойдет смена даты или месяца 
+    ' если произойдет смена даты или месяца
     ' то и колонки должны обновится
-    ' 
-    ' Так-же не обновляется заправка за текущее число
-    ' в колонке месяц и сумма за год
-
-    ' Возможно добавить на вкладку "Журнал"
-    ' кнопку "Обновить" которая перезагрузит
-    ' данные из базы
-    ' 
 End Sub
-Public Function lastDayByMonth(ByVal m, ByVal yyyy) as Integer
+
+Public Function lastDayByMonth(ByVal m, ByVal yyyy) As Integer
     Select Case m
         Case 1, 3, 5, 7, 8, 10, 12
             lastDayByMonth = 31
