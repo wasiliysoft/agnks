@@ -3236,10 +3236,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private nTimer1Counter As Long ' Счетчик срабатывания Timer1
-Private last_gdРасход1 As Double
-Private last_CarPercent as Integer
-Private last_upd_Label_Avg_Left_Time_Car as Date
+
 
 Private Sub cmdDanger_Click()
     frmStart.cmdDanger.Visible = False
@@ -3570,12 +3567,7 @@ Private Sub Timer1_Timer()
     Label_Summa.Caption = Format(v * gdPrice, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
 
-    If (nTimer1Counter Mod 4 = 0) Then ' раз в 2 сек
-      s = ((gdРасход1 - last_gdРасход1) / gdPlot) * 30
-      Label_Avg_Speed_Car = Format(s, "0.00")
-      s = ""
-      last_gdРасход1 = gdРасход1
-    End If
+    Label_Avg_Speed_Car =  Format(getAvgRefuelingSpeed / gdPlot,"0.00")
 
    '  i = CInt(Автобаллон.FloodPercent) - last_CarPercent
    '  If i > 1 Then

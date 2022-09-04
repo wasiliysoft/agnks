@@ -106,7 +106,7 @@ Public gbStopAGNKS  As Boolean    ' флаг Останова АГНКС
 
 'Болванки
 Public gdTime       As Double    'Время заправки
-
+Public nTimer1Counter As Long ' Счетчик срабатывания Timer1
 
 Public giDVS        As Integer
 Public gdPlot       As Double
