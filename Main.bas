@@ -103,7 +103,6 @@ Public Function Заправка()
             gbDontStat = False    'Можно работать с диском
             'Заполнить статистику по заправке
             StatRS_Insert
-            frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
 
             'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
             frmStart.SSCmdStart.Enabled = True
@@ -195,8 +194,7 @@ Public Function Заправка()
             gdTime = GetTimeCounter_2
             gbDontStat = False    'Можно работать с диском
             StatRS_Insert 'Заполнить статистику по заправке
-            frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-      
+            
             'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
             frmStart.SSCmdStart.Enabled = True
             gbAkkum = True

@@ -126,15 +126,19 @@ Sub load_statistic_from_DB()
 End Sub
 
 Sub StatRS_Insert()
-    GMC = GMC + MotorCount
-    MotorCount = 0
-    StatRS.AddNew
-    StatRS("DATA") = Now
-    StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
-    StatRS("GAZ_IR1") = gdИР1
-    StatRS("MOTO") = GMC 
-    StatRS.Update
-
+    Dim v as Double: v = gdРасход1 / gdPlot 
+    If v > 0.1 Then ' Защита от околонулевых записей заправок
+        GMC = GMC + MotorCount
+        MotorCount = 0
+        StatRS.AddNew
+        StatRS("DATA") = Now
+        StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
+        StatRS("GAZ_IR1") = gdИР1
+        StatRS("MOTO") = GMC 
+        StatRS.Update
+        
+        frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
+    End If
     ' FIXME после добавления в базу нужно обновить
     ' колонки "За сегодня", "За месяц", "За год"
     ' при этом учитывать возможность работы 24/7

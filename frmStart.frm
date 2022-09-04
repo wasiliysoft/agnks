@@ -3258,9 +3258,6 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     
     StopOutput (2)
     StatRS_Insert
-
-    frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-
     If gbOnlyAkk = True Then
         ROff A1, 127 'Закрыть К6 (Акк)
         frmStart.SSCmdStart.Enabled = True
@@ -3398,7 +3395,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             toStage_0
             If gbDontStat = True Then
                 StatRS_Insert
-                frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
                 gbDontStat = False    'Можно работать с диском
             End If
 
@@ -3413,7 +3409,6 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             frmStart.cmdDanger.Visible = True
             If gbDontStat = True Then
                 StatRS_Insert
-                frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
                 gbDontStat = False    'Можно работать с диском
             End If
 
