@@ -29,7 +29,7 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
-      Tab             =   4
+      Tab             =   3
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
@@ -49,12 +49,13 @@ Begin VB.Form frmStart
       Tab(2).ControlCount=   1
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
-      Tab(3).ControlEnabled=   0   'False
+      Tab(3).ControlEnabled=   -1  'True
       Tab(3).Control(0)=   "Frame1(3)"
+      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
-      Tab(4).ControlEnabled=   -1  'True
+      Tab(4).ControlEnabled=   0   'False
       Tab(4).Control(0)=   "lblStat(3)"
       Tab(4).Control(0).Enabled=   0   'False
       Tab(4).Control(1)=   "lblStat(2)"
@@ -79,7 +80,7 @@ Begin VB.Form frmStart
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
          Height          =   690
-         Left            =   225
+         Left            =   -74775
          TabIndex        =   197
          Top             =   6525
          Width           =   2130
@@ -90,7 +91,7 @@ Begin VB.Form frmStart
          Height          =   5520
          Index           =   0
          ItemData        =   "frmStart.frx":008C
-         Left            =   180
+         Left            =   -74820
          List            =   "frmStart.frx":008E
          TabIndex        =   192
          Top             =   810
@@ -102,7 +103,7 @@ Begin VB.Form frmStart
          Height          =   5520
          Index           =   1
          ItemData        =   "frmStart.frx":0090
-         Left            =   2580
+         Left            =   -72420
          List            =   "frmStart.frx":0092
          TabIndex        =   191
          Top             =   810
@@ -114,7 +115,7 @@ Begin VB.Form frmStart
          Height          =   5520
          Index           =   2
          ItemData        =   "frmStart.frx":0094
-         Left            =   4980
+         Left            =   -70020
          List            =   "frmStart.frx":0096
          TabIndex        =   190
          Top             =   810
@@ -126,7 +127,7 @@ Begin VB.Form frmStart
          Height          =   5520
          Index           =   3
          ItemData        =   "frmStart.frx":0098
-         Left            =   7380
+         Left            =   -67620
          List            =   "frmStart.frx":009A
          TabIndex        =   189
          Top             =   810
@@ -135,7 +136,7 @@ Begin VB.Form frmStart
       Begin VB.CommandButton cmdUpdateStat 
          Caption         =   "Обновить журнал"
          Height          =   690
-         Left            =   7380
+         Left            =   -67620
          TabIndex        =   188
          Top             =   6525
          Width           =   2175
@@ -146,7 +147,7 @@ Begin VB.Form frmStart
          Caption         =   "---"
          Height          =   7110
          Index           =   3
-         Left            =   -75000
+         Left            =   0
          TabIndex        =   132
          Top             =   315
          Width           =   9795
@@ -184,6 +185,16 @@ Begin VB.Form frmStart
             TabIndex        =   179
             Top             =   4590
             Width           =   3165
+            Begin VB.Label Label14 
+               AutoSize        =   -1  'True
+               BackColor       =   &H00C0C0C0&
+               Caption         =   "Н/м. куб. в минуту"
+               Height          =   195
+               Left            =   180
+               TabIndex        =   198
+               Top             =   1125
+               Width           =   1410
+            End
             Begin VB.Label Label9 
                AutoSize        =   -1  'True
                BackColor       =   &H00C0C0C0&
@@ -201,7 +212,7 @@ Begin VB.Form frmStart
                Height          =   195
                Left            =   180
                TabIndex        =   186
-               Top             =   1035
+               Top             =   900
                Width           =   1755
             End
             Begin VB.Label Label_Avg_Speed_Car 
@@ -426,7 +437,7 @@ Begin VB.Form frmStart
             Begin VB.Label Label6 
                AutoSize        =   -1  'True
                BackColor       =   &H00C0C0C0&
-               Caption         =   "н / м"
+               Caption         =   "Н / м"
                BeginProperty Font 
                   Name            =   "MS Sans Serif"
                   Size            =   12
@@ -440,7 +451,7 @@ Begin VB.Form frmStart
                Left            =   2700
                TabIndex        =   173
                Top             =   675
-               Width           =   480
+               Width           =   525
             End
             Begin VB.Label Label15 
                AutoSize        =   -1  'True
@@ -535,7 +546,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -667,7 +678,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -792,7 +803,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -894,7 +905,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -3154,7 +3165,7 @@ Begin VB.Form frmStart
          EndProperty
          Height          =   240
          Index           =   0
-         Left            =   525
+         Left            =   -74475
          TabIndex        =   196
          Top             =   450
          Width           =   1275
@@ -3173,7 +3184,7 @@ Begin VB.Form frmStart
          EndProperty
          Height          =   255
          Index           =   1
-         Left            =   2565
+         Left            =   -72435
          TabIndex        =   195
          Top             =   450
          Width           =   2205
@@ -3192,7 +3203,7 @@ Begin VB.Form frmStart
          EndProperty
          Height          =   255
          Index           =   2
-         Left            =   4995
+         Left            =   -70005
          TabIndex        =   194
          Top             =   450
          Width           =   2205
@@ -3211,7 +3222,7 @@ Begin VB.Form frmStart
          EndProperty
          Height          =   255
          Index           =   3
-         Left            =   7335
+         Left            =   -67665
          TabIndex        =   193
          Top             =   450
          Width           =   2250
@@ -3224,6 +3235,11 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private nTimer1Counter As Long ' Счетчик срабатывания Timer1
+Private last_gdРасход1 As Double
+Private last_CarPercent as Integer
+Private last_upd_Label_Avg_Left_Time_Car as Date
 
 Private Sub cmdDanger_Click()
     frmStart.cmdDanger.Visible = False
@@ -3470,77 +3486,79 @@ Private Sub Timer_ДВС_Timer()
     End If
 
 
-    Панель_Авто.Visible = k5_isOpen
 End Sub
 
 
 ' 500 мсек
 Private Sub Timer1_Timer()
-    Dim k           As Integer
+    Dim i           As Integer
     Dim Dv, Akk, t  As Integer
     Dim Temp        As Double
     Dim s1          As String
     Dim ErrDat      As Boolean
     Dim v           As Double ' Объем заправленного газа
+    Dim s           As String
+    nTimer1Counter = nTimer1Counter + 1
     ОпросПлат
     
     ShowPict 'Управление изображением
 
 
-    For k = 0 To 47
-        If gnДатчик(k).Data = 0 Then
-            Label1(k).BackColor = &HFF00&
+    For i = 0 To 47
+        If gnДатчик(i).Data = 0 Then
+            Label1(i).BackColor = &HFF00&
         Else
-            Label1(k).BackColor = &HFF
+            Label1(i).BackColor = &HFF
         End If
-    Next k
+    Next i
 
     ' Цикл для суммирования аналоговых значений
     glCounter = glCounter + 1
-    For k = 2 To 16
-        If gnDif(k) = -1 Then
-            sum(k) = -1
-        ElseIf sum(k) = -1 Then
-            sum(k) = -1
+    For i = 2 To 16
+        If gnDif(i) = -1 Then
+            sum(i) = -1
+        ElseIf sum(i) = -1 Then
+            sum(i) = -1
         Else
-            sum(k) = sum(k) + gnDif(k)
+            sum(i) = sum(i) + gnDif(i)
         End If
-    Next k
+    Next i
 
     If glCounter >= glAver Then    'Если счетчик дошел, то усредняем
-        For k = 2 To 16
-            If sum(k) = -1 Then
-                sum(k) = 0
-                Text2(k - 1).ForeColor = &HFF
-                Text1(k - 1).Text = "Не исправен"
+        For i = 2 To 16
+            If sum(i) = -1 Then
+                sum(i) = 0
+                Text2(i - 1).ForeColor = &HFF
+                Text1(i - 1).Text = "Не исправен"
             Else
-                sum(k) = sum(k) / glCounter
-                Text2(k - 1).ForeColor = &H80000012
-                Text1(k - 1).Text = Format(sum(k), "##0.000")
+                sum(i) = sum(i) / glCounter
+                Text2(i - 1).ForeColor = &H80000012
+                Text1(i - 1).Text = Format(sum(i), "##0.000")
             End If
 
             'Для чистового вывода
-            Select Case k
-                Case 2: Р_вход_АГНКС.Caption = Format(sum(k) / 0.0981, "##0.0")
-                Case 6: Р_выход_компр.Caption = Format(sum(k) / 0.0981, "##0.0")
+            Select Case i
+                Case 2: Р_вход_АГНКС.Caption = Format(sum(i) / 0.0981, "##0.0")
+                Case 6: Р_выход_компр.Caption = Format(sum(i) / 0.0981, "##0.0")
                 Case 7
-                  Р_аккумулятор.Caption = Format(sum(k) / 0.0981, "##0.0")
-                  Аккумулятор.FloodPercent = getP_As_Percent(sum(k))
-                Case 8: Т_после_детандера.Caption = Format(sum(k), "#0.0")
-                Case 9: Т_газ_на_входе.Caption = Format(sum(k), "#0.0")
+                  Р_аккумулятор.Caption = Format(sum(i) / 0.0981, "##0.0")
+                  Аккумулятор.FloodPercent = getP_As_Percent(sum(i))
+                Case 8: Т_после_детандера.Caption = Format(sum(i), "#0.0")
+                Case 9: Т_газ_на_входе.Caption = Format(sum(i), "#0.0")
                 Case 4
-                  Р_автобаллон.Caption = Format(sum(k) / 0.0981, "##0.0")
-                  Автобаллон.FloodPercent = getP_As_Percent(sum(k))
-                Case 14: ОборотыДВС.Caption = Format((sum(k) \ 100) * 100, "###0")
+                  Р_автобаллон.Caption = Format(sum(i) / 0.0981, "##0.0")
+                  Автобаллон.FloodPercent = getP_As_Percent(sum(i))
+                Case 14: ОборотыДВС.Caption = Format((sum(i) \ 100) * 100, "###0")
             End Select
-            sum(k) = 0
-        Next k
+            sum(i) = 0
+        Next i
         glCounter = 0
     End If
 
 
     lblV.Caption = Format(gnDif(16), "00.0" & " В") ' Напряжение
     Наработка_ДВС.Caption = Format((GMC + MotorCount) / 60, "00")
+    Панель_Авто.Visible = k5_isOpen
 
     'Выводим расход на заправку одной машины
     If (gdРасход1 < 0) Then gdРасход1 = 0
@@ -3549,11 +3567,24 @@ Private Sub Timer1_Timer()
 
     v = Round(gdРасход1 / gdPlot, 1) ' Округление до десятых
     ЗаправленоГаза.Caption = Format(v, "0.0")
-    frmStart.Label_Summa.Caption = Format(v * gdPrice, "##0.00")
-
+    Label_Summa.Caption = Format(v * gdPrice, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
 
+    If (nTimer1Counter Mod 4 = 0) Then ' раз в 2 сек
+      s = ((gdРасход1 - last_gdРасход1) / gdPlot) * 30
+      Label_Avg_Speed_Car = Format(s, "0.00")
+      s = ""
+      last_gdРасход1 = gdРасход1
+    End If
 
+   '  i = CInt(Автобаллон.FloodPercent) - last_CarPercent
+   '  If i > 1 Then
+   '    i = ((100 - CInt(Автобаллон.FloodPercent)) / i) * (Now - last_upd_Label_Avg_Left_Time_Car)
+   '    Label_Avg_Left_Time_Car = formatSecToHHMMSS(i)
+   '    last_upd_Label_Avg_Left_Time_Car = Now
+   '    last_CarPercent = CInt(Автобаллон.FloodPercent)
+   '  End If
+    
     'Проверка датчиков
     ErrDat = False
     If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
@@ -3632,8 +3663,6 @@ Private Sub Timer1_Timer()
       frmStart.SSCmdStart.Caption = "ЗАПРАВКА"
    End If
 End Sub
-
-
 
 Private Sub Timer2_Timer()
     frmStart.txtTimeDate = Format(Time, "h:m:s")

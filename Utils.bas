@@ -1,7 +1,7 @@
 Attribute VB_Name = "Utils"
 Option Explicit
 
-Public Function formatSecToHHMMSS(ByVal s) As String
+Public Function formatSecToHHMMSS(ByVal s as Double) As String
    Dim d As Date
    d = DateAdd("s", s, d)
    formatSecToHHMMSS = Format(d, "hh:nn:ss")
