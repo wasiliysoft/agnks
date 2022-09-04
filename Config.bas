@@ -66,13 +66,11 @@ Public gbFrmShow    As Boolean
 ' gbCmdStart = true
 ' giStage = 3,0
 ' gbCmdStart = false
-' giStage = 1
+' giStage = 1 
 Public gbCmdStart   As Boolean    'Вид кнопки Пуск\Заправка
 Public gbAkkum      As Boolean
 Public giTrigger    As Integer    ' Для формы Запроса
 Public Car          As Integer
-Public gbЗаправка   As Boolean    'Показывает когда нужно в главном цикле считать расход
-'газа на заправку одного автомобиля
 Public gdРасход1    As Double    'Расход на заправку автомобиля
 Public giMainРасход As Integer    'Флаг для подсчета расхода всего газа:
 ' 1 - добавляем

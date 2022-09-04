@@ -3235,12 +3235,7 @@ Private Sub cmdDanger_Click()
     frmStart.cmdDanger.Visible = False
     ROff A1, 1  'закрыть К 1-6
     'Стоп ДВС, открыть КЭМ4 'TODO проверить комментарий
-    giStage2 = 0
-    giStage = 0  'Переход на этап Исходное Состояние
-    giStage1 = 0
-    gbAkkum = False
-    frmStart.SSCmdStart.Enabled = False
-    gbCmdStart = True
+    toStage_0
     gbStopAGNKS = False
 End Sub
 
@@ -3260,20 +3255,17 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     gbDontStat = False         'Можно работать с диском
     gdTime = GetTimeCounter_2
 
-    '<<<<Прекратить считать расход>>>>
+    
     StopOutput (2)
     StatRS_Insert
 
     frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
 
-
-    gbЗаправка = False
-
     If gbOnlyAkk = True Then
         ROff A1, 127 'Закрыть К6 (Акк)
         frmStart.SSCmdStart.Enabled = True
         gbAkkum = True
-        giStage = 1    'Переход на Этап Предпуска
+        giStage = 1  'Переход на этап ПредПуск()
         giStage1 = 0
         giStage2 = 0
     Else
@@ -3375,7 +3367,7 @@ Private Sub SSCmdStart_Click()
     Dim t           As Integer
     If gbCmdStart = True Then
         gbCmdStart = False
-        giStage = 1    'Переход на этап ПредПуск()
+        giStage = 1  'Переход на этап ПредПуск()
         giStage2 = 0
         giStage1 = 0
         ROn A1, 4 'Открыть К1
@@ -3403,12 +3395,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             SSCommand2(1).Enabled = False
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
             ROn A1, 2 ' Стоп ДВС
-            giStage2 = 0
-            giStage = 0    'Переход на этап ИсхСост
-            giStage1 = 0
-            gbAkkum = False
-            frmStart.SSCmdStart.Enabled = False
-            gbCmdStart = True
+            toStage_0
             If gbDontStat = True Then
                 StatRS_Insert
                 frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format(gdРасход1 / gdPlot, "###0.00")
@@ -3420,13 +3407,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
             SSCommand2(0).Enabled = False
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
             ROn A1, 2 ' Стоп ДВС
-
-            giStage2 = 0
-            giStage = 0    'Переход на этап ИсхСост
-            giStage1 = 0
-            gbAkkum = False
-            frmStart.SSCmdStart.Enabled = False
-            gbCmdStart = True
+            toStage_0
             'frmStart.Timer2.Enabled = False
             'ОстановДВС = "Двигатель остановлен !!!"
             frmStart.cmdDanger.Visible = True
@@ -3443,6 +3424,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
 End Sub
 
 Private Sub SSExit_Click()
+   ' TODO Возможно тут достаточно проверить Car или giStage
     If gbDontStat = True Then
         StatRS_Insert
         Debug.Print "Сохранено состояние заправки"
@@ -3615,14 +3597,9 @@ Private Sub Timer1_Timer()
 
 
         If (giDVS > 5) Then
-            giStage2 = 0
-            giStage = 0    'Переход на этап ИсхСост
-            giStage1 = 0
+            toStage_0
             giDVS = 0
-            gbAkkum = False
             gbRunDVS = False
-            frmStart.SSCmdStart.Enabled = False
-            gbCmdStart = True
             'frmStart.Timer2.Enabled = False
 
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
@@ -3668,7 +3645,6 @@ Private Sub Timer1_Timer()
       frmStart.SSCmdStart.Caption = "ЗАПРАВКА"
    End If
 End Sub
-
 
 
 

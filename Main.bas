@@ -55,7 +55,7 @@ Public Function ОстановДВС() As String
     ROn A1, 32 'Открыть К4
 
     giStage2 = 0
-    giStage = 1  'Переход на этап ИсхСост
+    giStage = 1  'Переход на этап ПредПуск()
     giStage1 = 1
     giMainРасход = 0
 
@@ -72,13 +72,11 @@ Public Function Заправка()
     ' ПОДЭТАП 8  - Заправка только от ов
     If giStage2 = 8 Then
         'Заправка машин
-
         If k4_isOpen Then
             ROff A1, 223 'Закрыть К4
         Else
             ROff A1, 239 'Закрыть К3
         End If
-
 
         ROn A1, 64 'Открыть КЭ5
         giStage2 = 9
@@ -92,10 +90,10 @@ Public Function Заправка()
 
     'ПодЭтап 9
     If giStage2 = 9 Then
+        gdTime = GetTimeCounter_2
         If (Abs(gnDif(5) - gnDif(4)) > 0.5) Then
             Заправка = "Идет заправка "
             'Считаем расход на одну машину (за полсекунды)
-            gdTime = GetTimeCounter_2
             gdРасход1 = gdИР2
             Exit Function
         Else
@@ -103,27 +101,17 @@ Public Function Заправка()
             ROff A1, 127 'Закрыть К4 (Акк)
             StopOutput (2)
             gbDontStat = False    'Можно работать с диском
-
-            gdTime = GetTimeCounter_2
-
             'Заполнить статистику по заправке
-
-            '<<<<Прекратить считать расход>>>>
             StatRS_Insert
-
-            s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-            frmStart.lstStat(0).AddItem s
-
-            gbЗаправка = False
+            frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
 
             'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
             frmStart.SSCmdStart.Enabled = True
             gbAkkum = True
-            giStage = 1    'Переход на Этап Предпуска
+            giStage = 1  'Переход на этап ПредПуск()
             giStage1 = 0
             giStage2 = 0
             Exit Function
-
         End If
     End If
 
@@ -140,9 +128,8 @@ Public Function Заправка()
     If (giStage2 = 1) And (gbFrmShow = False) Then
         If giTrigger = 0 Then ' Пистолет не вставлен
             giStage2 = 0
-            gbЗаправка = True
             gbAkkum = False
-            giStage = 1    'Переход на этап ПредПуск
+            giStage = 1  'Переход на этап ПредПуск()
             giStage1 = 1    'Сразу на проверку ДВС и компрессора
 
             Заправка = "Переход на этап ПредПуск"
@@ -170,9 +157,6 @@ Public Function Заправка()
 
     ' ПОДЭТАП 4
     If giStage2 = 3 Then
-        'Считать расход заправки автомобиля
-        gbЗаправка = True
-
         If (gnDif(7) - gnDif(5)) >= 2 Then    'Разница давлений в аккумуляторах и баке
             ROn A1, 128 'Открыть К6 - заправка и от аккумуляторов
         End If
@@ -205,19 +189,14 @@ Public Function Заправка()
             Exit Function
         ElseIf (gbAkkum = False) Then
             ROff A1, 191 'Закрыть К5 (пистолет)
-            gbDontStat = False    'Можно работать с диском
             StopOutput (2)
-            gdTime = GetTimeCounter_2
-            'Заполнить статистику по заправке
-            StatRS_Insert
-
-            s = Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
-            frmStart.lstStat(0).AddItem s
-
-            '<<<<Прекратить считать расход>>>>
-            gbЗаправка = False            
             ROn A1, 128 'Открыть КЭ6 ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
 
+            gdTime = GetTimeCounter_2
+            gbDontStat = False    'Можно работать с диском
+            StatRS_Insert 'Заполнить статистику по заправке
+            frmStart.lstStat(0).AddItem Format(Now, "hh:mm:ss") + "        " + Format((gdРасход1 / gdPlot), "###0.00")
+      
             'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
             frmStart.SSCmdStart.Enabled = True
             gbAkkum = True
@@ -239,10 +218,6 @@ Public Function Заправка()
 
         'Выключить Двигатель
         s = ОстановДВС
-        '<<<<Прекратить считать расход>>>>
-        gbЗаправка = False
-
-
     End If
 
 
@@ -256,7 +231,6 @@ Public Function Заправка()
         
         'Считать расход заправки автомобиля
         giMainРасход = 1
-        gbЗаправка = True
         gbAkkum = False
         gdРасход1 = 0    'Обнуляем расход на одну машину
 
@@ -267,6 +241,17 @@ Public Function Заправка()
     Заправка = s
 End Function
 
+Public Sub toStage_0()
+' 
+' Переход на этап ИсхСост
+' 
+    giStage2 = 0
+    giStage = 0    
+    giStage1 = 0
+    gbAkkum = False
+    gbCmdStart = True
+    frmStart.SSCmdStart.Enabled = False
+End Sub
 
 'Приводит АГНКС в исходное состояние
 Public Function ИсхСост() As String
@@ -341,13 +326,8 @@ Public Function ПредПуск() As String
             frmStart.SSCmdStart.Enabled = True
             'Если ДВС был запущен и заглох , то переход на Этап ИсхСост
             If gbRunDVS = True Then
-                giStage2 = 0
-                giStage = 0    'Переход на этап ИсхСост
-                giStage1 = 0
-                gbAkkum = False
+                toStage_0
                 gbRunDVS = False
-                frmStart.SSCmdStart.Enabled = False
-                gbCmdStart = True
 
                 'frmStart.Timer2.Enabled = False
                 'TODO проверить коррекность gnДатчик(25)

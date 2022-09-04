@@ -107,7 +107,7 @@ Private Sub Command2_Click()
 
     'Если пистолет не вставлен во время заправки только от аккумуляторов, то на ПредПуск
     If gbOnlyAkk = True Then
-        giStage = 1
+        giStage = 1  'Переход на этап ПредПуск()
         giStage1 = 1
         frmStart.SSCmdStart.Enabled = True
         'gbAkkum = True
