@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{0BA686C6-F7D3-101A-993E-0000C0EF6F5E}#1.0#0"; "THREED32.OCX"
 Object = "{8E27C92E-1264-101C-8A2F-040224009C02}#7.0#0"; "MSCAL.OCX"
 Begin VB.Form frmSt 
    BorderStyle     =   1  'Fixed Single
@@ -16,6 +15,30 @@ Begin VB.Form frmSt
    PaletteMode     =   1  'UseZOrder
    ScaleHeight     =   5205
    ScaleWidth      =   6720
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Закрыть"
+      Height          =   600
+      Left            =   3375
+      TabIndex        =   4
+      Top             =   4455
+      Width           =   3210
+   End
+   Begin VB.CommandButton smdShow 
+      Caption         =   "Показать"
+      Height          =   600
+      Left            =   4815
+      TabIndex        =   3
+      Top             =   2475
+      Width           =   1725
+   End
+   Begin VB.CommandButton cmdSetCalendarNow 
+      Caption         =   "Сегодня"
+      Height          =   600
+      Left            =   3330
+      TabIndex        =   2
+      Top             =   2475
+      Width           =   1455
+   End
    Begin VB.ListBox List1 
       Height          =   4935
       Left            =   120
@@ -23,37 +46,9 @@ Begin VB.Form frmSt
       Top             =   120
       Width           =   3015
    End
-   Begin Threed.SSCommand ssClose 
-      Height          =   735
-      Left            =   3600
-      TabIndex        =   3
-      Top             =   4320
-      Width           =   2535
-      _Version        =   65536
-      _ExtentX        =   4471
-      _ExtentY        =   1296
-      _StockProps     =   78
-      Caption         =   "Закрыть"
-      BevelWidth      =   3
-      Font3D          =   1
-   End
-   Begin Threed.SSCommand ssShow 
-      Height          =   735
-      Left            =   3600
-      TabIndex        =   2
-      Top             =   2640
-      Width           =   2535
-      _Version        =   65536
-      _ExtentX        =   4471
-      _ExtentY        =   1296
-      _StockProps     =   78
-      Caption         =   "Показать"
-      BevelWidth      =   3
-      Font3D          =   1
-   End
    Begin MSACAL.Calendar Calendar1 
       Height          =   2295
-      Left            =   3120
+      Left            =   3240
       TabIndex        =   1
       Top             =   120
       Width           =   3375
@@ -114,40 +109,52 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Private Sub ssClose_Click()
-    frmSt.Hide
+
+
+Private Sub Form_Load()
+   cmdSetCalendarNow_Click
 End Sub
 
 
-Private Sub ssShow_Click()
+
+Private Sub cmdSetCalendarNow_Click()
+    Calendar1.Value = Now
+    smdShow_Click
+End Sub
+
+
+Private Sub cmdClose_Click()
+   frmSt.Hide
+End Sub
+
+
+Private Sub smdShow_Click()
+    Const separatorStr = "=============================="
     Dim s           As String
     Dim s1          As String
     Dim d           As Date
     Dim sum         As Double
-    Dim i           As Long
+    Dim v           As Double
     
-    frmSt.List1.Clear
-    sum = 0
+    sum = 0    
     d = frmSt.Calendar1.Value
+
+    frmSt.List1.Clear
+    frmSt.List1.AddItem ("Журнал за ") & Format(d, "dd.mmmm.yyyy")
+    frmSt.List1.AddItem separatorStr
     s = Format(d, "\#mm\/dd\/yyyy 00:00:00\#")
     s1 = Format(d, "\#mm\/dd\/yyyy 23:59:59\#")
     Set SelectRS = StatDB.OpenRecordset("select * from stat where DATA between " & s & " AND " & s1)
     If SelectRS.RecordCount >= 1 Then
         SelectRS.MoveLast
         SelectRS.MoveFirst
-
-        For i = 0 To SelectRS.RecordCount - 1
-            s = ""
-            s = Format(CStr(SelectRS("Data")), "hh:mm:ss") + "        " + Format(CStr(SelectRS("GAZ_CAR")), "###0.00")
-            sum = sum + SelectRS("GAZ_CAR")
-            frmSt.List1.AddItem (s)
+        Do While Not SelectRS.EOF
+            v = SelectRS("GAZ_CAR")
+            sum = sum + v
+            frmSt.List1.AddItem Format(SelectRS("Data"), "  hh:mm:ss") + "                   " + Format(v, "###0.00")
             SelectRS.MoveNext
-        Next i
-        frmSt.List1.AddItem ("====================")
-        frmSt.List1.AddItem ("Всего:    " & Format(CStr(sum), "###0.00"))
+        Loop            
     End If
-
+    frmSt.List1.AddItem separatorStr
+    frmSt.List1.AddItem ("Всего:                        " & Format(sum, "###0.00"))
 End Sub
-
-
-

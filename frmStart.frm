@@ -23,7 +23,7 @@ Begin VB.Form frmStart
       Height          =   7395
       Left            =   0
       TabIndex        =   0
-      Top             =   0
+      Top             =   45
       Width           =   9795
       _ExtentX        =   17277
       _ExtentY        =   13044
@@ -36,7 +36,6 @@ Begin VB.Form frmStart
       TabPicture(0)   =   "frmStart.frx":0000
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Frame1(0)"
-      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Аналоговые"
       TabPicture(1)   =   "frmStart.frx":001C
@@ -56,9 +55,91 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   -1  'True
-      Tab(4).Control(0)=   "Frame1(4)"
+      Tab(4).Control(0)=   "lblStat(3)"
       Tab(4).Control(0).Enabled=   0   'False
-      Tab(4).ControlCount=   1
+      Tab(4).Control(1)=   "lblStat(2)"
+      Tab(4).Control(1).Enabled=   0   'False
+      Tab(4).Control(2)=   "lblStat(1)"
+      Tab(4).Control(2).Enabled=   0   'False
+      Tab(4).Control(3)=   "lblStat(0)"
+      Tab(4).Control(3).Enabled=   0   'False
+      Tab(4).Control(4)=   "cmdUpdateStat"
+      Tab(4).Control(4).Enabled=   0   'False
+      Tab(4).Control(5)=   "lstStat(3)"
+      Tab(4).Control(5).Enabled=   0   'False
+      Tab(4).Control(6)=   "lstStat(2)"
+      Tab(4).Control(6).Enabled=   0   'False
+      Tab(4).Control(7)=   "lstStat(1)"
+      Tab(4).Control(7).Enabled=   0   'False
+      Tab(4).Control(8)=   "lstStat(0)"
+      Tab(4).Control(8).Enabled=   0   'False
+      Tab(4).Control(9)=   "cmdOpenStatForm"
+      Tab(4).Control(9).Enabled=   0   'False
+      Tab(4).ControlCount=   10
+      Begin VB.CommandButton cmdOpenStatForm 
+         Caption         =   "Статистика"
+         Height          =   690
+         Left            =   225
+         TabIndex        =   197
+         Top             =   6525
+         Width           =   2130
+      End
+      Begin VB.ListBox lstStat 
+         BackColor       =   &H00800000&
+         ForeColor       =   &H0000FFFF&
+         Height          =   5520
+         Index           =   0
+         ItemData        =   "frmStart.frx":008C
+         Left            =   180
+         List            =   "frmStart.frx":008E
+         TabIndex        =   192
+         Top             =   810
+         Width           =   2200
+      End
+      Begin VB.ListBox lstStat 
+         BackColor       =   &H00800000&
+         ForeColor       =   &H0000FFFF&
+         Height          =   5520
+         Index           =   1
+         ItemData        =   "frmStart.frx":0090
+         Left            =   2580
+         List            =   "frmStart.frx":0092
+         TabIndex        =   191
+         Top             =   810
+         Width           =   2200
+      End
+      Begin VB.ListBox lstStat 
+         BackColor       =   &H00800000&
+         ForeColor       =   &H0000FFFF&
+         Height          =   5520
+         Index           =   2
+         ItemData        =   "frmStart.frx":0094
+         Left            =   4980
+         List            =   "frmStart.frx":0096
+         TabIndex        =   190
+         Top             =   810
+         Width           =   2200
+      End
+      Begin VB.ListBox lstStat 
+         BackColor       =   &H00800000&
+         ForeColor       =   &H0000FFFF&
+         Height          =   5520
+         Index           =   3
+         ItemData        =   "frmStart.frx":0098
+         Left            =   7380
+         List            =   "frmStart.frx":009A
+         TabIndex        =   189
+         Top             =   810
+         Width           =   2200
+      End
+      Begin VB.CommandButton cmdUpdateStat 
+         Caption         =   "Обновить журнал"
+         Height          =   690
+         Left            =   7380
+         TabIndex        =   188
+         Top             =   6525
+         Width           =   2175
+      End
       Begin VB.Frame Frame1 
          BackColor       =   &H00C0C0C0&
          BorderStyle     =   0  'None
@@ -66,13 +147,13 @@ Begin VB.Form frmStart
          Height          =   7110
          Index           =   3
          Left            =   -75000
-         TabIndex        =   141
+         TabIndex        =   132
          Top             =   315
          Width           =   9795
          Begin Threed.SSCommand cmdDanger 
             Height          =   2310
             Left            =   3690
-            TabIndex        =   179
+            TabIndex        =   169
             Top             =   4680
             Visible         =   0   'False
             Width           =   3255
@@ -94,13 +175,13 @@ Begin VB.Form frmStart
             Enabled         =   -1  'True
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "frmStart.frx":008C
+            Picture         =   "frmStart.frx":009C
          End
          Begin VB.Frame Frame3 
             BackColor       =   &H00C0C0C0&
             Height          =   2400
             Left            =   3735
-            TabIndex        =   189
+            TabIndex        =   179
             Top             =   4590
             Width           =   3165
             Begin VB.Label Label9 
@@ -109,7 +190,7 @@ Begin VB.Form frmStart
                Caption         =   "Время заправки"
                Height          =   195
                Left            =   180
-               TabIndex        =   197
+               TabIndex        =   187
                Top             =   1485
                Width           =   1260
             End
@@ -119,7 +200,7 @@ Begin VB.Form frmStart
                Caption         =   "Ср. скорость заправки"
                Height          =   195
                Left            =   180
-               TabIndex        =   196
+               TabIndex        =   186
                Top             =   1035
                Width           =   1755
             End
@@ -140,7 +221,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   195
+               TabIndex        =   185
                Top             =   990
                Width           =   960
             End
@@ -150,7 +231,7 @@ Begin VB.Form frmStart
                Caption         =   "Расчетно осталось"
                Height          =   195
                Left            =   180
-               TabIndex        =   194
+               TabIndex        =   184
                Top             =   1935
                Width           =   1455
             End
@@ -171,7 +252,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   193
+               TabIndex        =   183
                Top             =   1890
                Width           =   960
             End
@@ -192,7 +273,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   192
+               TabIndex        =   182
                Top             =   1440
                Width           =   960
             End
@@ -213,7 +294,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   191
+               TabIndex        =   181
                Top             =   270
                Width           =   960
             End
@@ -223,7 +304,7 @@ Begin VB.Form frmStart
                Caption         =   "Заправленно, кг."
                Height          =   195
                Left            =   180
-               TabIndex        =   190
+               TabIndex        =   180
                Top             =   315
                Width           =   1305
             End
@@ -233,13 +314,13 @@ Begin VB.Form frmStart
             Caption         =   "Табло заправки"
             Height          =   2400
             Left            =   90
-            TabIndex        =   180
+            TabIndex        =   170
             Top             =   4590
             Width           =   3570
             Begin Threed.SSCommand cmdKKM 
                Height          =   750
                Left            =   2655
-               TabIndex        =   181
+               TabIndex        =   171
                Top             =   1485
                Width           =   795
                _Version        =   65536
@@ -265,7 +346,7 @@ Begin VB.Form frmStart
                Caption         =   "Цена руб."
                Height          =   195
                Left            =   135
-               TabIndex        =   188
+               TabIndex        =   178
                Top             =   270
                Width           =   735
             End
@@ -286,7 +367,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   510
                Left            =   90
-               TabIndex        =   187
+               TabIndex        =   177
                Top             =   540
                Width           =   1230
             End
@@ -307,7 +388,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   780
                Left            =   90
-               TabIndex        =   186
+               TabIndex        =   176
                Top             =   1485
                Width           =   2490
             End
@@ -317,7 +398,7 @@ Begin VB.Form frmStart
                Caption         =   "Сумма руб."
                Height          =   195
                Left            =   135
-               TabIndex        =   185
+               TabIndex        =   175
                Top             =   1215
                Width           =   855
             End
@@ -338,7 +419,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   510
                Left            =   1350
-               TabIndex        =   184
+               TabIndex        =   174
                Top             =   540
                Width           =   1230
             End
@@ -357,7 +438,7 @@ Begin VB.Form frmStart
                EndProperty
                Height          =   300
                Left            =   2700
-               TabIndex        =   183
+               TabIndex        =   173
                Top             =   675
                Width           =   480
             End
@@ -367,7 +448,7 @@ Begin VB.Form frmStart
                Caption         =   "3"
                Height          =   195
                Left            =   3195
-               TabIndex        =   182
+               TabIndex        =   172
                Top             =   585
                Width           =   90
             End
@@ -375,7 +456,7 @@ Begin VB.Form frmStart
          Begin Threed.SSPanel SSPanel1 
             Height          =   3450
             Left            =   45
-            TabIndex        =   142
+            TabIndex        =   133
             Top             =   45
             Width           =   9720
             _Version        =   65536
@@ -419,7 +500,7 @@ Begin VB.Form frmStart
             Begin Threed.SSPanel Отсек_ДВС 
                Height          =   1500
                Left            =   1800
-               TabIndex        =   143
+               TabIndex        =   134
                Top             =   870
                Width           =   1095
                _Version        =   65536
@@ -442,7 +523,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel ОборотыДВС 
                   Height          =   375
                   Left            =   135
-                  TabIndex        =   144
+                  TabIndex        =   135
                   Top             =   90
                   Width           =   810
                   _Version        =   65536
@@ -482,14 +563,14 @@ Begin VB.Form frmStart
                   Height          =   240
                   Index           =   0
                   Left            =   315
-                  TabIndex        =   145
+                  TabIndex        =   136
                   Top             =   1170
                   Width           =   510
                End
                Begin VB.Image Температура_ДВС 
                   Height          =   480
                   Left            =   360
-                  Picture         =   "frmStart.frx":00A8
+                  Picture         =   "frmStart.frx":00B8
                   Top             =   720
                   Visible         =   0   'False
                   Width           =   300
@@ -498,7 +579,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   0
                   Left            =   225
-                  Picture         =   "frmStart.frx":02AA
+                  Picture         =   "frmStart.frx":02BA
                   Top             =   540
                   Width           =   600
                End
@@ -506,7 +587,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   1
                   Left            =   225
-                  Picture         =   "frmStart.frx":064C
+                  Picture         =   "frmStart.frx":065C
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -515,7 +596,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   2
                   Left            =   225
-                  Picture         =   "frmStart.frx":09EE
+                  Picture         =   "frmStart.frx":09FE
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -524,7 +605,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   3
                   Left            =   225
-                  Picture         =   "frmStart.frx":0D90
+                  Picture         =   "frmStart.frx":0DA0
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -533,7 +614,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   4
                   Left            =   225
-                  Picture         =   "frmStart.frx":1132
+                  Picture         =   "frmStart.frx":1142
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -542,7 +623,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   5
                   Left            =   225
-                  Picture         =   "frmStart.frx":14D4
+                  Picture         =   "frmStart.frx":14E4
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   600
@@ -551,7 +632,7 @@ Begin VB.Form frmStart
             Begin Threed.SSPanel Отсек_компр 
                Height          =   1500
                Left            =   3105
-               TabIndex        =   146
+               TabIndex        =   137
                Top             =   870
                Width           =   1245
                _Version        =   65536
@@ -574,7 +655,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Р_выход_компр 
                   Height          =   375
                   Left            =   135
-                  TabIndex        =   147
+                  TabIndex        =   138
                   Top             =   90
                   Width           =   990
                   _Version        =   65536
@@ -615,7 +696,7 @@ Begin VB.Form frmStart
                   Height          =   240
                   Index           =   1
                   Left            =   315
-                  TabIndex        =   148
+                  TabIndex        =   139
                   Top             =   1170
                   Width           =   660
                End
@@ -623,7 +704,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   0
                   Left            =   180
-                  Picture         =   "frmStart.frx":1876
+                  Picture         =   "frmStart.frx":1886
                   Top             =   540
                   Width           =   900
                End
@@ -631,7 +712,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   1
                   Left            =   180
-                  Picture         =   "frmStart.frx":1DF8
+                  Picture         =   "frmStart.frx":1E08
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -640,7 +721,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   2
                   Left            =   180
-                  Picture         =   "frmStart.frx":237A
+                  Picture         =   "frmStart.frx":238A
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -649,7 +730,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   3
                   Left            =   180
-                  Picture         =   "frmStart.frx":28FC
+                  Picture         =   "frmStart.frx":290C
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -658,7 +739,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   4
                   Left            =   180
-                  Picture         =   "frmStart.frx":2E7E
+                  Picture         =   "frmStart.frx":2E8E
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -667,7 +748,7 @@ Begin VB.Form frmStart
                   Height          =   600
                   Index           =   5
                   Left            =   180
-                  Picture         =   "frmStart.frx":3400
+                  Picture         =   "frmStart.frx":3410
                   Top             =   540
                   Visible         =   0   'False
                   Width           =   900
@@ -676,7 +757,7 @@ Begin VB.Form frmStart
             Begin Threed.SSPanel Панель_Авто 
                Height          =   1890
                Left            =   7230
-               TabIndex        =   149
+               TabIndex        =   140
                Top             =   870
                Visible         =   0   'False
                Width           =   2100
@@ -699,7 +780,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Р_автобаллон 
                   Height          =   375
                   Left            =   630
-                  TabIndex        =   150
+                  TabIndex        =   141
                   Top             =   90
                   Width           =   1320
                   _Version        =   65536
@@ -725,7 +806,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Автобаллон 
                   Height          =   1725
                   Left            =   90
-                  TabIndex        =   151
+                  TabIndex        =   142
                   Top             =   90
                   Width           =   420
                   _Version        =   65536
@@ -752,7 +833,7 @@ Begin VB.Form frmStart
                Begin Threed.SSCommand cmdStop 
                   Height          =   1260
                   Left            =   630
-                  TabIndex        =   166
+                  TabIndex        =   157
                   Top             =   540
                   Width           =   1335
                   _Version        =   65536
@@ -772,14 +853,14 @@ Begin VB.Form frmStart
                   EndProperty
                   Font3D          =   4
                   AutoSize        =   1
-                  Picture         =   "frmStart.frx":3982
+                  Picture         =   "frmStart.frx":3992
                End
             End
             Begin Threed.SSPanel SSPanel5 
                Height          =   1890
                Index           =   2
                Left            =   5490
-               TabIndex        =   152
+               TabIndex        =   143
                Top             =   870
                Width           =   1515
                _Version        =   65536
@@ -801,7 +882,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Р_аккумулятор 
                   Height          =   375
                   Left            =   585
-                  TabIndex        =   153
+                  TabIndex        =   144
                   Top             =   90
                   Width           =   855
                   _Version        =   65536
@@ -827,7 +908,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Аккумулятор 
                   Height          =   1725
                   Left            =   90
-                  TabIndex        =   154
+                  TabIndex        =   145
                   Top             =   90
                   Width           =   420
                   _Version        =   65536
@@ -964,7 +1045,7 @@ Begin VB.Form frmStart
                Height          =   240
                Index           =   1
                Left            =   5220
-               Picture         =   "frmStart.frx":6554
+               Picture         =   "frmStart.frx":6564
                Top             =   3015
                Width           =   150
             End
@@ -989,7 +1070,7 @@ Begin VB.Form frmStart
             Begin VB.Image Image3 
                Height          =   435
                Left            =   4500
-               Picture         =   "frmStart.frx":6656
+               Picture         =   "frmStart.frx":6666
                Stretch         =   -1  'True
                Top             =   2115
                Width           =   375
@@ -997,7 +1078,7 @@ Begin VB.Form frmStart
             Begin VB.Image Image2 
                Height          =   480
                Left            =   4455
-               Picture         =   "frmStart.frx":6F20
+               Picture         =   "frmStart.frx":6F30
                Top             =   2430
                Width           =   480
             End
@@ -1018,7 +1099,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   315
                Left            =   135
-               TabIndex        =   155
+               TabIndex        =   146
                Top             =   2970
                Width           =   495
             End
@@ -1026,7 +1107,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   1170
-               Picture         =   "frmStart.frx":77EA
+               Picture         =   "frmStart.frx":77FA
                Top             =   1935
                Width           =   480
             End
@@ -1034,7 +1115,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   1170
-               Picture         =   "frmStart.frx":7AF4
+               Picture         =   "frmStart.frx":7B04
                Top             =   1935
                Visible         =   0   'False
                Width           =   480
@@ -1052,7 +1133,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   765
-               Picture         =   "frmStart.frx":7DFE
+               Picture         =   "frmStart.frx":7E0E
                Top             =   2565
                Width           =   480
             End
@@ -1060,7 +1141,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   720
-               Picture         =   "frmStart.frx":8108
+               Picture         =   "frmStart.frx":8118
                Top             =   2565
                Visible         =   0   'False
                Width           =   480
@@ -1069,7 +1150,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   7230
-               Picture         =   "frmStart.frx":8412
+               Picture         =   "frmStart.frx":8422
                Top             =   400
                Width           =   480
             End
@@ -1077,7 +1158,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   5520
-               Picture         =   "frmStart.frx":871C
+               Picture         =   "frmStart.frx":872C
                Top             =   400
                Width           =   480
             End
@@ -1110,7 +1191,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   4950
-               Picture         =   "frmStart.frx":8A26
+               Picture         =   "frmStart.frx":8A36
                Top             =   1485
                Width           =   480
             End
@@ -1118,7 +1199,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   270
-               Picture         =   "frmStart.frx":8D30
+               Picture         =   "frmStart.frx":8D40
                Top             =   1935
                Width           =   480
             End
@@ -1126,7 +1207,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   270
-               Picture         =   "frmStart.frx":903A
+               Picture         =   "frmStart.frx":904A
                Top             =   765
                Width           =   480
             End
@@ -1174,7 +1255,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   2
                Left            =   4635
-               TabIndex        =   165
+               TabIndex        =   156
                Top             =   1620
                Width           =   300
             End
@@ -1186,7 +1267,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   3
                Left            =   135
-               TabIndex        =   164
+               TabIndex        =   155
                Top             =   1710
                Width           =   300
             End
@@ -1198,7 +1279,7 @@ Begin VB.Form frmStart
                Height          =   192
                Index           =   4
                Left            =   120
-               TabIndex        =   163
+               TabIndex        =   154
                Top             =   600
                Width           =   300
             End
@@ -1210,7 +1291,7 @@ Begin VB.Form frmStart
                Height          =   240
                Index           =   5
                Left            =   7740
-               TabIndex        =   162
+               TabIndex        =   153
                Top             =   540
                Width           =   300
             End
@@ -1222,7 +1303,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   6
                Left            =   6075
-               TabIndex        =   161
+               TabIndex        =   152
                Top             =   540
                Width           =   300
             End
@@ -1243,7 +1324,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   315
                Left            =   5445
-               TabIndex        =   160
+               TabIndex        =   151
                Top             =   2970
                Width           =   585
             End
@@ -1251,7 +1332,7 @@ Begin VB.Form frmStart
                Height          =   240
                Index           =   0
                Left            =   3690
-               Picture         =   "frmStart.frx":9344
+               Picture         =   "frmStart.frx":9354
                Top             =   3015
                Width           =   150
             End
@@ -1263,7 +1344,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   1
                Left            =   990
-               TabIndex        =   157
+               TabIndex        =   148
                Top             =   1710
                Width           =   300
             End
@@ -1275,7 +1356,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   0
                Left            =   855
-               TabIndex        =   156
+               TabIndex        =   147
                Top             =   3060
                Width           =   300
             End
@@ -1312,7 +1393,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   270
-               Picture         =   "frmStart.frx":9446
+               Picture         =   "frmStart.frx":9456
                Top             =   1935
                Visible         =   0   'False
                Width           =   480
@@ -1321,7 +1402,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   270
-               Picture         =   "frmStart.frx":9750
+               Picture         =   "frmStart.frx":9760
                Top             =   765
                Visible         =   0   'False
                Width           =   480
@@ -1330,7 +1411,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   4950
-               Picture         =   "frmStart.frx":9A5A
+               Picture         =   "frmStart.frx":9A6A
                Top             =   1485
                Visible         =   0   'False
                Width           =   480
@@ -1339,7 +1420,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   5520
-               Picture         =   "frmStart.frx":9D64
+               Picture         =   "frmStart.frx":9D74
                Top             =   400
                Visible         =   0   'False
                Width           =   480
@@ -1348,7 +1429,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   7230
-               Picture         =   "frmStart.frx":A06E
+               Picture         =   "frmStart.frx":A07E
                Top             =   400
                Visible         =   0   'False
                Width           =   480
@@ -1357,7 +1438,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   0
                Left            =   1395
-               Picture         =   "frmStart.frx":A378
+               Picture         =   "frmStart.frx":A388
                Top             =   1350
                Visible         =   0   'False
                Width           =   480
@@ -1433,7 +1514,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   315
                Left            =   3915
-               TabIndex        =   159
+               TabIndex        =   150
                Top             =   2970
                Width           =   585
             End
@@ -1441,7 +1522,7 @@ Begin VB.Form frmStart
                Height          =   480
                Index           =   1
                Left            =   495
-               Picture         =   "frmStart.frx":A682
+               Picture         =   "frmStart.frx":A692
                Top             =   180
                Visible         =   0   'False
                Width           =   480
@@ -1450,7 +1531,7 @@ Begin VB.Form frmStart
          Begin Threed.SSCommand SSCmdStart 
             Height          =   915
             Left            =   6975
-            TabIndex        =   171
+            TabIndex        =   161
             Top             =   6075
             Width           =   2715
             _Version        =   65536
@@ -1471,13 +1552,13 @@ Begin VB.Form frmStart
             Enabled         =   0   'False
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "frmStart.frx":A98C
+            Picture         =   "frmStart.frx":A99C
          End
          Begin Threed.SSCommand SSCommand2 
             Height          =   1185
             Index           =   0
             Left            =   8145
-            TabIndex        =   172
+            TabIndex        =   162
             Top             =   4680
             Width           =   1545
             _Version        =   65536
@@ -1497,13 +1578,13 @@ Begin VB.Form frmStart
             EndProperty
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "frmStart.frx":A9A8
+            Picture         =   "frmStart.frx":A9B8
          End
          Begin Threed.SSCommand SSCommand2 
             Height          =   1185
             Index           =   1
             Left            =   7020
-            TabIndex        =   173
+            TabIndex        =   163
             Top             =   4680
             Width           =   1095
             _Version        =   65536
@@ -1523,12 +1604,12 @@ Begin VB.Form frmStart
             EndProperty
             BevelWidth      =   4
             Font3D          =   2
-            Picture         =   "frmStart.frx":ADFA
+            Picture         =   "frmStart.frx":AE0A
          End
          Begin Threed.SSPanel SSPanel3 
             Height          =   840
             Left            =   90
-            TabIndex        =   174
+            TabIndex        =   164
             Top             =   3600
             Width           =   9630
             _Version        =   65536
@@ -1565,174 +1646,10 @@ Begin VB.Form frmStart
                ForeColor       =   &H00000000&
                Height          =   660
                Left            =   90
-               TabIndex        =   175
+               TabIndex        =   165
                Top             =   90
                Width           =   9450
             End
-         End
-      End
-      Begin VB.Frame Frame1 
-         Height          =   5355
-         Index           =   4
-         Left            =   0
-         TabIndex        =   132
-         Top             =   360
-         Width           =   9345
-         Begin VB.CommandButton cmdUpdateStat 
-            Caption         =   "Обновить журнал"
-            Height          =   690
-            Left            =   7200
-            TabIndex        =   198
-            Top             =   4500
-            Width           =   1950
-         End
-         Begin VB.ListBox lstStat 
-            BackColor       =   &H00800000&
-            ForeColor       =   &H0000FFFF&
-            Height          =   3765
-            Index           =   3
-            ItemData        =   "frmStart.frx":B24C
-            Left            =   7080
-            List            =   "frmStart.frx":B24E
-            TabIndex        =   136
-            Top             =   600
-            Width           =   2055
-         End
-         Begin VB.ListBox lstStat 
-            BackColor       =   &H00800000&
-            ForeColor       =   &H0000FFFF&
-            Height          =   3765
-            Index           =   2
-            ItemData        =   "frmStart.frx":B250
-            Left            =   4800
-            List            =   "frmStart.frx":B252
-            TabIndex        =   135
-            Top             =   600
-            Width           =   2175
-         End
-         Begin VB.ListBox lstStat 
-            BackColor       =   &H00800000&
-            ForeColor       =   &H0000FFFF&
-            Height          =   3765
-            Index           =   1
-            ItemData        =   "frmStart.frx":B254
-            Left            =   2400
-            List            =   "frmStart.frx":B256
-            TabIndex        =   134
-            Top             =   600
-            Width           =   2295
-         End
-         Begin VB.ListBox lstStat 
-            BackColor       =   &H00800000&
-            ForeColor       =   &H0000FFFF&
-            Height          =   3765
-            Index           =   0
-            ItemData        =   "frmStart.frx":B258
-            Left            =   120
-            List            =   "frmStart.frx":B25A
-            TabIndex        =   133
-            Top             =   600
-            Width           =   2175
-         End
-         Begin Threed.SSCommand ssStat 
-            Height          =   855
-            Left            =   120
-            TabIndex        =   170
-            Top             =   4440
-            Width           =   2775
-            _Version        =   65536
-            _ExtentX        =   4895
-            _ExtentY        =   1508
-            _StockProps     =   78
-            Caption         =   "Статистика"
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-               Name            =   "MS Sans Serif"
-               Size            =   12
-               Charset         =   204
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            BevelWidth      =   5
-            Font3D          =   1
-         End
-         Begin VB.Label lblStat 
-            Alignment       =   2  'Center
-            Caption         =   "Годы"
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   9.75
-               Charset         =   204
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Index           =   3
-            Left            =   7320
-            TabIndex        =   140
-            Top             =   240
-            Width           =   1575
-         End
-         Begin VB.Label lblStat 
-            Alignment       =   2  'Center
-            Caption         =   "За год"
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   9.75
-               Charset         =   204
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Index           =   2
-            Left            =   4920
-            TabIndex        =   139
-            Top             =   240
-            Width           =   1935
-         End
-         Begin VB.Label lblStat 
-            Alignment       =   2  'Center
-            Caption         =   "За месяц"
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   9.75
-               Charset         =   204
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Index           =   1
-            Left            =   2520
-            TabIndex        =   138
-            Top             =   240
-            Width           =   1935
-         End
-         Begin VB.Label lblStat 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
-            Caption         =   "За день"
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   9.75
-               Charset         =   204
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   240
-            Index           =   0
-            Left            =   690
-            TabIndex        =   137
-            Top             =   240
-            Width           =   915
          End
       End
       Begin VB.Frame Frame1 
@@ -1754,7 +1671,7 @@ Begin VB.Form frmStart
             EndProperty
             Height          =   510
             Left            =   675
-            TabIndex        =   158
+            TabIndex        =   149
             Text            =   "12:01:02"
             Top             =   585
             Width           =   1410
@@ -1762,7 +1679,7 @@ Begin VB.Form frmStart
          Begin Threed.SSCommand SSExit 
             Height          =   1725
             Left            =   2580
-            TabIndex        =   169
+            TabIndex        =   160
             Top             =   3510
             Width           =   4530
             _Version        =   65536
@@ -1786,7 +1703,7 @@ Begin VB.Form frmStart
          Begin Threed.SSPanel Наработка_ДВС 
             Height          =   330
             Left            =   7065
-            TabIndex        =   176
+            TabIndex        =   166
             Top             =   900
             Width           =   855
             _Version        =   65536
@@ -1833,7 +1750,7 @@ Begin VB.Form frmStart
             ForeColor       =   &H00000000&
             Height          =   255
             Left            =   7830
-            TabIndex        =   178
+            TabIndex        =   168
             Top             =   2820
             Width           =   690
          End
@@ -1869,7 +1786,7 @@ Begin VB.Form frmStart
             Height          =   300
             Index           =   0
             Left            =   7950
-            TabIndex        =   177
+            TabIndex        =   167
             Top             =   960
             Width           =   375
          End
@@ -1887,7 +1804,7 @@ Begin VB.Form frmStart
             EndProperty
             Height          =   1560
             Left            =   2985
-            TabIndex        =   167
+            TabIndex        =   158
             Top             =   2085
             Width           =   3885
          End
@@ -2247,7 +2164,7 @@ Begin VB.Form frmStart
             Caption         =   "Label5"
             Height          =   285
             Left            =   6495
-            TabIndex        =   168
+            TabIndex        =   159
             Top             =   4890
             Width           =   2715
          End
@@ -3222,6 +3139,83 @@ Begin VB.Form frmStart
             Width           =   255
          End
       End
+      Begin VB.Label lblStat 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         Caption         =   "За сегодня"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   204
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Index           =   0
+         Left            =   525
+         TabIndex        =   196
+         Top             =   450
+         Width           =   1275
+      End
+      Begin VB.Label lblStat 
+         Alignment       =   2  'Center
+         Caption         =   "За месяц"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   204
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   1
+         Left            =   2565
+         TabIndex        =   195
+         Top             =   450
+         Width           =   2205
+      End
+      Begin VB.Label lblStat 
+         Alignment       =   2  'Center
+         Caption         =   "За год"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   204
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   2
+         Left            =   4995
+         TabIndex        =   194
+         Top             =   450
+         Width           =   2205
+      End
+      Begin VB.Label lblStat 
+         Alignment       =   2  'Center
+         Caption         =   "По годам"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   204
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   3
+         Left            =   7335
+         TabIndex        =   193
+         Top             =   450
+         Width           =   2250
+      End
    End
 End
 Attribute VB_Name = "frmStart"
@@ -3245,6 +3239,10 @@ Private Sub cmdKKM_Click()
     frmKKM.lblErrorKKM.Caption = gsErrorKKM    ' = Drvfr.ResultCodeDescription
     frmKKM.lblStatusKKM.Caption = gsРежимККМ    '= Drvfr.ECRModeDescription
     frmKKM.Show vbModal
+End Sub
+
+Private Sub cmdOpenStatForm_Click()
+    frmSt.Show vbModeless
 End Sub
 
 Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -3440,12 +3438,6 @@ Private Sub SSExit_Click()
     End
 End Sub
 
-Private Sub ssStat_Click()
-    frmSt.Calendar1.Value = Now
-    frmSt.Show vbModeless
-End Sub
-
-
 Private Sub Timer_ДВС_Timer()
 
     Dim i           As Integer
@@ -3489,7 +3481,7 @@ Private Sub Timer1_Timer()
     Dim Temp        As Double
     Dim s1          As String
     Dim ErrDat      As Boolean
-    Dim V           As Double ' Объем заправленного газа
+    Dim v           As Double ' Объем заправленного газа
     ОпросПлат
     
     ShowPict 'Управление изображением
@@ -3555,9 +3547,9 @@ Private Sub Timer1_Timer()
 
     txtKg.Caption = Format(gdРасход1, "0.00")
 
-    V = Round(gdРасход1 / gdPlot, 1) ' Округление до десятых
-    ЗаправленоГаза.Caption = Format(V, "0.0")
-    frmStart.Label_Summa.Caption = Format(V * gdPrice, "##0.00")
+    v = Round(gdРасход1 / gdPlot, 1) ' Округление до десятых
+    ЗаправленоГаза.Caption = Format(v, "0.0")
+    frmStart.Label_Summa.Caption = Format(v * gdPrice, "##0.00")
 
     txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
 
