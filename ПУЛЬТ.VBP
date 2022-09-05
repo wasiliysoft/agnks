@@ -21,6 +21,7 @@ Module=DB; DB.bas
 Module=MetanCounter_Helper; MetanCounter_Helper.bas
 Module=Utils; Utils.bas
 Module=AvgHelperModule; AvgHelperModule.bas
+Form=frmDbDebug.frm
 IconForm="frmStart"
 Startup="frmStart"
 HelpFile=""

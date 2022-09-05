@@ -3287,6 +3287,7 @@ Private Sub Form_Load()
    InitAGNKS
    If isDebug Then
       frmDebug.Show vbModeless
+      frmDbDebug.Show
    End If
 End Sub
 
