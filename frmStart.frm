@@ -841,7 +841,7 @@ Begin VB.Form frmStart
                   FloodType       =   4
                   FloodColor      =   16776960
                End
-               Begin Threed.SSCommand cmdStop 
+               Begin Threed.SSCommand cmdStopCarRefueling 
                   Height          =   1260
                   Left            =   630
                   TabIndex        =   155
@@ -3188,15 +3188,11 @@ Private Sub cmdOpenStatForm_Click()
     frmSt.Show vbModeless
 End Sub
 
-Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub cmdStopCarRefueling_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim s1       As String
-    cmdStop.Enabled = False
-
     ROff A1, 191 'Закрыть К5 (пистолет)
     gbDontStat = False         'Можно работать с диском
     gdTime = GetTimeCounter_2
-
-    
     StopOutput (2)
     StatRS_Insert
     If gbOnlyAkk = True Then
@@ -3214,8 +3210,6 @@ Private Sub cmdStop_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     'Разрешить повторную заправку автомобиля во время заправки аккумуляторов
     frmStart.SSCmdStart.Enabled = True
     gbAkkum = True
-
-
 End Sub
 
 Private Sub cmdUpdateStat_Click()
@@ -3314,7 +3308,6 @@ Private Sub SSCmdStart_Click()
         ROn A1, 4 'Открыть К1
     Else
         'Если идет заправка аккумуляторов
-        cmdStop.Enabled = True
         If gbAkkum = True Then
             frmЗапрос.Show vbModeless
             gbFrmShow = True
