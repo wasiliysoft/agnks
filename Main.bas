@@ -97,7 +97,7 @@ Public Function Заправка()
             Exit Function
         Else
             ROff A1, 191 'Закрыть К5 (пмстолет)
-            ROff A1, 127 'Закрыть К4 (Акк)
+            ROff A1, 127 'Закрыть К6 (Акк)
             StopOutput (2)
             gbDontStat = False    'Можно работать с диском
             'Заполнить статистику по заправке
@@ -178,6 +178,7 @@ Public Function Заправка()
             ROff A1, 127 'Закрыть К6 (Акк)
             'Exit Function
         End If
+        
         If (gbAkkum = False) And ((Not (gnDif(4) >= gdUpLevel))) Then
             Заправка = "Идет заправка "
             'Считаем расход на одну машину (за полсекунды)
