@@ -3299,7 +3299,6 @@ End Sub
 
 
 Private Sub SSCmdStart_Click()
-    Dim t           As Integer
     If gbCmdStart = True Then
         gbCmdStart = False
         giStage = 1  'Переход на этап ПредПуск()
@@ -3320,39 +3319,27 @@ End Sub
 
 
 Private Sub cmdSTOP_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If giStage = 2 Then
-        StopOutput (2)
-    End If
+      If giStage = 2 Then
+         StopOutput (2)
+      End If
 
-    Select Case Index
-        Case 1 ' Нажата Стоп ДВС
+      ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
+      ROn A1, 2 ' Стоп ДВС
+      toStage_0
+      If gbDontStat = True Then
+         StatRS_Insert
+         gbDontStat = False    'Можно работать с диском
+      End If
+
+      Select Case Index
+         Case 1 ' Нажата Стоп ДВС
             cmdSTOP(1).Enabled = False
-            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
-            ROn A1, 2 ' Стоп ДВС
-            toStage_0
-            If gbDontStat = True Then
-                StatRS_Insert
-                gbDontStat = False    'Можно работать с диском
-            End If
-
-            'ОстановДВС = "Двигатель остановлен !!!"
-        Case 0 ' Нажата Стоп АГНКС
+         Case 0 ' Нажата Стоп АГНКС
             cmdSTOP(0).Enabled = False
-            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
-            ROn A1, 2 ' Стоп ДВС
-            toStage_0
             'frmStart.Timer2.Enabled = False
-            'ОстановДВС = "Двигатель остановлен !!!"
-            frmStart.cmdDanger.Visible = True
-            If gbDontStat = True Then
-                StatRS_Insert
-                gbDontStat = False    'Можно работать с диском
-            End If
-
-
+            cmdDanger.Visible = True
             ОкноСообщений.Caption = ОстановАГНКС()
-    End Select
-
+      End Select
 End Sub
 
 Private Sub SSExit_Click()
