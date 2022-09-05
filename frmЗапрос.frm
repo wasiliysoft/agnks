@@ -13,7 +13,7 @@ Begin VB.Form frmЗапрос
    ScaleHeight     =   2505
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
-   Begin VB.CommandButton Command2 
+   Begin VB.CommandButton cmdYes 
       Cancel          =   -1  'True
       Caption         =   "Нет"
       BeginProperty Font 
@@ -31,7 +31,7 @@ Begin VB.Form frmЗапрос
       Top             =   1065
       Width           =   3045
    End
-   Begin VB.CommandButton Command1 
+   Begin VB.CommandButton cmdNo 
       Caption         =   "Да"
       Default         =   -1  'True
       BeginProperty Font 
@@ -78,7 +78,7 @@ Option Explicit
 ' Переделывать на MSGBOX опасно, нужно убедиться что он не будет блокировать основной поток
 
 ' Пистолет вставлен
-Private Sub Command1_Click()
+Private Sub cmdNo_Click()
     'Если выбрана заправка во время наполнения аккумуляторов
     If gbAkkum = True Then
         giStage2 = 7
@@ -98,7 +98,7 @@ Private Sub Command1_Click()
 End Sub
 
 ' Пистолет не вставлен
-Private Sub Command2_Click()
+Private Sub cmdYes_Click()
     If gbAkkum = False Then
         giStage2 = giStage2 + 1
     Else
