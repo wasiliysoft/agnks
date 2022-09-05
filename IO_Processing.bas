@@ -15,9 +15,6 @@ Public Sub ОпросПлат()
 End Sub
 
 Private Sub Обработка_1()
-    Dim i As Integer
-    Dim dTmp As Double
-
     'Отобразить состояние датчиков, работающих с платой Pet48DIO
     update_gnДатчик
 
@@ -27,14 +24,6 @@ Private Sub Обработка_1()
     'Считать расход (общий) по ИР2
     Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
     gdИР2 = GetMass_2
-
-    'Считать расход (общий) по ИР1
-    dTmp = -(GetMassExpense_2)
-    If giMainРасход = 1 Then
-        dTmp = 0
-    End If
-    Call AddSensorsData(1, gnDif(2), gnDif(9), gnDif(3), 6, 0.95 * gdK, dTmp)
-    gdИР1 = GetMass_1
 End Sub
 
  

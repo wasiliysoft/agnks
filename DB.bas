@@ -139,7 +139,7 @@ Sub StatRS_Insert()
         StatRS.AddNew
         StatRS("DATA") = Now
         StatRS("GAZ_CAR") = gd–‡ÒıÓ‰1 / gdPlot        '* 1.42
-        StatRS("GAZ_IR1") = gd»–1
+        StatRS("GAZ_IR1") = 0
         StatRS("MOTO") = GMC
         StatRS.Update
         update_Journal_col_1

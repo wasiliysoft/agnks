@@ -57,7 +57,6 @@ Public Function ОстановДВС() As String
     giStage2 = 0
     giStage = 1  'Переход на этап ПредПуск()
     giStage1 = 1
-    giMainРасход = 0
 
     gbAkkum = False
     frmStart.SSCmdStart.Enabled = False
@@ -150,7 +149,6 @@ Public Function Заправка()
             ResetExpenseCounter_2
             StartOutput (2)
             gbDontStat = True    'Нельзя работать с диском
-            giMainРасход = 1
         End If
     End If
 
@@ -226,9 +224,6 @@ Public Function Заправка()
         ResetExpenseCounter_2
         StartOutput (2)
         giStage2 = 4
-        
-        'Считать расход заправки автомобиля
-        giMainРасход = 1
         gbAkkum = False
         gdРасход1 = 0    'Обнуляем расход на одну машину
 
@@ -372,15 +367,10 @@ End Function
 Public Sub InitAGNKS()   
     frmStart.tmrMotor.Interval = 65535
     frmStart.tmrMotor.Enabled = False
-    
-
     gbCmdStart = True    'Сначала Пуск АГНКС
-    giMainРасход = 1    'Начинаем добавлять к показанию ИР1
-
     InitDisk
     ConnectKKM
     Init_Controllers
-    ResetExpenseCounter_1
     ResetExpenseCounter_2
 End Sub
 

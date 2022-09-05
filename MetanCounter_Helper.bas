@@ -15,14 +15,6 @@ Declare Sub StopOutput Lib "MetanCounter" Alias "#8" (ByVal i As Long)
 Private gTime2 As Double
 Private gMass2 As Double
 
-Sub ResetExpenseCounter_1()
-    If isDebug Then
-
-    Else
-        ResetExpenseCounter (1)
-    End If
-End Sub
-
 Sub ResetExpenseCounter_2()
     If isDebug Then
         gTime2 = 0
@@ -39,10 +31,6 @@ Function GetTimeCounter_2() As Double
     Else
         GetTimeCounter_2 = GetTimeCounter(2)
     End If
-End Function
-
-Function GetMass_1() As Double
-    GetMass_1 = GetMass(1)
 End Function
 
 Function GetMass_2() As Double

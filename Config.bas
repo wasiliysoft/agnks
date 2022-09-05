@@ -30,7 +30,6 @@ Public Type Sensor
 End Type
 
 'Для расхода газа
-Public gdИР1        As Double
 Public gdИР2        As Double
 
 
@@ -72,10 +71,6 @@ Public gbAkkum      As Boolean
 Public giTrigger    As Integer    ' Для формы Запроса
 Public Car          As Integer
 Public gdРасход1    As Double    'Расход на заправку автомобиля
-Public giMainРасход As Integer    'Флаг для подсчета расхода всего газа:
-' 1 - добавляем
-' 0 - ничего
-'-1 - отнимаем
 
 Public gdK          As Double    'Поправочный коэффициент
 
