@@ -1576,7 +1576,7 @@ Begin VB.Form frmStart
             Font3D          =   2
             Picture         =   "frmStart.frx":A99C
          End
-         Begin Threed.SSCommand SSCommand2 
+         Begin Threed.SSCommand cmdSTOP 
             Height          =   1185
             Index           =   0
             Left            =   8145
@@ -1602,7 +1602,7 @@ Begin VB.Form frmStart
             Font3D          =   2
             Picture         =   "frmStart.frx":A9B8
          End
-         Begin Threed.SSCommand SSCommand2 
+         Begin Threed.SSCommand cmdSTOP 
             Height          =   1185
             Index           =   1
             Left            =   7020
@@ -3319,14 +3319,14 @@ Private Sub SSCmdStart_Click()
 End Sub
 
 
-Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub cmdSTOP_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     If giStage = 2 Then
         StopOutput (2)
     End If
 
     Select Case Index
         Case 1 ' Нажата Стоп ДВС
-            SSCommand2(1).Enabled = False
+            cmdSTOP(1).Enabled = False
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
             ROn A1, 2 ' Стоп ДВС
             toStage_0
@@ -3337,7 +3337,7 @@ Private Sub SSCommand2_MouseUp(Index As Integer, Button As Integer, Shift As Int
 
             'ОстановДВС = "Двигатель остановлен !!!"
         Case 0 ' Нажата Стоп АГНКС
-            SSCommand2(0).Enabled = False
+            cmdSTOP(0).Enabled = False
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
             ROn A1, 2 ' Стоп ДВС
             toStage_0

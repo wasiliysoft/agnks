@@ -250,8 +250,8 @@ End Sub
 Public Function »сх—ост() As String
     Dim s           As String
     Dim norma       As Boolean
-    frmStart.SSCommand2(1).Enabled = True
-    frmStart.SSCommand2(0).Enabled = True
+    frmStart.cmdSTOP(1).Enabled = True
+    frmStart.cmdSTOP(0).Enabled = True
 
     s = ""
     norma = True
