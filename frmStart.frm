@@ -21,7 +21,7 @@ Begin VB.Form frmStart
    Visible         =   0   'False
    Begin TabDlg.SSTab SSTab1 
       Height          =   7395
-      Left            =   45
+      Left            =   90
       TabIndex        =   0
       Top             =   0
       Width           =   9795
@@ -29,7 +29,7 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
-      Tab             =   2
+      Tab             =   3
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
@@ -41,44 +41,36 @@ Begin VB.Form frmStart
       TabPicture(1)   =   "frmStart.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "Frame1(1)"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "О программе"
       TabPicture(2)   =   "frmStart.frx":0038
-      Tab(2).ControlEnabled=   -1  'True
+      Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "Label4"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Image1"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "txtTimeDate"
-      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "Label16"
-      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "SSExit"
-      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
-      Tab(3).ControlEnabled=   0   'False
+      Tab(3).ControlEnabled=   -1  'True
       Tab(3).Control(0)=   "Frame1(3)"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "cmdOpenStatForm"
-      Tab(4).Control(1)=   "lstStat(0)"
-      Tab(4).Control(2)=   "lstStat(1)"
-      Tab(4).Control(3)=   "lstStat(2)"
-      Tab(4).Control(4)=   "lstStat(3)"
-      Tab(4).Control(5)=   "cmdUpdateStat"
-      Tab(4).Control(6)=   "Наработка_ДВС"
-      Tab(4).Control(7)=   "Label10(0)"
-      Tab(4).Control(8)=   "lblStat(0)"
-      Tab(4).Control(9)=   "lblStat(1)"
-      Tab(4).Control(10)=   "lblStat(2)"
-      Tab(4).Control(11)=   "lblStat(3)"
-      Tab(4).ControlCount=   12
+      Tab(4).Control(0)=   "lblStat(3)"
+      Tab(4).Control(1)=   "lblStat(2)"
+      Tab(4).Control(2)=   "lblStat(1)"
+      Tab(4).Control(3)=   "lblStat(0)"
+      Tab(4).Control(4)=   "cmdUpdateStat"
+      Tab(4).Control(5)=   "lstStat(3)"
+      Tab(4).Control(6)=   "lstStat(2)"
+      Tab(4).Control(7)=   "lstStat(1)"
+      Tab(4).Control(8)=   "lstStat(0)"
+      Tab(4).Control(9)=   "cmdOpenStatForm"
+      Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
          Height          =   690
@@ -149,7 +141,7 @@ Begin VB.Form frmStart
          Caption         =   "---"
          Height          =   7110
          Index           =   3
-         Left            =   -75000
+         Left            =   0
          TabIndex        =   131
          Top             =   315
          Width           =   9795
@@ -470,7 +462,7 @@ Begin VB.Form frmStart
             Height          =   3450
             Left            =   45
             TabIndex        =   132
-            Top             =   45
+            Top             =   90
             Width           =   9720
             _Version        =   65536
             _ExtentX        =   17145
@@ -1054,6 +1046,17 @@ Begin VB.Form frmStart
                   Y2              =   1575
                End
             End
+            Begin VB.Label Наработка_ДВС 
+               Alignment       =   2  'Center
+               BackColor       =   &H00C0C0C0&
+               Caption         =   "Наработка ДВС 999999 ч."
+               ForeColor       =   &H00FF0000&
+               Height          =   240
+               Left            =   1305
+               TabIndex        =   197
+               Top             =   540
+               Width           =   2130
+            End
             Begin VB.Image Термометр 
                Height          =   240
                Index           =   1
@@ -1289,11 +1292,11 @@ Begin VB.Form frmStart
                BackStyle       =   0  'Transparent
                Caption         =   "КЭ7"
                ForeColor       =   &H00FF0000&
-               Height          =   192
+               Height          =   195
                Index           =   4
-               Left            =   120
+               Left            =   135
                TabIndex        =   152
-               Top             =   600
+               Top             =   540
                Width           =   300
             End
             Begin VB.Label Label8 
@@ -2024,7 +2027,7 @@ Begin VB.Form frmStart
             ForeColor       =   &H00000000&
             Height          =   255
             Left            =   7695
-            TabIndex        =   198
+            TabIndex        =   196
             Top             =   4440
             Width           =   690
          End
@@ -2057,7 +2060,7 @@ Begin VB.Form frmStart
             Caption         =   "Label5"
             Height          =   285
             Left            =   5130
-            TabIndex        =   197
+            TabIndex        =   195
             Top             =   3825
             Width           =   2715
          End
@@ -3034,7 +3037,7 @@ Begin VB.Form frmStart
       End
       Begin Threed.SSCommand SSExit 
          Height          =   1725
-         Left            =   180
+         Left            =   -74820
          TabIndex        =   191
          Top             =   5490
          Width           =   9390
@@ -3056,31 +3059,6 @@ Begin VB.Form frmStart
          BevelWidth      =   7
          Font3D          =   3
       End
-      Begin Threed.SSPanel Наработка_ДВС 
-         Height          =   330
-         Left            =   -70455
-         TabIndex        =   193
-         Top             =   6750
-         Width           =   855
-         _Version        =   65536
-         _ExtentX        =   1503
-         _ExtentY        =   572
-         _StockProps     =   15
-         Caption         =   "12999"
-         ForeColor       =   65280
-         BackColor       =   0
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   204
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         BevelWidth      =   4
-         BevelOuter      =   1
-      End
       Begin VB.Label Label16 
          Caption         =   "Текущее время"
          BeginProperty Font 
@@ -3093,8 +3071,8 @@ Begin VB.Form frmStart
             Strikethrough   =   0   'False
          EndProperty
          Height          =   510
-         Left            =   225
-         TabIndex        =   196
+         Left            =   -74775
+         TabIndex        =   194
          Top             =   2115
          Width           =   2190
       End
@@ -3110,34 +3088,14 @@ Begin VB.Form frmStart
             Strikethrough   =   0   'False
          EndProperty
          Height          =   510
-         Left            =   2520
-         TabIndex        =   195
+         Left            =   -72480
+         TabIndex        =   193
          Top             =   2115
          Width           =   4980
       End
-      Begin VB.Label Label10 
-         AutoSize        =   -1  'True
-         Caption         =   "час"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   12
-            Charset         =   204
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FF0000&
-         Height          =   300
-         Index           =   0
-         Left            =   -69330
-         TabIndex        =   194
-         Top             =   6750
-         Width           =   375
-      End
       Begin VB.Image Image1 
          Height          =   1365
-         Left            =   270
+         Left            =   -74730
          Picture         =   "frmStart.frx":B870
          Stretch         =   -1  'True
          Top             =   450
@@ -3155,7 +3113,7 @@ Begin VB.Form frmStart
             Strikethrough   =   0   'False
          EndProperty
          Height          =   885
-         Left            =   1350
+         Left            =   -73650
          TabIndex        =   192
          Top             =   990
          Width           =   6090
@@ -3317,16 +3275,15 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Form_Load()
+   Left = 10
+   Top = 700
+   frmStart.SSTab1.Tab = 3
+   Show
    InitAGNKS
 
    If isDebug Then
       frmDebug.Show vbModeless
    End If
-
-   Left = 10
-   Top = 700
-   frmStart.SSTab1.Tab = 3
-   Show
 End Sub
 
 
@@ -3462,6 +3419,7 @@ Private Sub SSExit_Click()
     End
 End Sub
 
+
 Private Sub Timer_ДВС_Timer()
 
     Dim i           As Integer
@@ -3565,7 +3523,7 @@ Private Sub Timer1_Timer()
 
 
     lblV.Caption = Format(gnDif(16), "00.0" & " В") ' Напряжение
-    Наработка_ДВС.Caption = Format((GMC + MotorCount) / 60, "00")
+    Наработка_ДВС = "Наработка ДВС " & Format((GMC + MotorCount) / 60, "00") & " ч."
     Панель_Авто.Visible = k5_isOpen
 
     'Выводим расход на заправку одной машины
