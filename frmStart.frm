@@ -46,15 +46,15 @@ Begin VB.Form frmStart
       TabCaption(2)   =   "О программе"
       TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "SSExit"
+      Tab(2).Control(0)=   "Label4"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Label16"
+      Tab(2).Control(1)=   "Image1"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "txtTimeDate"
       Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "Image1"
+      Tab(2).Control(3)=   "Label16"
       Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "Label4"
+      Tab(2).Control(4)=   "SSExit"
       Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "Схема"
@@ -66,16 +66,16 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "cmdOpenStatForm"
-      Tab(4).Control(1)=   "lstStat(0)"
-      Tab(4).Control(2)=   "lstStat(1)"
-      Tab(4).Control(3)=   "lstStat(2)"
-      Tab(4).Control(4)=   "lstStat(3)"
-      Tab(4).Control(5)=   "cmdUpdateStat"
-      Tab(4).Control(6)=   "lblStat(0)"
-      Tab(4).Control(7)=   "lblStat(1)"
-      Tab(4).Control(8)=   "lblStat(2)"
-      Tab(4).Control(9)=   "lblStat(3)"
+      Tab(4).Control(0)=   "lblStat(3)"
+      Tab(4).Control(1)=   "lblStat(2)"
+      Tab(4).Control(2)=   "lblStat(1)"
+      Tab(4).Control(3)=   "lblStat(0)"
+      Tab(4).Control(4)=   "cmdUpdateStat"
+      Tab(4).Control(5)=   "lstStat(3)"
+      Tab(4).Control(6)=   "lstStat(2)"
+      Tab(4).Control(7)=   "lstStat(1)"
+      Tab(4).Control(8)=   "lstStat(0)"
+      Tab(4).Control(9)=   "cmdOpenStatForm"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
@@ -3242,7 +3242,7 @@ Private Sub Form_Load()
    InitAGNKS
    If isDebug Then
       frmDebug.Show vbModeless
-      frmDbDebug.Show
+      'frmDbDebug.Show
    End If
 End Sub
 

@@ -9,480 +9,520 @@ Begin VB.Form frmDebug
    PaletteMode     =   1  'UseZOrder
    ScaleHeight     =   6030
    ScaleWidth      =   10140
+   Begin VB.CommandButton Command15 
+      Caption         =   "100"
+      Height          =   330
+      Left            =   2475
+      TabIndex        =   80
+      Top             =   3015
+      Width           =   645
+   End
+   Begin VB.CommandButton Command14 
+      Caption         =   "0"
+      Height          =   330
+      Left            =   1755
+      TabIndex        =   79
+      Top             =   3015
+      Width           =   600
+   End
+   Begin VB.CommandButton Command13 
+      Caption         =   "200"
+      Height          =   330
+      Left            =   3195
+      TabIndex        =   78
+      Top             =   3015
+      Width           =   510
+   End
+   Begin VB.CommandButton Command12 
+      Caption         =   "Ñòîï"
+      Height          =   330
+      Left            =   2925
+      TabIndex        =   77
+      Top             =   720
+      Width           =   915
+   End
+   Begin VB.CommandButton Command9 
+      Caption         =   "ÐÕ"
+      Height          =   330
+      Left            =   3870
+      TabIndex        =   76
+      Top             =   720
+      Width           =   960
+   End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   16
-      Left            =   7965
+      Left            =   8055
       TabIndex        =   73
       Text            =   "0,8"
-      Top             =   5220
+      Top             =   4590
       Width           =   690
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   16
-      Left            =   8730
+      Left            =   8820
       TabIndex        =   72
-      Top             =   5220
+      Top             =   4590
       Width           =   510
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   16
-      Left            =   7335
+      Left            =   7425
       TabIndex        =   71
-      Top             =   5220
+      Top             =   4590
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   15
-      Left            =   7335
+      Left            =   7425
       TabIndex        =   57
-      Top             =   4860
+      Top             =   4230
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   14
-      Left            =   3465
+      Left            =   2925
       TabIndex        =   56
-      Top             =   720
+      Top             =   315
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   13
-      Left            =   7335
+      Left            =   4005
       TabIndex        =   55
-      Top             =   4140
+      Top             =   2610
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   12
-      Left            =   7335
+      Left            =   7965
       TabIndex        =   54
-      Top             =   3780
+      Top             =   810
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   11
-      Left            =   7335
+      Left            =   7965
       TabIndex        =   53
-      Top             =   3420
+      Top             =   450
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   10
-      Left            =   7335
+      Left            =   7965
       TabIndex        =   52
-      Top             =   3060
+      Top             =   90
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   9
-      Left            =   7020
+      Left            =   2700
       TabIndex        =   51
-      Top             =   2025
+      Top             =   4995
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   8
-      Left            =   7020
+      Left            =   2700
       TabIndex        =   50
-      Top             =   1665
+      Top             =   4635
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   7
-      Left            =   3105
+      Left            =   1755
       TabIndex        =   49
-      Top             =   5220
+      Top             =   3690
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   6
-      Left            =   3105
+      Left            =   1755
       TabIndex        =   48
-      Top             =   4860
+      Top             =   2610
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   5
-      Left            =   3105
+      Left            =   2970
       TabIndex        =   47
-      Top             =   4500
+      Top             =   1890
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   4
-      Left            =   3105
+      Left            =   2970
       TabIndex        =   46
-      Top             =   4140
+      Top             =   1530
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   3
-      Left            =   3105
+      Left            =   7425
       TabIndex        =   45
-      Top             =   3780
+      Top             =   1890
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   2
-      Left            =   3105
+      Left            =   7425
       TabIndex        =   44
-      Top             =   3420
+      Top             =   1530
       Width           =   600
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   1
-      Left            =   3105
+      Left            =   7290
       TabIndex        =   43
-      Top             =   3060
+      Top             =   5400
       Width           =   600
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   15
-      Left            =   8730
+      Left            =   8820
       TabIndex        =   42
-      Top             =   4860
+      Top             =   4230
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   14
-      Left            =   4860
+      Left            =   4320
       TabIndex        =   41
-      Top             =   720
+      Top             =   315
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   13
-      Left            =   8730
+      Left            =   5400
       TabIndex        =   40
-      Top             =   4140
+      Top             =   2610
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   12
-      Left            =   8730
+      Left            =   9360
       TabIndex        =   39
-      Top             =   3780
+      Top             =   810
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   11
-      Left            =   8730
+      Left            =   9360
       TabIndex        =   38
-      Top             =   3420
+      Top             =   450
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   10
-      Left            =   8730
+      Left            =   9360
       TabIndex        =   37
-      Top             =   3060
+      Top             =   90
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   9
-      Left            =   8550
+      Left            =   4230
       TabIndex        =   36
-      Top             =   2025
+      Top             =   4995
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   8
-      Left            =   8550
+      Left            =   4230
       TabIndex        =   35
-      Top             =   1665
+      Top             =   4635
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   7
-      Left            =   4635
+      Left            =   3195
       TabIndex        =   34
-      Top             =   5220
+      Top             =   3690
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   6
-      Left            =   4635
+      Left            =   3195
       TabIndex        =   33
-      Top             =   4860
+      Top             =   2610
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   5
-      Left            =   4635
+      Left            =   4410
       TabIndex        =   32
-      Top             =   4500
+      Top             =   1890
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   4
-      Left            =   4635
+      Left            =   4410
       TabIndex        =   31
-      Top             =   4140
+      Top             =   1530
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   3
-      Left            =   4635
+      Left            =   8865
       TabIndex        =   30
-      Top             =   3780
+      Top             =   1890
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   2
-      Left            =   4635
+      Left            =   8865
       TabIndex        =   29
-      Top             =   3420
+      Top             =   1530
       Width           =   510
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   1
-      Left            =   4635
+      Left            =   8820
       TabIndex        =   28
-      Top             =   3060
+      Top             =   5400
       Width           =   510
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   15
-      Left            =   7965
+      Left            =   8055
       TabIndex        =   27
       Text            =   "0,8"
-      Top             =   4860
+      Top             =   4230
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   14
-      Left            =   4095
+      Left            =   3555
       TabIndex        =   26
       Text            =   "0,8"
-      Top             =   720
+      Top             =   315
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   13
-      Left            =   7965
+      Left            =   4635
       TabIndex        =   25
       Text            =   "0,8"
-      Top             =   4140
+      Top             =   2610
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   12
-      Left            =   7965
+      Left            =   8595
       TabIndex        =   24
       Text            =   "0,8"
-      Top             =   3780
+      Top             =   810
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   11
-      Left            =   7965
+      Left            =   8595
       TabIndex        =   23
       Text            =   "0,8"
-      Top             =   3420
+      Top             =   450
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   10
-      Left            =   7965
+      Left            =   8595
       TabIndex        =   22
       Text            =   "0,8"
-      Top             =   3060
+      Top             =   90
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   9
-      Left            =   7740
+      Left            =   3420
       TabIndex        =   21
       Text            =   "2"
-      Top             =   2025
+      Top             =   4995
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   8
-      Left            =   7740
+      Left            =   3420
       TabIndex        =   20
       Text            =   "1,7"
-      Top             =   1665
+      Top             =   4635
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   7
-      Left            =   3825
+      Left            =   2430
       TabIndex        =   19
       Text            =   "3"
-      Top             =   5220
+      Top             =   3690
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   6
-      Left            =   3825
+      Left            =   2430
       TabIndex        =   18
       Text            =   "0,8"
-      Top             =   4860
+      Top             =   2610
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   5
-      Left            =   3825
+      Left            =   3600
       TabIndex        =   17
       Text            =   "0,6"
-      Top             =   4500
+      Top             =   1890
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   4
-      Left            =   3825
+      Left            =   3600
       TabIndex        =   16
       Text            =   "2"
-      Top             =   4140
+      Top             =   1530
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   3
-      Left            =   3825
+      Left            =   8100
       TabIndex        =   15
       Text            =   "0,8"
-      Top             =   3780
+      Top             =   1890
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   2
-      Left            =   3825
+      Left            =   8100
       TabIndex        =   14
       Text            =   "1,9"
-      Top             =   3420
+      Top             =   1530
       Width           =   690
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   1
-      Left            =   3825
+      Left            =   8010
       TabIndex        =   13
       Text            =   "0"
-      Top             =   3060
+      Top             =   5400
       Width           =   690
    End
    Begin VB.CommandButton Command_minus 
       Caption         =   "-"
       Height          =   330
       Index           =   0
-      Left            =   3105
+      Left            =   7290
       TabIndex        =   12
-      Top             =   2700
+      Top             =   5040
       Width           =   600
    End
    Begin VB.CommandButton Command_plus 
       Caption         =   "+"
       Height          =   330
       Index           =   0
-      Left            =   4635
+      Left            =   8820
       TabIndex        =   11
-      Top             =   2700
+      Top             =   5040
       Width           =   510
    End
    Begin VB.TextBox Text_ggACL8113 
       Height          =   330
       Index           =   0
-      Left            =   3825
+      Left            =   8010
       TabIndex        =   10
       Text            =   "0"
-      Top             =   2700
+      Top             =   5040
       Width           =   690
    End
    Begin VB.CommandButton Command11 
       Caption         =   "ÂÛÊË"
-      Height          =   375
-      Left            =   6885
+      Height          =   330
+      Left            =   4905
       TabIndex        =   9
-      Top             =   705
+      Top             =   720
       Width           =   1215
    End
    Begin VB.CommandButton Command10 
       Cancel          =   -1  'True
       Caption         =   "Ìóôòà ÂÊË"
-      Height          =   375
-      Left            =   5565
+      Height          =   330
+      Left            =   4905
       TabIndex        =   8
-      Top             =   705
+      Top             =   315
       Width           =   1215
    End
    Begin VB.CommandButton Command8 
@@ -554,9 +594,9 @@ Begin VB.Form frmDebug
       Caption         =   "Íàïðÿæåíèå"
       Height          =   195
       Index           =   14
-      Left            =   5715
+      Left            =   6300
       TabIndex        =   75
-      Top             =   5310
+      Top             =   4680
       Width           =   960
    End
    Begin VB.Label Label1 
@@ -565,9 +605,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÄ4"
       Height          =   195
       Index           =   13
-      Left            =   5715
+      Left            =   6840
       TabIndex        =   74
-      Top             =   4950
+      Top             =   4275
       Width           =   360
    End
    Begin VB.Label Label1 
@@ -575,20 +615,21 @@ Begin VB.Form frmDebug
       Caption         =   "Îáîðîòû ÄÂÑ"
       Height          =   195
       Index           =   12
-      Left            =   2160
+      Left            =   2925
       TabIndex        =   70
-      Top             =   765
+      Top             =   45
       Width           =   1065
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
       Caption         =   "ÄÒ4 Âûõîä êîìïðåññîðà"
-      Height          =   195
+      Height          =   210
       Index           =   11
-      Left            =   5265
+      Left            =   4005
       TabIndex        =   69
-      Top             =   4185
-      Width           =   1920
+      Top             =   2340
+      Width           =   1995
+      WordWrap        =   -1  'True
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
@@ -596,9 +637,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÒ3"
       Height          =   195
       Index           =   10
-      Left            =   5715
+      Left            =   7380
       TabIndex        =   68
-      Top             =   3870
+      Top             =   855
       Width           =   330
    End
    Begin VB.Label Label1 
@@ -606,9 +647,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÒ2.1"
       Height          =   195
       Index           =   9
-      Left            =   5715
+      Left            =   7335
       TabIndex        =   67
-      Top             =   3510
+      Top             =   540
       Width           =   465
    End
    Begin VB.Label Label1 
@@ -616,9 +657,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÒ2"
       Height          =   195
       Index           =   8
-      Left            =   5715
+      Left            =   7335
       TabIndex        =   66
-      Top             =   3150
+      Top             =   180
       Width           =   330
    End
    Begin VB.Label Label1 
@@ -626,9 +667,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÒ1.1 Âõîä"
       Height          =   195
       Index           =   7
-      Left            =   5715
+      Left            =   1710
       TabIndex        =   65
-      Top             =   2070
+      Top             =   5040
       Width           =   870
    End
    Begin VB.Label Label1 
@@ -636,9 +677,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÒ1 Âûõîä"
       Height          =   195
       Index           =   6
-      Left            =   5715
+      Left            =   1710
       TabIndex        =   64
-      Top             =   1755
+      Top             =   4680
       Width           =   855
    End
    Begin VB.Label Label1 
@@ -646,9 +687,9 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÄ8 Àêê"
       Height          =   195
       Index           =   5
-      Left            =   1665
+      Left            =   1755
       TabIndex        =   63
-      Top             =   5265
+      Top             =   3465
       Width           =   690
    End
    Begin VB.Label Label1 
@@ -656,45 +697,45 @@ Begin VB.Form frmDebug
       Caption         =   "ÄÄ6 Êîìïðåññîð"
       Height          =   195
       Index           =   4
-      Left            =   1665
+      Left            =   1800
       TabIndex        =   62
-      Top             =   4950
+      Top             =   2340
       Width           =   1350
    End
    Begin VB.Label Label1 
       Caption         =   "ÄÄ2.2"
       Height          =   240
       Index           =   3
-      Left            =   1665
+      Left            =   1845
       TabIndex        =   61
-      Top             =   4545
+      Top             =   1935
       Width           =   690
    End
    Begin VB.Label Label1 
       Caption         =   "ÄÄ2.1 Àâòî"
       Height          =   240
       Index           =   2
-      Left            =   1665
+      Left            =   1845
       TabIndex        =   60
-      Top             =   4140
+      Top             =   1530
       Width           =   1095
    End
    Begin VB.Label Label1 
       Caption         =   "ÄÄ1.2"
       Height          =   240
       Index           =   1
-      Left            =   1665
+      Left            =   6255
       TabIndex        =   59
-      Top             =   3735
+      Top             =   1890
       Width           =   690
    End
    Begin VB.Label Label1 
       Caption         =   "ÄÄ1.1 Âõîä"
       Height          =   240
       Index           =   0
-      Left            =   1665
+      Left            =   6255
       TabIndex        =   58
-      Top             =   3420
+      Top             =   1530
       Width           =   1140
    End
 End
@@ -706,8 +747,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command_minus_Click(Index As Integer)
-   Dim d as Double
-   if(Index =4) Then
+   Dim d As Double
+   If (Index = 4) Then
       d = 0.001
    Else
       d = 0.1
@@ -717,8 +758,8 @@ Private Sub Command_minus_Click(Index As Integer)
 End Sub
 
 Private Sub Command_plus_Click(Index As Integer)
-   Dim d as Double
-   if(Index =4) Then
+   Dim d As Double
+   If (Index = 4) Then
       d = 0.001
    Else
       d = 0.1
@@ -736,7 +777,7 @@ Private Sub Command1_Click()
 End Sub
 
 Sub openK1()
-   ROn A1, 4
+   ROn A1, 4 'Îòêðûòü Ê1
 End Sub
 Sub openK2()
    ROn A1, 8
@@ -765,6 +806,26 @@ End Sub
 Private Sub Command11_Click()
     ' Ìóôòà ÂÛÊË
     ROff B1, Not (16)
+End Sub
+
+Private Sub Command12_Click()
+    Text_ggACL8113(14) = 0
+    updateState
+End Sub
+
+Private Sub Command13_Click()
+    Text_ggACL8113(6) = 3.3
+    updateState
+End Sub
+
+Private Sub Command14_Click()
+    Text_ggACL8113(6) = 0.8
+    updateState
+End Sub
+
+Private Sub Command15_Click()
+    Text_ggACL8113(6) = 2
+    updateState
 End Sub
 
 Private Sub Command2_Click()
@@ -797,6 +858,11 @@ End Sub
 
 
 
+Private Sub Command9_Click()
+    Text_ggACL8113(14) = 3
+    updateState
+End Sub
+
 Private Sub Form_Load()
     updateState
 End Sub
@@ -807,4 +873,9 @@ Private Sub updateState()
     For Index = 0 To 16
         ggACL8113(Index) = CDbl(Text_ggACL8113(Index).Text)
     Next
+End Sub
+
+
+Private Sub Label1_Click(Index As Integer)
+
 End Sub
