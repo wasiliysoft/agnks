@@ -68,6 +68,23 @@ Public Function Заправка()
     Dim MaxIR       As Double    'Запоминаем max расход при открытии КЭМ6
     Dim p           As Double
 
+    'Если заправка только от АКК и заглох ДВС, то на ИсхСост
+    If (gnDif(14) < 100) And (gbOnlyAkk = False) Then
+        giDVS = giDVS + 1
+        If (giDVS > 5) Then
+            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
+            ROn A1, 6 ' (2 + 4) Стоп ДВС, октрыть К1
+            toStage_0
+            giDVS = 0
+            gbRunDVS = False
+            Exit Function
+        End If
+    Else
+        giDVS = 0
+    End If
+    
+
+
     ' ПОДЭТАП 8  - Заправка только от ов
     If giStage2 = 8 Then
         'Заправка машин
@@ -174,7 +191,7 @@ Public Function Заправка()
 
         MaxIR = GetMassExpense_2
         If (gbAkkum = False) And ((k6_isOpen And (((MaxIR * 3600) <= gdRashAkkEnd) _
-                And (MaxIR > 0)) And (MaxIR >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then           
+                And (MaxIR > 0)) And (MaxIR >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then
             ROff A1, 127 'Закрыть К6 (Акк)
             'Exit Function
         End If
@@ -219,7 +236,7 @@ Public Function Заправка()
 
 
     ' ПОДЭТАП 7  - во время заправки аккумуляторов переход на заправку машин
-    If giStage2 = 7 Then       
+    If giStage2 = 7 Then
         ROn A1, 64 'Открыть КЭ5
         s = "Переходим на заправку машин"
         ResetExpenseCounter_2
@@ -235,12 +252,20 @@ Public Function Заправка()
     Заправка = s
 End Function
 
+Public Function isAll_PSecnsor_OK() As Boolean
+    Dim i As Integer
+    For i = 2 To 7
+         If gnDif(i) = -1 Then
+            isAll_PSecnsor_OK = False
+            Exit Function
+         End If
+    Next i
+    isAll_PSecnsor_OK = True
+End Function
+
 Public Sub toStage_0()
-' 
-' Переход на этап ИсхСост
-' 
     giStage2 = 0
-    giStage = 0    
+    giStage = 0
     giStage1 = 0
     gbAkkum = False
     gbCmdStart = True
@@ -365,7 +390,7 @@ Public Function ПредПуск() As String
     End If
 End Function
 
-Public Sub InitAGNKS()   
+Public Sub InitAGNKS()
     frmStart.tmrMotor.Interval = 65535
     frmStart.tmrMotor.Enabled = False
     gbCmdStart = True    'Сначала Пуск АГНКС

@@ -728,7 +728,11 @@ Private Sub Command_plus_Click(Index As Integer)
 End Sub
 
 Private Sub Command1_Click()
-   ROn B0, 128
+   If isHandControl Then
+      ROn B0, 128
+   Else
+      ROff B0, Not 128
+   End If
 End Sub
 
 Sub openK1()

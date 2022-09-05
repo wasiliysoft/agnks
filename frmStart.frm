@@ -29,7 +29,7 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
-      Tab             =   1
+      Tab             =   3
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
@@ -39,43 +39,43 @@ Begin VB.Form frmStart
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Аналоговые"
       TabPicture(1)   =   "frmStart.frx":001C
-      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "Frame1(1)"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "О программе"
       TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label4"
+      Tab(2).Control(0)=   "SSExit"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Image1"
+      Tab(2).Control(1)=   "Label16"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "txtTimeDate"
       Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "Label16"
+      Tab(2).Control(3)=   "Image1"
       Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "SSExit"
+      Tab(2).Control(4)=   "Label4"
       Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
-      Tab(3).ControlEnabled=   0   'False
+      Tab(3).ControlEnabled=   -1  'True
       Tab(3).Control(0)=   "Frame1(3)"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "lblStat(3)"
-      Tab(4).Control(1)=   "lblStat(2)"
-      Tab(4).Control(2)=   "lblStat(1)"
-      Tab(4).Control(3)=   "lblStat(0)"
-      Tab(4).Control(4)=   "cmdUpdateStat"
-      Tab(4).Control(5)=   "lstStat(3)"
-      Tab(4).Control(6)=   "lstStat(2)"
-      Tab(4).Control(7)=   "lstStat(1)"
-      Tab(4).Control(8)=   "lstStat(0)"
-      Tab(4).Control(9)=   "cmdOpenStatForm"
+      Tab(4).Control(0)=   "cmdOpenStatForm"
+      Tab(4).Control(1)=   "lstStat(0)"
+      Tab(4).Control(2)=   "lstStat(1)"
+      Tab(4).Control(3)=   "lstStat(2)"
+      Tab(4).Control(4)=   "lstStat(3)"
+      Tab(4).Control(5)=   "cmdUpdateStat"
+      Tab(4).Control(6)=   "lblStat(0)"
+      Tab(4).Control(7)=   "lblStat(1)"
+      Tab(4).Control(8)=   "lblStat(2)"
+      Tab(4).Control(9)=   "lblStat(3)"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
@@ -147,7 +147,7 @@ Begin VB.Form frmStart
          Caption         =   "---"
          Height          =   7110
          Index           =   3
-         Left            =   -75000
+         Left            =   0
          TabIndex        =   131
          Top             =   315
          Width           =   9795
@@ -1678,7 +1678,7 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   5355
          Index           =   1
-         Left            =   0
+         Left            =   -75000
          TabIndex        =   98
          Top             =   360
          Width           =   9345
@@ -3407,15 +3407,12 @@ Private Sub Timer1_Timer()
     Dim Dv, Akk, t  As Integer
     Dim Temp        As Double
     Dim s1          As String
-    Dim ErrDat      As Boolean
+    Dim bPSensorOsOk      As Boolean
     Dim v           As Double ' Объем заправленного газа
     Dim s           As String
     nTimer1Counter = nTimer1Counter + 1
     ОпросПлат
     
-    ShowPict 'Управление изображением
-
-
     For i = 0 To 47
         If gnДатчик(i).Data = 0 Then
             Label1(i).BackColor = &HFF00&
@@ -3467,6 +3464,8 @@ Private Sub Timer1_Timer()
         glCounter = 0
     End If
 
+    ShowPict 'Управление изображением
+
     Наработка_ДВС = "Наработка ДВС " & Format((GMC + MotorCount) / 60, "00") & " ч."
     Панель_Авто.Visible = k5_isOpen
 
@@ -3482,53 +3481,20 @@ Private Sub Timer1_Timer()
 
     Label_Avg_Speed_Car = Format(getAvgRefuelingSpeed / gdPlot, "0.00")
     Label_Avg_Left_Time_Car = formatSecToHHMMSS(getLeftRefuelingTime)
-   '  i = CInt(Автобаллон.FloodPercent) - last_CarPercent
-   '  If i > 1 Then
-   '    i = ((100 - CInt(Автобаллон.FloodPercent)) / i) * (Now - last_upd_Label_Avg_Left_Time_Car)
-   '    Label_Avg_Left_Time_Car = formatSecToHHMMSS(i)
-   '    last_upd_Label_Avg_Left_Time_Car = Now
-   '    last_CarPercent = CInt(Автобаллон.FloodPercent)
-   '  End If
-    
-    'Проверка датчиков
-    ErrDat = False
-    If (gnDif(2) = -1) Or (gnDif(3) = -1) Or (gnDif(4) = -1) Or (gnDif(5) = -1) Or _
-            (gnDif(6) = -1) Or (gnDif(7) = -1) Then
-        ErrDat = True
-    End If
 
-    'Если ручное управление
-    If (isHandControl) Or (ErrDat = True) Then
+    bPSensorOsOk = isAll_PSecnsor_OK
+    'Если ручное управление или неисправны датчики
+    If (isHandControl) Or (bPSensorOsOk = False) Then
         'Если перешли на ручное управление
         ОкноСообщений.BackColor = &HFF
         ОкноСообщений.ForeColor = &HFFFF&
         ОкноСообщений.Caption = "Ручное управление !!! - программа не управляет процессами !"
-        If ErrDat = True Then
+        If bPSensorOsOk = False Then
             ОкноСообщений.Caption = "Неисправны датчики !!! - программа не управляет процессами !"
         End If
     Else
         ОкноСообщений.BackColor = &HE0E0E0
         ОкноСообщений.ForeColor = &HFF0000
-
-        'Если на этапе Заправка заглох ДВС, то  на ИсхСост
-
-        If (gnDif(14) < 100) And (giStage = 2) And (gbOnlyAkk = False) Then
-            giDVS = giDVS + 1
-        Else
-            giDVS = 0
-        End If
-
-
-        If (giDVS > 5) Then
-            toStage_0
-            giDVS = 0
-            gbRunDVS = False
-            'frmStart.Timer2.Enabled = False
-
-            ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
-            ROn A1, 6 ' (2 + 4) Стоп ДВС, октрыть К1
-        End If
-
 
         Select Case giStage
             Case 0:
