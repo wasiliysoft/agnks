@@ -45,11 +45,11 @@ Begin VB.Form frmStart
       TabCaption(2)   =   "О программе"
       TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label4"
-      Tab(2).Control(1)=   "Image1"
+      Tab(2).Control(0)=   "SSExit"
+      Tab(2).Control(1)=   "Label16"
       Tab(2).Control(2)=   "txtTimeDate"
-      Tab(2).Control(3)=   "Label16"
-      Tab(2).Control(4)=   "SSExit"
+      Tab(2).Control(3)=   "Image1"
+      Tab(2).Control(4)=   "Label4"
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
@@ -60,16 +60,16 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "lblStat(3)"
-      Tab(4).Control(1)=   "lblStat(2)"
-      Tab(4).Control(2)=   "lblStat(1)"
-      Tab(4).Control(3)=   "lblStat(0)"
-      Tab(4).Control(4)=   "cmdUpdateStat"
-      Tab(4).Control(5)=   "lstStat(3)"
-      Tab(4).Control(6)=   "lstStat(2)"
-      Tab(4).Control(7)=   "lstStat(1)"
-      Tab(4).Control(8)=   "lstStat(0)"
-      Tab(4).Control(9)=   "cmdOpenStatForm"
+      Tab(4).Control(0)=   "cmdOpenStatForm"
+      Tab(4).Control(1)=   "lstStat(0)"
+      Tab(4).Control(2)=   "lstStat(1)"
+      Tab(4).Control(3)=   "lstStat(2)"
+      Tab(4).Control(4)=   "lstStat(3)"
+      Tab(4).Control(5)=   "cmdUpdateStat"
+      Tab(4).Control(6)=   "lblStat(0)"
+      Tab(4).Control(7)=   "lblStat(1)"
+      Tab(4).Control(8)=   "lblStat(2)"
+      Tab(4).Control(9)=   "lblStat(3)"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
@@ -540,7 +540,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -672,7 +672,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -797,7 +797,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -899,7 +899,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -1650,6 +1650,7 @@ Begin VB.Form frmStart
             Begin VB.Label ОкноСообщений 
                Alignment       =   2  'Center
                BackColor       =   &H00FFFFFF&
+               Caption         =   "Загрузка программы..."
                BeginProperty Font 
                   Name            =   "MS Sans Serif"
                   Size            =   8.25
@@ -3278,9 +3279,12 @@ Private Sub Form_Load()
    Left = 10
    Top = 700
    frmStart.SSTab1.Tab = 3
+   ОкноСообщений.BackColor = &HE0E0E0
+   ОкноСообщений.ForeColor = &HFF0000
+   ОкноСообщений.Caption = "Загрузка программы..."
    Show
+   DoEvents
    InitAGNKS
-
    If isDebug Then
       frmDebug.Show vbModeless
    End If
