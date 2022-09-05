@@ -3568,7 +3568,7 @@ Private Sub Timer1_Timer()
     txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
 
     Label_Avg_Speed_Car =  Format(getAvgRefuelingSpeed / gdPlot,"0.00")
-
+    Label_Avg_Left_Time_Car = formatSecToHHMMSS(getLeftRefuelingTime)
    '  i = CInt(Автобаллон.FloodPercent) - last_CarPercent
    '  If i > 1 Then
    '    i = ((100 - CInt(Автобаллон.FloodPercent)) / i) * (Now - last_upd_Label_Avg_Left_Time_Car)

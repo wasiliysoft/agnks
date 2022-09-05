@@ -706,12 +706,24 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command_minus_Click(Index As Integer)
-    Text_ggACL8113(Index).Text = CDbl(Text_ggACL8113(Index).Text) - 0.1
+   Dim d as Double
+   if(Index =4) Then
+      d = 0.001
+   Else
+      d = 0.1
+   End If
+    Text_ggACL8113(Index).Text = CDbl(Text_ggACL8113(Index).Text) - d
     ggACL8113(Index) = CDbl(Text_ggACL8113(Index).Text)
 End Sub
 
 Private Sub Command_plus_Click(Index As Integer)
-    Text_ggACL8113(Index).Text = CDbl(Text_ggACL8113(Index).Text) + 0.1
+   Dim d as Double
+   if(Index =4) Then
+      d = 0.001
+   Else
+      d = 0.1
+   End If
+    Text_ggACL8113(Index).Text = CDbl(Text_ggACL8113(Index).Text) + d
     ggACL8113(Index) = CDbl(Text_ggACL8113(Index).Text)
 End Sub
 
