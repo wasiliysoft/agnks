@@ -9,17 +9,50 @@ Private StatWS       As Workspace
 
 
 Sub init_Database()
-    Dim s As String
-    s = App.Path + "\base.mdb"
+    Dim sPath As String
+    sPath = App.Path + "\BASE.MDB"
     Set StatWS = DBEngine.Workspaces(0)
-    Set StatDB = StatWS.OpenDatabase(s)
+    On Error GoTo createDB
+    Set StatDB = StatWS.OpenDatabase(sPath)
     Set StatRS = StatDB.OpenRecordset("stat", dbOpenTable)
-    'TODO создать базу если пустая
+    Exit Sub
+createDB:
+    Select Case err.Number
+    Case 3024
+        Debug.Print "Нет базы данных", sPath
+        createDB sPath
+        Debug.Print "Создана новая база данных"
+        Resume
+    Case Else
+        Dim errStr As String
+        errStr = err.Description & ". Code = " & err.Number
+        Debug.Print errStr
+        MsgBox errStr, vbCritical, "init_Database"
+    End Select
+End Sub
+
+Private Sub createDB(ByVal sPath As String)
+    Dim tdfNew As TableDef
+
+    StatWS.CreateDatabase sPath, dbLangCyrillic
+    Set StatDB = StatWS.OpenDatabase(sPath)
+
+    Set tdfNew = StatDB.CreateTableDef("stat")
+    With tdfNew
+        .Fields.Append .CreateField("data", dbDate)
+        .Fields.Append .CreateField("gaz_car", dbDouble)
+        .Fields.Append .CreateField("gaz_ir1", dbDouble)
+        .Fields.Append .CreateField("moto", dbLong)
+    End With
+    StatDB.TableDefs.Append tdfNew
+    Set tdfNew = Nothing
+    StatDB.Close
+    Set StatDB = Nothing
 End Sub
 
 Function getGMC_from_DB() As Long
     Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
-    If Not IsNull(SelectRS(0)) Then
+    If Not SelectRS.EOF Then
         getGMC_from_DB = SelectRS("MOTO")
     Else
         getGMC_from_DB = 0
@@ -30,11 +63,13 @@ End Function
 
 Sub saveGMC_in_DB()
     Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
-    SelectRS.Edit
-    GMC = GMC + tmrMotorCounter
-    tmrMotorCounter = 0
-    SelectRS("MOTO") = GMC
-    SelectRS.Update
+    If Not SelectRS.EOF Then
+        SelectRS.Edit
+        GMC = GMC + tmrMotorCounter
+        tmrMotorCounter = 0
+        SelectRS("MOTO") = GMC
+        SelectRS.Update
+    End If
     SelectRS.Close
     Set SelectRS = Nothing
 End Sub
