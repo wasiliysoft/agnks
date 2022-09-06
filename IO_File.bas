@@ -62,7 +62,7 @@ Private Sub init_gdK_file()
             gdK = rec.PC
         Close #fh
     End If
-    frmStart.lblPC.Caption = Format(gdK, "0.000") + "   - коэффициент"
+    frmStart.lblPC.Caption = Format(gdK, "0.000")
 End Sub
 
 'FIXME обработать отмену ввода
