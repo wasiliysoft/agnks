@@ -3427,11 +3427,9 @@ Private Sub Timer1_Timer()
     
 
     'Выводим расход на заправку одной машины
-    If (gdРасход1 < 0) Then gdРасход1 = 0
+    txtKg.Caption = Format(gdИР2, "0.00")
 
-    txtKg.Caption = Format(gdРасход1, "0.00")
-
-    v = Round(gdРасход1 / gdPlot, 1) ' Округление до десятых
+    v = Round(gdИР2 / gdPlot, 1) ' Округление до десятых
     ЗаправленоГаза.Caption = Format(v, "0.0")
     Label_Summa.Caption = Format(v * gdPrice, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки

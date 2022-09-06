@@ -22,7 +22,10 @@ Function GetTimeCounter_2() As Double
 End Function
 
 Function GetMass_2() As Double
-    GetMass_2 = GetMass(2)
+    Dim d as Double
+    d = GetMass(2)
+    If (d < 0) Then d = 0
+    GetMass_2 = d
 End Function
 
 Function GetMassExpense_2() As Double

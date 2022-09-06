@@ -132,7 +132,7 @@ Private Sub update_Journal_col_1()
 End Sub
 
 Sub StatRS_Insert()
-    Dim v As Double: v = gdРасход1 / gdPlot
+    Dim v As Double: v = gdИР2 / gdPlot
     If v > 0.1 Then ' Защита от околонулевых записей заправок
         GMC = GMC + tmrMotorCounter
         tmrMotorCounter = 0

@@ -70,8 +70,6 @@ Public gbCmdStart   As Boolean    'Вид кнопки Пуск\Заправка
 Public gbAkkum      As Boolean
 Public giTrigger    As Integer    ' Для формы Запроса
 Public Car          As Integer
-Public gdРасход1    As Double    'Расход на заправку автомобиля
-
 Public gdK          As Double    'Поправочный коэффициент
 
 ' Переменные для усреднения аналоговых значений

@@ -173,12 +173,11 @@ Public Function Заправка() As String
         End If
 
         ROn A1, 64 'Открыть КЭ5
-        giStage2 = 9
         ROn A1, 128 'Открыть КЭ6
-        gdРасход1 = 0    'Обнуляем расход на одну машину
         ResetExpenseCounter_2
         StartOutput (2)
         gbDontStat = True    'Нельзя работать с диском
+        giStage2 = 9
         Exit Function
     End If
 
@@ -187,8 +186,6 @@ Public Function Заправка() As String
         gdTime = GetTimeCounter_2
         If (Abs(gnDif(5) - gnDif(4)) > 0.5) Then
             Заправка = "Идет заправка "
-            'Считаем расход на одну машину (за полсекунды)
-            gdРасход1 = gdИР2
             Exit Function
         Else
             ROff A1, 191 'Закрыть К5 (пмстолет)
@@ -239,11 +236,10 @@ Public Function Заправка() As String
         If Car = 1 Then
             'Заправка машин
             ROn A1, 64  'Открыть КЭ5
-            giStage2 = 3
-            gdРасход1 = 0    'Обнуляем расход на одну машину
             ResetExpenseCounter_2
             StartOutput (2)
             gbDontStat = True    'Нельзя работать с диском
+            giStage2 = 3
         End If
     End If
 
@@ -279,8 +275,6 @@ Public Function Заправка() As String
         
         If (gbAkkum = False) And ((Not (gnDif(4) >= gdUpLevel))) Then
             Заправка = "Идет заправка "
-            'Считаем расход на одну машину (за полсекунды)
-            gdРасход1 = gdИР2
             gdTime = GetTimeCounter_2
             Exit Function
         ElseIf (gbAkkum = False) Then
@@ -325,15 +319,13 @@ Public Function Заправка() As String
 
     ' ПОДЭТАП 7  - во время заправки аккумуляторов переход на заправку машин
     If giStage2 = 7 Then
-        ROn A1, 64 'Открыть КЭ5
         s = "Переходим на заправку машин"
+        ROn A1, 64 'Открыть КЭ5
         ResetExpenseCounter_2
         StartOutput (2)
-        giStage2 = 4
         gbAkkum = False
-        gdРасход1 = 0    'Обнуляем расход на одну машину
-
         gdTime = GetTimeCounter_2
+        giStage2 = 4
     End If
 
 
