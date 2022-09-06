@@ -28,7 +28,7 @@ Begin VB.Form frmStart
       _ExtentY        =   13044
       _Version        =   393216
       Tabs            =   5
-      Tab             =   3
+      Tab             =   2
       TabsPerRow      =   5
       TabHeight       =   529
       TabCaption(0)   =   "Дискретные"
@@ -43,7 +43,7 @@ Begin VB.Form frmStart
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Системные"
       TabPicture(2)   =   "frmStart.frx":0038
-      Tab(2).ControlEnabled=   0   'False
+      Tab(2).ControlEnabled=   -1  'True
       Tab(2).Control(0)=   "Shape3"
       Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Image1"
@@ -76,7 +76,7 @@ Begin VB.Form frmStart
       Tab(2).Control(14).Enabled=   0   'False
       Tab(2).Control(15)=   "Command1"
       Tab(2).Control(15).Enabled=   0   'False
-      Tab(2).Control(16)=   "Command2"
+      Tab(2).Control(16)=   "cmdUpdatePlot"
       Tab(2).Control(16).Enabled=   0   'False
       Tab(2).Control(17)=   "Command3"
       Tab(2).Control(17).Enabled=   0   'False
@@ -87,7 +87,7 @@ Begin VB.Form frmStart
       Tab(2).ControlCount=   20
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "Frame1(3)"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
@@ -108,7 +108,7 @@ Begin VB.Form frmStart
       Begin VB.CommandButton Command5 
          Caption         =   "изменить"
          Height          =   330
-         Left            =   -71175
+         Left            =   3825
          TabIndex        =   209
          Top             =   3465
          Width           =   1140
@@ -116,7 +116,7 @@ Begin VB.Form frmStart
       Begin VB.CommandButton Command4 
          Caption         =   "изменить"
          Height          =   330
-         Left            =   -71175
+         Left            =   3825
          TabIndex        =   207
          Top             =   3060
          Width           =   1140
@@ -124,15 +124,15 @@ Begin VB.Form frmStart
       Begin VB.CommandButton Command3 
          Caption         =   "изменить"
          Height          =   330
-         Left            =   -71175
+         Left            =   3825
          TabIndex        =   206
          Top             =   2655
          Width           =   1140
       End
-      Begin VB.CommandButton Command2 
+      Begin VB.CommandButton cmdUpdatePlot 
          Caption         =   "изменить"
          Height          =   330
-         Left            =   -71175
+         Left            =   3825
          TabIndex        =   205
          Top             =   2250
          Width           =   1140
@@ -140,7 +140,7 @@ Begin VB.Form frmStart
       Begin VB.CommandButton Command1 
          Caption         =   "изменить"
          Height          =   330
-         Left            =   -71175
+         Left            =   3825
          TabIndex        =   204
          Top             =   1845
          Width           =   1140
@@ -215,7 +215,7 @@ Begin VB.Form frmStart
          Caption         =   "---"
          Height          =   7110
          Index           =   3
-         Left            =   0
+         Left            =   -75000
          TabIndex        =   131
          Top             =   315
          Width           =   9795
@@ -614,7 +614,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -746,7 +746,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -871,7 +871,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -973,7 +973,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -3059,7 +3059,7 @@ Begin VB.Form frmStart
       End
       Begin Threed.SSCommand SSExit 
          Height          =   1320
-         Left            =   -74820
+         Left            =   180
          TabIndex        =   191
          Top             =   5895
          Width           =   9390
@@ -3084,7 +3084,7 @@ Begin VB.Form frmStart
       Begin VB.Label Label20 
          Caption         =   "Пароль"
          Height          =   285
-         Left            =   -74415
+         Left            =   585
          TabIndex        =   208
          Top             =   3555
          Width           =   1545
@@ -3092,7 +3092,7 @@ Begin VB.Form frmStart
       Begin VB.Label lbl_Price 
          Caption         =   "0.000"
          Height          =   240
-         Left            =   -71985
+         Left            =   3015
          TabIndex        =   203
          Top             =   2745
          Width           =   780
@@ -3100,7 +3100,7 @@ Begin VB.Form frmStart
       Begin VB.Label lbl_GMC_hour 
          Caption         =   "0.000"
          Height          =   240
-         Left            =   -71985
+         Left            =   3015
          TabIndex        =   202
          Top             =   3150
          Width           =   780
@@ -3108,7 +3108,7 @@ Begin VB.Form frmStart
       Begin VB.Label lbl_gnPlot 
          Caption         =   "0.000"
          Height          =   240
-         Left            =   -71985
+         Left            =   3015
          TabIndex        =   201
          Top             =   2340
          Width           =   780
@@ -3116,7 +3116,7 @@ Begin VB.Form frmStart
       Begin VB.Label Label19 
          Caption         =   "Цена газа (руб.):"
          Height          =   285
-         Left            =   -74415
+         Left            =   585
          TabIndex        =   200
          Top             =   2745
          Width           =   1545
@@ -3124,7 +3124,7 @@ Begin VB.Form frmStart
       Begin VB.Label Label18 
          Caption         =   "Наработка ДВС (часов):"
          Height          =   285
-         Left            =   -74415
+         Left            =   585
          TabIndex        =   199
          Top             =   3150
          Width           =   1950
@@ -3132,7 +3132,7 @@ Begin VB.Form frmStart
       Begin VB.Label Label17 
          Caption         =   "Плотность газа:"
          Height          =   285
-         Left            =   -74415
+         Left            =   585
          TabIndex        =   198
          Top             =   2340
          Width           =   1455
@@ -3142,7 +3142,7 @@ Begin VB.Form frmStart
          BackStyle       =   0  'Transparent
          Caption         =   "05 сеитября 2022    00:00:00"
          Height          =   285
-         Left            =   -68655
+         Left            =   6345
          TabIndex        =   192
          Top             =   1140
          Width           =   3210
@@ -3150,7 +3150,7 @@ Begin VB.Form frmStart
       Begin VB.Label Label4 
          Caption         =   "Поправочный коэффициент:"
          Height          =   285
-         Left            =   -74415
+         Left            =   585
          TabIndex        =   197
          Top             =   1935
          Width           =   2310
@@ -3159,7 +3159,7 @@ Begin VB.Form frmStart
          BackStyle       =   0  'Transparent
          Caption         =   "Данный программный продукт разработан лабораторией автоматизации производства Управления ""ЭНЕРГОГАЗРЕМОНТ"""
          Height          =   465
-         Left            =   -74190
+         Left            =   810
          TabIndex        =   196
          Top             =   945
          Width           =   5325
@@ -3167,7 +3167,7 @@ Begin VB.Form frmStart
       Begin VB.Label lblPC 
          Caption         =   "0.000"
          Height          =   240
-         Left            =   -71985
+         Left            =   3015
          TabIndex        =   195
          Top             =   1935
          Width           =   780
@@ -3177,14 +3177,14 @@ Begin VB.Form frmStart
          BackStyle       =   0  'Transparent
          Caption         =   "Системное время"
          Height          =   285
-         Left            =   -67620
+         Left            =   7380
          TabIndex        =   193
          Top             =   945
          Width           =   2190
       End
       Begin VB.Image Image1 
          Height          =   870
-         Left            =   -74730
+         Left            =   270
          Picture         =   "frmStart.frx":B25C
          Stretch         =   -1  'True
          Top             =   450
@@ -3273,7 +3273,7 @@ Begin VB.Form frmStart
          BorderStyle     =   0  'Transparent
          FillColor       =   &H00FFFFFF&
          Height          =   1140
-         Left            =   -74955
+         Left            =   45
          Top             =   360
          Width           =   9690
       End
@@ -3285,6 +3285,12 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+
+
+Private Sub cmdUpdatePlot_Click()
+    updatePlot
+End Sub
 
 Private Sub Form_Load()
    Left = 10
@@ -3306,9 +3312,9 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     'реакция на ctrl+alt+home
     'On Error Resume Next
     If ((KeyCode = vbKeyHome) And (Shift = 6)) Then
-      setting_gdK
+      updatePC
     ElseIf ((KeyCode = vbKeyEnd) And (Shift = 6)) Then
-      update_gdK_pass
+      updatePWD
     End If
 
 End Sub
@@ -3550,12 +3556,12 @@ Private Sub Timer1_Timer()
     'Выводим расход на заправку одной машины
     txtKg.Caption = Format(gdИР2, "0.00")
 
-    v = Round(gdИР2 / gdPlot, 1) ' Округление до десятых
+    v = Round(gdИР2 / agnksСonfig.plot, 1) ' Округление до десятых
     ЗаправленоГаза.Caption = Format(v, "0.0")
     Label_Summa.Caption = Format(v * gdPrice, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(GetTimeCounter_2) ' Время заправки
 
-    Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / gdPlot, "0.00")
+    Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / agnksСonfig.plot, "0.00")
     Label_Avg_Left_Time_Car = formatSecToHHMMSS(getLeftRefuelingTime)
 
     bPSensorOsOk = isAll_PSecnsor_OK

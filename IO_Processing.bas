@@ -22,7 +22,7 @@ Private Sub Обработка_1()
     update_gnDif
     
     'Считать расход (общий) по ИР2
-    Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * gdK, 0)
+    Call AddSensorsData(2, gnDif(5), gnDif(11), gnDif(4), 1.5, 0.95 * agnksСonfig.PC, 0)
     gdИР2 = GetMass_2
    ' Debug.Print  "time:" & Format( GetTimeCounter_2,"0.00") , _ 
    '    "mass: " &  Format(GetMass_2,"0.00"), _

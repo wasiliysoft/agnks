@@ -1,18 +1,25 @@
 Attribute VB_Name = "IO_File"
 Option Explicit
 
-Private rec As pswd
-Private Password As String
+Private pAgnksÑonfig As AgnksÑonfigType
 
-'ñòðóêòóðà äëÿ secret file (gdK_file_name)
-Public Type pswd
-    PC              As Double
-    pwd             As String * 7
+'ñòðóêòóðà äëÿ êîíôèãóðàöèîííîãî ôàéëà (configFilePath)
+Public Type AgnksÑonfigType
+    PC As Double        ' Ïîïðàâî÷íûé êîýôôèöèåíò
+    price As Double     ' Öåíà ãàçà
+    plot As Double      ' Ïëîòíîñòü ãàçà
+    motoMinute As Long  ' Ìîòîðåñóðñ â ìèíóòàõ
+    pwd As String * 7   ' Ïàðîëü
 End Type
 
-Private Function gdK_file_name() As String
-   gdK_file_name = App.Path + "\agnks.config"
+Private Function configFilePath() As String
+   configFilePath = App.Path + "\agnks.config"
 End Function
+
+Function agnksÑonfig() As AgnksÑonfigType
+   agnksÑonfig = pAgnksÑonfig
+End Function
+
 
 'Ôóíêöèÿ èíèöèàëèçàöèè äàííûõ, ñ÷èòûâàíèå ñ äèñêà
 'TODO Âûâåñòè íà îòäåëüíóþ âêëàäêó èíôîðìàöèþ
@@ -33,9 +40,9 @@ Public Function InitDisk() As Integer
 
     load_statistic_from_DB 'TODO âûíåñòè èç ôóíêöèè èíèöèàëèçàöèè äèñêà?
 
-    init_gdK_file
+    init_agnksConfig
     init_price_file
-    init_data_file
+    init_SensorDescr_file
     frmStart.MousePointer = vbArrow
     InitDisk = 0
     Exit Function
@@ -45,68 +52,82 @@ ErrorHandler:        'Åñëè åñòü êàêèå-íèáóäü îøèáêè âîçâðàùàåì -1
     Exit Function
 End Function
 
-Private Sub init_gdK_file()
+Private Sub init_agnksConfig()
     Dim fh As Long: fh = FreeFile
     Dim fLen As Long
     On Error Resume Next
-        fLen = FileLen(gdK_file_name)
+        fLen = FileLen(configFilePath)
     On Error GoTo 0
     If fLen = 0 Then
-        Password = "LAB"
-        gdK = 0
-        MsgBox "Îòñóòâóåò ôàéë êîíôèãóðàöèè ÀÃÍÊÑ: " & gdK_file_name, vbExclamation
+        With pAgnksÑonfig
+            .motoMinute = -1
+            .PC = -1
+            .plot = -1
+            .price = -1
+            .pwd = "LAB"
+        End With
+        MsgBox "Îòñóòâóåò ôàéë êîíôèãóðàöèè ÀÃÍÊÑ: " & configFilePath, vbExclamation
     Else
-        Open gdK_file_name For Random As fh Len = Len(rec)
-            Get #fh, 1, rec
-            Password = Trim(rec.pwd)
-            gdK = rec.PC
+        Open configFilePath For Random As fh Len = Len(pAgnksÑonfig)
+            Get #fh, 1, pAgnksÑonfig
         Close #fh
     End If
-    frmStart.lblPC.Caption = Format(gdK, "0.000")
+    frmStart.lblPC.Caption = Format(agnksÑonfig.PC, "0.000")
+    frmStart.Label_Price.Caption = pAgnksÑonfig.price
+    frmStart.lbl_gnPlot.Caption = pAgnksÑonfig.plot
 End Sub
 
 'FIXME îáðàáîòàòü îòìåíó ââîäà
-Sub setting_gdK()
-    Dim fh As Long
+Sub updatePC()
     Dim s As String
     Dim title As String: title = "DANGER - Îáíîâëåíèå ïîïðàâî÷íîãî êîýôôèöèåíòà"
     s = InputBox("Ââåäèòå ïàðîëü", title)
-    If (s = Password) Then
-        s = InputBox("Ââåäèòå ïîïðàâî÷íûé êîýôôèöèåíò", title, Format(gdK, "0.000"))
+    If (s = Trim(pAgnksÑonfig.pwd)) Then
+        s = InputBox("Ââåäèòå ïîïðàâî÷íûé êîýôôèöèåíò", title, Format(agnksÑonfig.PC, "0.000"))
         If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
-            gdK = CDbl(s)
-            fh = FreeFile
-            Open gdK_file_name For Random As fh Len = Len(rec)
-                rec.pwd = Password
-                rec.PC = gdK
-                Put #fh, 1, rec
-            Close #fh
+            pAgnksÑonfig.PC = CDbl(s)
+            saveConfig
             MsgBox "Êîýôôèöèåíò ââåäåí", vbInformation
         End If
     Else
         MsgBox "Ïàðîëü íå âåðíûé", vbCritical
     End If
-    init_gdK_file
+    init_agnksConfig
 End Sub
 
-Sub update_gdK_pass()
-    Dim fh As Long
+' TODO implementation
+Sub updatePlot()
+    pAgnksÑonfig.plot = CDbl(0.7)
+    saveConfig
+    init_agnksConfig
+End Sub
+
+' TODO implementation
+Sub updatePrice()
+    pAgnksÑonfig.price = CDbl(11.7)
+    saveConfig
+    init_agnksConfig
+End Sub
+' TODO return result
+Private Sub saveConfig()
+    Dim fh As Long: fh = FreeFile
+    Open configFilePath For Random As fh Len = Len(pAgnksÑonfig)
+        Put #fh, 1, pAgnksÑonfig
+    Close #fh
+End Sub
+
+Sub updatePWD()
     Dim s As String
     Dim s1 As String
     Dim title As String: title = "DANGER - Îáíîâëåíèå ïàðîëÿ"
     s = InputBox("Ââåäèòå òåêóùèé ïàðîëü", title)
-    If (s = Password) Then
+    If (s = Trim(pAgnksÑonfig.pwd)) Then
         s = InputBox("Ââåäèòå íîâûé ïàðîëü", title)
         If (Len(s) > 0) And (Len(s) <= 7) Then
             s1 = InputBox("Ïîâòîðèòå íîâûé ïàðîëü", title)
             If (s = s1) Then
-                Password = s1
-                fh = FreeFile
-                Open gdK_file_name For Random As fh Len = Len(rec)
-                    rec.pwd = Password
-                    rec.PC = gdK
-                    Put #fh, 1, rec
-                Close #fh
+                pAgnksÑonfig.pwd = s1
+                saveConfig
                 MsgBox "Ïàðîëü ââåäåí", vbInformation
             Else
                 MsgBox "Ïàðîëè íå ñîâïàäàþò", vbCritical
@@ -115,37 +136,10 @@ Sub update_gdK_pass()
     Else
         MsgBox "Ïàðîëü íå âåðíûé", vbCritical
     End If
-    init_gdK_file
+    init_agnksConfig
 End Sub
 
-Private Sub init_price_file()
-    Dim fh As Long: fh = FreeFile
-    Dim s As String
-    s = App.Path & "\price.txt"
-    
-    Dim fLen As Long
-    On Error Resume Next
-        fLen = FileLen(s)
-    On Error GoTo 0
-    If fLen = 0 Then
-        MsgBox "Îòñóòâóåò ôàéë êîíôèãóðàöèè ÀÃÍÊÑ: " & s, vbExclamation
-        Exit Sub
-    End If
-
-    Open s For Input Access Read As fh
-        Seek #fh, 1
-        Line Input #fh, s
-        gdPrice = CDbl(s)
-        
-        Line Input #fh, s
-        gdPlot = CDbl(s)
-    Close #fh
-
-    frmStart.Label_Price.Caption = gdPrice
-    If gdPlot < 0.5 Or gdPlot > 1 Then gdPlot = 0.7
-End Sub
-
-Private Sub init_data_file()
+Private Sub init_SensorDescr_file()
     Dim fh As Long: fh = FreeFile
     Dim s As String
     Dim i As Integer
@@ -173,5 +167,4 @@ Private Sub init_data_file()
             frmStart.Text2(i).Text = s
         Next i
     Close #fh
-
 End Sub

@@ -70,7 +70,6 @@ Public gbCmdStart   As Boolean    'Вид кнопки Пуск\Заправка
 Public gbAkkum      As Boolean
 Public giTrigger    As Integer    ' Для формы Запроса
 Public Car          As Integer
-Public gdK          As Double    'Поправочный коэффициент
 
 ' Переменные для усреднения аналоговых значений
 Public glCounter    As Long
@@ -79,7 +78,6 @@ Public sum(31)      As Double
 
 Public gbRunDVS     As Boolean
 
-Public FileHandle   As Integer    'Идентификатор файла с описаниями
 Public tmrMotorCounter   As Long    'Счетчик моторесурсов, минут
 Public GMC          As Long    'глобальный счетчик, минут
 
@@ -92,4 +90,3 @@ Public gbStopAGNKS  As Boolean    ' флаг Останова АГНКС
 Public nTimer1Counter As Long    'Счетчик срабатывания Timer1
 
 Public giDVS        As Integer
-Public gdPlot       As Double
