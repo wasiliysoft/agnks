@@ -3240,7 +3240,6 @@ Private Sub cmdStopCarRefueling_MouseUp(Button As Integer, Shift As Integer, X A
     Dim s1       As String
     ROff A1, 191 'Закрыть К5 (пистолет)
     gbDontStat = False         'Можно работать с диском
-    gdTime = GetTimeCounter_2
     StopOutput (2)
     StatRS_Insert
     If gbOnlyAkk = True Then
@@ -3432,7 +3431,7 @@ Private Sub Timer1_Timer()
     v = Round(gdИР2 / gdPlot, 1) ' Округление до десятых
     ЗаправленоГаза.Caption = Format(v, "0.0")
     Label_Summa.Caption = Format(v * gdPrice, "##0.00")
-    txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
+    txtTime.Caption = formatSecToHHMMSS(GetTimeCounter_2) ' Время заправки
 
     Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / gdPlot, "0.00")
     Label_Avg_Left_Time_Car = formatSecToHHMMSS(getLeftRefuelingTime)

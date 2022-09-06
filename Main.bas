@@ -183,7 +183,6 @@ Public Function Заправка() As String
 
     'ПодЭтап 9
     If giStage2 = 9 Then
-        gdTime = GetTimeCounter_2
         If (Abs(gnDif(5) - gnDif(4)) > 0.5) Then
             Заправка = "Идет заправка "
             Exit Function
@@ -275,14 +274,12 @@ Public Function Заправка() As String
         
         If (gbAkkum = False) And ((Not (gnDif(4) >= gdUpLevel))) Then
             Заправка = "Идет заправка "
-            gdTime = GetTimeCounter_2
             Exit Function
         ElseIf (gbAkkum = False) Then
             ROff A1, 191 'Закрыть К5 (пистолет)
             StopOutput (2)
             ROn A1, 128 'Открыть КЭ6 ЗАПРАВЛЯЕМ АККУМУЛЯТОРЫ
 
-            gdTime = GetTimeCounter_2
             gbDontStat = False    'Можно работать с диском
             StatRS_Insert 'Заполнить статистику по заправке
             
@@ -324,11 +321,8 @@ Public Function Заправка() As String
         ResetExpenseCounter_2
         StartOutput (2)
         gbAkkum = False
-        gdTime = GetTimeCounter_2
         giStage2 = 4
     End If
-
-
     Заправка = s
 End Function
 

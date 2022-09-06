@@ -17,6 +17,7 @@ Sub ResetExpenseCounter_2()
     ResetExpenseCounter (2)
 End Sub
 
+' Возвращает время (сек) прошедшее плсле StartOutput(2)
 Function GetTimeCounter_2() As Double
     GetTimeCounter_2 = GetTimeCounter(2)
 End Function
