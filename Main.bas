@@ -20,6 +20,7 @@ End Sub
 ' АГНКС в исходном состоянии
 ' Выполняется при giStage = 0
 Public Function ИсхСост() As String
+    ИсхСост = ""
     Dim s           As String
     Dim norma       As Boolean
     frmStart.cmdSTOP(1).Enabled = True
@@ -53,7 +54,7 @@ Public Function ИсхСост() As String
         norma = False
     End If
 
-    If gnDif(14) > 100 Then  'Есть обороты
+    If getDVS_RPM > 100 Then  'Есть обороты
         s = s & "Есть обороты ДВС !!!"
         norma = False
     End If
@@ -73,6 +74,7 @@ End Function
 ' Подготовка компрессора к пуску
 ' Выполняется при giStage = 1
 Public Function ПредПуск() As String
+    ПредПуск = ""
     If giStage1 = 0 Then
         'Если есть давление в выходном трубопроводе , то открыть КЭМ4
         If (gnDif(6) - gnDif(2)) >= 0.25 Then
@@ -86,7 +88,7 @@ Public Function ПредПуск() As String
 
     If giStage1 = 1 Then
         'ВТОРОЙ ПОДЭТАП
-        If gnDif(14) < 100 Then
+        If getDVS_RPM < 100 Then
             'Нет оборотов ДВС
             gbAkkum = True
             frmStart.SSCmdStart.Enabled = True
@@ -119,7 +121,7 @@ Public Function ПредПуск() As String
             gbOnlyAkk = False
             gbAkkum = False
             Exit Function
-        ElseIf gnDif(14) <= 1700 Then
+        ElseIf getDVS_RPM <= 1700 Then
             ПредПуск = "ДВС не вышел на рабочий режим !!!"
             frmStart.SSCmdStart.Enabled = False
             gbRunDVS = True
@@ -138,13 +140,14 @@ Public Function ПредПуск() As String
 End Function
 
 ' Выполняется при giStage = 2
-Public Function Заправка()
+Public Function Заправка() As String
+    Заправка = ""
     Dim s, s1       As String
     Dim MaxIR       As Double    'Запоминаем max расход при открытии КЭМ6
     Dim p           As Double
 
     'Если заправка только от АКК и заглох ДВС, то на ИсхСост
-    If (gnDif(14) < 100) And (gbOnlyAkk = False) Then
+    If (getDVS_RPM < 100) And (gbOnlyAkk = False) Then
         giDVS = giDVS + 1
         If (giDVS > 5) Then
             ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
@@ -246,7 +249,7 @@ Public Function Заправка()
 
     ' ПОДЭТАП 4
     If giStage2 = 3 Then
-        If (gnDif(7) - gnDif(5)) >= 2 Then    'Разница давлений в аккумуляторах и баке
+        If (gnDif(7) - gnDif(5)) >= 2 Then  'Разница давлений в Акк и магистрали
             ROn A1, 128 'Открыть К6 - заправка и от аккумуляторов
         End If
 
@@ -261,12 +264,15 @@ Public Function Заправка()
 
     ' ПОДЭТАП 5
     If giStage2 = 4 Then
-        '<<<<Считать расход по ИР2>>>>
-
-
         MaxIR = GetMassExpense_2
-        If (gbAkkum = False) And ((k6_isOpen And (((MaxIR * 3600) <= gdRashAkkEnd) _
-                And (MaxIR > 0)) And (MaxIR >= 5)) Or ((gnDif(7) - gnDif(4)) <= 0.5)) Then
+        If (gbAkkum = False) And _ 
+            ((k6_isOpen And (((MaxIR * 3600) <= gdRashAkkEnd) And (MaxIR > 0)) And (MaxIR >= 5)) Or _
+             ((gnDif(7) - gnDif(4)) <= 0.5)) Then
+            'Закрыть К6 если
+            'gbAkkum = False И
+            'окткрыт К6 
+            'И (расход через ИР2 * 3600 <= минимальнодопустипого но больше 0) И расход через ИР2 >= 5
+            'ИЛИ Даввление в Авто меньше чем в Акк на 0.5
             ROff A1, 127 'Закрыть К6 (Акк)
             'Exit Function
         End If
@@ -305,8 +311,15 @@ Public Function Заправка()
             gbFrmShow = False
         End If
 
-        'Выключить Двигатель
-        s = ОстановДВС
+        'Разгрузить компрессор ???
+        ROff A1, 191 'Закрыть К5 (пистолет) ???
+        ROn A1, 32 'Открыть К4
+        giStage2 = 0
+        giStage = 1  'Переход на этап ПредПуск()
+        giStage1 = 1
+        gbAkkum = False
+        frmStart.SSCmdStart.Enabled = False
+        gbCmdStart = False
     End If
 
 
@@ -329,7 +342,7 @@ End Function
 
 ' Функция обработки аварийных ситуаций
 ' Выполняется при giStage = 3
-Public Function Danger() As String
+Public Sub Danger()
     ' TODO АвтоАктивация вкладки СХЕМА
     ' Выполняется проверка управляющей команды "октрыть К4" !!!
     If gnДатчик(29).Data = 1 Then
@@ -345,27 +358,10 @@ Public Function Danger() As String
         End If
     End If
     frmStart.cmdDanger.Visible = True
-End Function
+End Sub
 
-
-'Функция остановки ДВС
-Public Function ОстановДВС() As String
-    'TODO Зачем закрывать пистолет при остановке ДВС?
-    ROff A1, 191 'Закрыть К5 (пистолет)
-
-    ROn A1, 32 'Открыть К4
-
-    giStage2 = 0
-    giStage = 1  'Переход на этап ПредПуск()
-    giStage1 = 1
-
-    gbAkkum = False
-    frmStart.SSCmdStart.Enabled = False
-    gbCmdStart = False
-End Function
 'Функция остановки АГНКС
 Public Function ОстановАГНКС() As String
-    Dim s           As String
     ROff A1, 1 'Закрыть К 1-6
     'если загазованность 20 %
     If (gnДатчик(42).Data = 1) Or (gnДатчик(44).Data = 1) Then
@@ -374,7 +370,6 @@ Public Function ОстановАГНКС() As String
     ElseIf isFireTech Then    'если пожар в техническом отсеке
         ROn A1, 34 '(2+32) Стоп ДВС, открыть КЭМ4
     End If
-
 
     giStage2 = 0
     giStage = 3  'Переход на этап Danger
@@ -396,7 +391,8 @@ Public Sub toStage_0()
     frmStart.SSCmdStart.Enabled = False
 End Sub
 
-Public Function Verify_Damage()
+Public Function Verify_Damage() As String
+    Verify_Damage = ""
     Dim s           As String
     'Функция проверки аварийных датчиков
     s = ""
@@ -447,6 +443,7 @@ Public Function Verify_Damage()
     If gnДатчик(33).Data = 1 Then
         s = s & "Высокая tC охл.жидкости ДВС ! "
     End If
+
     If gnДатчик(35).Data = 1 Then
         s = s & "Падение Давл. в системе смазки ДВС ! "
     End If

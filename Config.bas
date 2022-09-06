@@ -82,7 +82,7 @@ Public sum(31)      As Double
 Public gbRunDVS     As Boolean
 
 Public FileHandle   As Integer    '»дентификатор файла с описани€ми
-Public MotorCount   As Long    '—четчик моторесурсов, минут
+Public tmrMotorCounter   As Long    '—четчик моторесурсов, минут
 Public GMC          As Long    'глобальный счетчик, минут
 
 Public gbDontStat   As Boolean    ' флаг заправки (работы)

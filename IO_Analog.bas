@@ -118,3 +118,7 @@ Sub update_gnDif()
         End If
     Next i
 End Sub
+
+Function getDVS_RPM() as Integer
+   getDVS_RPM = gnDif(14)
+End Function

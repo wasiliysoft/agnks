@@ -31,8 +31,8 @@ End Function
 Sub saveGMC_in_DB()
     Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
     SelectRS.Edit
-    GMC = GMC + MotorCount
-    MotorCount = 0
+    GMC = GMC + tmrMotorCounter
+    tmrMotorCounter = 0
     SelectRS("MOTO") = GMC
     SelectRS.Update
     SelectRS.Close
@@ -134,8 +134,8 @@ End Sub
 Sub StatRS_Insert()
     Dim v As Double: v = gdРасход1 / gdPlot
     If v > 0.1 Then ' Защита от околонулевых записей заправок
-        GMC = GMC + MotorCount
-        MotorCount = 0
+        GMC = GMC + tmrMotorCounter
+        tmrMotorCounter = 0
         StatRS.AddNew
         StatRS("DATA") = Now
         StatRS("GAZ_CAR") = v

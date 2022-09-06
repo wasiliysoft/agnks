@@ -46,15 +46,15 @@ Begin VB.Form frmStart
       TabCaption(2)   =   "О программе"
       TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label4"
+      Tab(2).Control(0)=   "SSExit"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Image1"
+      Tab(2).Control(1)=   "Label16"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "txtTimeDate"
       Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "Label16"
+      Tab(2).Control(3)=   "Image1"
       Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "SSExit"
+      Tab(2).Control(4)=   "Label4"
       Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "Схема"
@@ -66,16 +66,16 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "lblStat(3)"
-      Tab(4).Control(1)=   "lblStat(2)"
-      Tab(4).Control(2)=   "lblStat(1)"
-      Tab(4).Control(3)=   "lblStat(0)"
-      Tab(4).Control(4)=   "cmdUpdateStat"
-      Tab(4).Control(5)=   "lstStat(3)"
-      Tab(4).Control(6)=   "lstStat(2)"
-      Tab(4).Control(7)=   "lstStat(1)"
-      Tab(4).Control(8)=   "lstStat(0)"
-      Tab(4).Control(9)=   "cmdOpenStatForm"
+      Tab(4).Control(0)=   "cmdOpenStatForm"
+      Tab(4).Control(1)=   "lstStat(0)"
+      Tab(4).Control(2)=   "lstStat(1)"
+      Tab(4).Control(3)=   "lstStat(2)"
+      Tab(4).Control(4)=   "lstStat(3)"
+      Tab(4).Control(5)=   "cmdUpdateStat"
+      Tab(4).Control(6)=   "lblStat(0)"
+      Tab(4).Control(7)=   "lblStat(1)"
+      Tab(4).Control(8)=   "lblStat(2)"
+      Tab(4).Control(9)=   "lblStat(3)"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
@@ -492,7 +492,7 @@ Begin VB.Form frmStart
                Left            =   6750
                Top             =   2835
             End
-            Begin VB.Timer Timer_ДВС 
+            Begin VB.Timer tmrDvsCompressorAnimation 
                Interval        =   75
                Left            =   8430
                Top             =   2835
@@ -546,7 +546,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -678,7 +678,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -803,7 +803,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -905,7 +905,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   11.99
+                     Size            =   12
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -3421,10 +3421,10 @@ Private Sub Timer1_Timer()
         glCounter = 0
     End If
 
-    ShowPict 'Управление изображением
+    mnemonicScheme_Tic 'Управление изображением
 
-    Наработка_ДВС = "Наработка ДВС " & Format((GMC + MotorCount) / 60, "00") & " ч."
-    Панель_Авто.Visible = k5_isOpen
+    Наработка_ДВС = "Наработка ДВС " & Format((GMC + tmrMotorCounter) / 60, "00") & " ч."
+    
 
     'Выводим расход на заправку одной машины
     If (gdРасход1 < 0) Then gdРасход1 = 0
@@ -3468,7 +3468,7 @@ Private Sub Timer1_Timer()
                 DoEvents
             Case 3:
                 'Аварийное состояние
-                ОкноСообщений.Caption = Danger
+                Danger
                 DoEvents
         End Select
     End If
@@ -3496,15 +3496,13 @@ Private Sub Timer2_Timer()
     txtTimeDate = Format(Now, "dd.mmmm.yyyy    hh:nn:ss")
 End Sub
 
-Private Sub tmrMotor_Timer()
-    MotorCount = MotorCount + 1
-End Sub
+
 
 ' Interval 75 ms
-Private Sub Timer_ДВС_Timer()
+Private Sub tmrDvsCompressorAnimation_Timer()
     Dim i           As Integer
     'Отображение работы ДВС, компрессора, детандера
-    If ОборотыДВС.Caption > 50 Then
+    If getDVS_RPM > 100 Then
         tmrMotor.Enabled = True    'Считать моторесурс
         For i = 0 To 5
             If ДВС(i).Visible Then
@@ -3531,7 +3529,12 @@ Private Sub Timer_ДВС_Timer()
     End If
 End Sub
 
-Public Sub ShowPict()
+' Interval 60 000 ms
+Private Sub tmrMotor_Timer()
+    tmrMotorCounter = tmrMotorCounter + 1
+End Sub
+
+Public Sub mnemonicScheme_Tic()
     With frmStart
         'Статус кранов
         .КЭ1(0).Visible = Not (k1_isOpen)
@@ -3549,6 +3552,7 @@ Public Sub ShowPict()
 
         .КЭ5(0).Visible = Not (k5_isOpen)
         .КЭ5(1).Visible = k5_isOpen
+        .Панель_Авто.Visible = k5_isOpen
 
         .КЭ6(0).Visible = Not (k6_isOpen)
         .КЭ6(1).Visible = k6_isOpen
