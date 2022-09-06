@@ -1,26 +1,11 @@
 Attribute VB_Name = "AvgHelperModule"
 Option Explicit
 
-' количество тактов для расчета средней скорости заправки
-Private Const ticToCalcAvgRefuelingSpeed = 4
-Private avgRefuelingSpeed As Double
-Private last_gdРасход1 As Double
-
 ' количество тактов для расчета времени до окончания заправки
 Private Const ticToCalcLeftRefuelingTime = 20
 Private pCarArr(ticToCalcLeftRefuelingTime) As Double
 Private last_pCarSumm As Double
 Private lastLeftRefuelingTime As Double
-
-Function getAvgRefuelingSpeed() As Double
-    If (nTimer1Counter Mod ticToCalcAvgRefuelingSpeed = 0) Then
-      avgRefuelingSpeed = (gdРасход1 - last_gdРасход1) * (60000 / (frmStart.Timer1.Interval * ticToCalcAvgRefuelingSpeed))
-      avgRefuelingSpeed = Round(avgRefuelingSpeed, 2)
-      If avgRefuelingSpeed < 0 Then avgRefuelingSpeed = 0
-      last_gdРасход1 = gdРасход1
-    End If
-    getAvgRefuelingSpeed = avgRefuelingSpeed
-End Function
 
 
 Function getLeftRefuelingTime() As Double

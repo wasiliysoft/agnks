@@ -3436,7 +3436,7 @@ Private Sub Timer1_Timer()
     Label_Summa.Caption = Format(v * gdPrice, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(gdTime) ' Время заправки
 
-    Label_Avg_Speed_Car = Format(getAvgRefuelingSpeed / gdPlot, "0.00")
+    Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / gdPlot, "0.00")
     Label_Avg_Left_Time_Car = formatSecToHHMMSS(getLeftRefuelingTime)
 
     bPSensorOsOk = isAll_PSecnsor_OK
