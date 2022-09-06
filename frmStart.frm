@@ -46,15 +46,15 @@ Begin VB.Form frmStart
       TabCaption(2)   =   "О программе"
       TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "SSExit"
+      Tab(2).Control(0)=   "Label4"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Label16"
+      Tab(2).Control(1)=   "Image1"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "txtTimeDate"
       Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "Image1"
+      Tab(2).Control(3)=   "Label16"
       Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "Label4"
+      Tab(2).Control(4)=   "SSExit"
       Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "Схема"
@@ -66,16 +66,16 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "cmdOpenStatForm"
-      Tab(4).Control(1)=   "lstStat(0)"
-      Tab(4).Control(2)=   "lstStat(1)"
-      Tab(4).Control(3)=   "lstStat(2)"
-      Tab(4).Control(4)=   "lstStat(3)"
-      Tab(4).Control(5)=   "cmdUpdateStat"
-      Tab(4).Control(6)=   "lblStat(0)"
-      Tab(4).Control(7)=   "lblStat(1)"
-      Tab(4).Control(8)=   "lblStat(2)"
-      Tab(4).Control(9)=   "lblStat(3)"
+      Tab(4).Control(0)=   "lblStat(3)"
+      Tab(4).Control(1)=   "lblStat(2)"
+      Tab(4).Control(2)=   "lblStat(1)"
+      Tab(4).Control(3)=   "lblStat(0)"
+      Tab(4).Control(4)=   "cmdUpdateStat"
+      Tab(4).Control(5)=   "lstStat(3)"
+      Tab(4).Control(6)=   "lstStat(2)"
+      Tab(4).Control(7)=   "lstStat(1)"
+      Tab(4).Control(8)=   "lstStat(0)"
+      Tab(4).Control(9)=   "cmdOpenStatForm"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdOpenStatForm 
          Caption         =   "Статистика"
@@ -188,12 +188,12 @@ Begin VB.Form frmStart
             Begin VB.Label Label14 
                AutoSize        =   -1  'True
                BackColor       =   &H00C0C0C0&
-               Caption         =   "Н/м. куб. в минуту"
+               Caption         =   "в минуту"
                Height          =   195
                Left            =   180
                TabIndex        =   190
                Top             =   1125
-               Width           =   1410
+               Width           =   660
             End
             Begin VB.Label Label9 
                AutoSize        =   -1  'True
@@ -208,12 +208,12 @@ Begin VB.Form frmStart
             Begin VB.Label Label13 
                AutoSize        =   -1  'True
                BackColor       =   &H00C0C0C0&
-               Caption         =   "Ср. скорость заправки"
+               Caption         =   "Расход Н / м. куб."
                Height          =   195
                Left            =   180
                TabIndex        =   178
                Top             =   900
-               Width           =   1755
+               Width           =   1380
             End
             Begin VB.Label Label_Avg_Speed_Car 
                Alignment       =   1  'Right Justify
@@ -546,7 +546,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -678,7 +678,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -803,7 +803,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False
@@ -905,7 +905,7 @@ Begin VB.Form frmStart
                   BackColor       =   0
                   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                      Name            =   "MS Sans Serif"
-                     Size            =   12
+                     Size            =   11.99
                      Charset         =   204
                      Weight          =   400
                      Underline       =   0   'False

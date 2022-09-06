@@ -303,6 +303,7 @@ Public Function Заправка() As String
         End If
 
         'Разгрузить компрессор ???
+        Debug.Print "Разгрузка компрессора"
         ROff A1, 191 'Закрыть К5 (пистолет) ???
         ROn A1, 32 'Открыть К4
         giStage2 = 0
