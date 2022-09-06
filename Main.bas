@@ -2,67 +2,144 @@ Attribute VB_Name = "Main"
 Option Explicit
 
 
-'Функция обработки аварийных ситуаций
-Public Function Danger() As String
-    ' TODO АвтоАктивация вкладки СХЕМА
-    ' Выполняется проверка управляющей команды "октрыть К4" !!!
-    If gnДатчик(29).Data = 1 Then
-        'Если перепад во вх. и вых. рукове станет меньше 5 кг
-        If Abs(gnDif(6) - gnDif(2)) <= 0.5 Then
-            ROff A1, 223    'Закрыть К4
-            If isFireTech Then
-                ROn A1, 24 '(16 + 8) Открыть КЭМ3 и КЭМ2
-                ROn A0, 2 'Открыть КЭМ7
-            Else
-                ROn A1, 16 'Открыть КЭМ3
+Public Sub InitAGNKS()
+    frmStart.tmrMotor.Interval = 65535
+    frmStart.tmrMotor.Enabled = False
+    gbCmdStart = True    'Сначала Пуск АГНКС
+    InitDisk
+    ConnectKKM
+    Init_Controllers
+    ResetExpenseCounter_2
+End Sub
+
+Private Sub Init_Controllers()
+    'Инициализация платы ACL8113
+    Init_ISO813_Driver
+    'Инициализация платы Pet48DIO
+    Init_DIO_Driver
+End Sub
+
+' АГНКС в исходном состоянии
+' Выполняется при giStage = 0
+Public Function ИсхСост() As String
+    Dim s           As String
+    Dim norma       As Boolean
+    frmStart.cmdSTOP(1).Enabled = True
+    frmStart.cmdSTOP(0).Enabled = True
+
+    s = ""
+    norma = True
+    gbRunDVS = False
+    ' TODO проверить утверждение ниже, пропущен k7
+    'Входные реле включены (порт A0 и A1) ? - неисправны
+    If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
+            k5_isOpen Or k6_isOpen Or k1_isOpen Then
+        s = "Есть открытые КЭМы !!!"
+        norma = False
+    End If
+
+    ' FIXME выполняется проверка управляющей команды!!!
+    ' но это тут кажется это не испарвить
+    If (gnДатчик(25).Data = 1) Then
+        s = s & "Нажата Останов ДВС !!!"
+        norma = False
+    End If
+
+    ' If gnDif(1) <= 0.3 Then   '0.3 потому что плавает показание
+    '   s = s & "Нет газа !!!"
+    '   norma = False
+    ' End If
+
+    If isClutchOn Then
+        s = s & "Включена муфта !!!"
+        norma = False
+    End If
+
+    If gnDif(14) > 100 Then  'Есть обороты
+        s = s & "Есть обороты ДВС !!!"
+        norma = False
+    End If
+
+    If norma Then
+        s = "АГНКС в исходном состоянии ."
+        frmStart.SSCmdStart.Enabled = True
+        gbOnlyAkk = True
+    Else
+        s = s & "АГНКС не готова !!!"
+        frmStart.SSCmdStart.Enabled = False
+    End If
+    ИсхСост = s
+End Function
+
+
+' Подготовка компрессора к пуску
+' Выполняется при giStage = 1
+Public Function ПредПуск() As String
+    If giStage1 = 0 Then
+        'Если есть давление в выходном трубопроводе , то открыть КЭМ4
+        If (gnDif(6) - gnDif(2)) >= 0.25 Then
+            ROn A1, 32 'Открыть К4
+        Else
+            ROn A1, 16 'Открыть К3 - для запуска ДВС
+        End If
+        gbAkkum = True
+        giStage1 = 1    ' Пререход на второй подэтап
+    End If
+
+    If giStage1 = 1 Then
+        'ВТОРОЙ ПОДЭТАП
+        If gnDif(14) < 100 Then
+            'Нет оборотов ДВС
+            gbAkkum = True
+            frmStart.SSCmdStart.Enabled = True
+            'Если ДВС был запущен и заглох , то переход на Этап ИсхСост
+            If gbRunDVS = True Then
+                toStage_0
+                gbRunDVS = False
+
+                'frmStart.Timer2.Enabled = False
+                'TODO проверить коррекность gnДатчик(25)
+                If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
+                        k5_isOpen Or k6_isOpen Or k1_isOpen Or _
+                        (gnДатчик(25).Data = 1) Then
+                    ROff A1, 1 'закрыть К 1-6
+                End If
+
             End If
+
+            If isClutchOn Then
+                ПредПуск = "Двигатель не готов к запуску !!! Включена муфта "
+                Exit Function
+            Else
+                ПредПуск = "Двигатель готов к запуску !!!"
+                Exit Function
+            End If
+            'Есть обороты ДВС
+        ElseIf Not (isClutchOn) Then
+            ПредПуск = "Двигатель на холостом ходу !!!"
+            frmStart.SSCmdStart.Enabled = False
+            gbOnlyAkk = False
+            gbAkkum = False
+            Exit Function
+        ElseIf gnDif(14) <= 1700 Then
+            ПредПуск = "ДВС не вышел на рабочий режим !!!"
+            frmStart.SSCmdStart.Enabled = False
+            gbRunDVS = True
+            gbOnlyAkk = False
+            gbAkkum = False
+            Exit Function
+        Else
+            ПредПуск = "Компрессор в работе, можно заправлять !!!"
+            frmStart.SSCmdStart.Enabled = True
+            gbOnlyAkk = False
+            gbRunDVS = True
+            giStage2 = 0
+            gbAkkum = False
         End If
     End If
-    frmStart.cmdDanger.Visible = True
 End Function
 
-
-
-'Функция остановки АГНКС
-Public Function ОстановАГНКС() As String
-    Dim s           As String
-    ROff A1, 1 'Закрыть К 1-6
-    'если загазованность 20 %
-    If (gnДатчик(42).Data = 1) Or (gnДатчик(44).Data = 1) Then
-        ROn A1, 42 '(2+8+32) Стоп ДВС, открыть К2, открыть К4
-        ROn A0, 2  'Открыть К7
-    ElseIf isFireTech Then    'если пожар в техническом отсеке
-        ROn A1, 34 '(2+32) Стоп ДВС, открыть КЭМ4
-    End If
-
-
-    giStage2 = 0
-    giStage = 3  'Переход на этап Danger
-    giStage1 = 0
-    gbAkkum = False
-    frmStart.SSCmdStart.Enabled = False
-    gbCmdStart = True
-    StopOutput (2)
-    gbStopAGNKS = True
-    ОстановАГНКС = "Останов АГНКС"
-End Function
-
-'Функция остановки ДВС
-Public Function ОстановДВС() As String
-    'TODO Зачем закрывать пистолет при остановке ДВС?
-    ROff A1, 191 'Закрыть К5 (пистолет)
-
-    ROn A1, 32 'Открыть К4
-
-    giStage2 = 0
-    giStage = 1  'Переход на этап ПредПуск()
-    giStage1 = 1
-
-    gbAkkum = False
-    frmStart.SSCmdStart.Enabled = False
-    gbCmdStart = False
-End Function
-'Сама процедура заправки
+' Выполняется при giStage = 2
 Public Function Заправка()
     Dim s, s1       As String
     Dim MaxIR       As Double    'Запоминаем max расход при открытии КЭМ6
@@ -252,15 +329,64 @@ Public Function Заправка()
     Заправка = s
 End Function
 
-Public Function isAll_PSecnsor_OK() As Boolean
-    Dim i As Integer
-    For i = 2 To 7
-         If gnDif(i) = -1 Then
-            isAll_PSecnsor_OK = False
-            Exit Function
-         End If
-    Next i
-    isAll_PSecnsor_OK = True
+' Функция обработки аварийных ситуаций
+' Выполняется при giStage = 3
+Public Function Danger() As String
+    ' TODO АвтоАктивация вкладки СХЕМА
+    ' Выполняется проверка управляющей команды "октрыть К4" !!!
+    If gnДатчик(29).Data = 1 Then
+        'Если перепад во вх. и вых. рукове станет меньше 5 кг
+        If Abs(gnDif(6) - gnDif(2)) <= 0.5 Then
+            ROff A1, 223    'Закрыть К4
+            If isFireTech Then
+                ROn A1, 24 '(16 + 8) Открыть КЭМ3 и КЭМ2
+                ROn A0, 2 'Открыть КЭМ7
+            Else
+                ROn A1, 16 'Открыть КЭМ3
+            End If
+        End If
+    End If
+    frmStart.cmdDanger.Visible = True
+End Function
+
+
+'Функция остановки ДВС
+Public Function ОстановДВС() As String
+    'TODO Зачем закрывать пистолет при остановке ДВС?
+    ROff A1, 191 'Закрыть К5 (пистолет)
+
+    ROn A1, 32 'Открыть К4
+
+    giStage2 = 0
+    giStage = 1  'Переход на этап ПредПуск()
+    giStage1 = 1
+
+    gbAkkum = False
+    frmStart.SSCmdStart.Enabled = False
+    gbCmdStart = False
+End Function
+'Функция остановки АГНКС
+Public Function ОстановАГНКС() As String
+    Dim s           As String
+    ROff A1, 1 'Закрыть К 1-6
+    'если загазованность 20 %
+    If (gnДатчик(42).Data = 1) Or (gnДатчик(44).Data = 1) Then
+        ROn A1, 42 '(2+8+32) Стоп ДВС, открыть К2, открыть К4
+        ROn A0, 2  'Открыть К7
+    ElseIf isFireTech Then    'если пожар в техническом отсеке
+        ROn A1, 34 '(2+32) Стоп ДВС, открыть КЭМ4
+    End If
+
+
+    giStage2 = 0
+    giStage = 3  'Переход на этап Danger
+    giStage1 = 0
+    gbAkkum = False
+    frmStart.SSCmdStart.Enabled = False
+    gbCmdStart = True
+    StopOutput (2)
+    gbStopAGNKS = True
+    ОстановАГНКС = "Останов АГНКС"
 End Function
 
 Public Sub toStage_0()
@@ -270,141 +396,6 @@ Public Sub toStage_0()
     gbAkkum = False
     gbCmdStart = True
     frmStart.SSCmdStart.Enabled = False
-End Sub
-
-'Приводит АГНКС в исходное состояние
-Public Function ИсхСост() As String
-    Dim s           As String
-    Dim norma       As Boolean
-    frmStart.cmdSTOP(1).Enabled = True
-    frmStart.cmdSTOP(0).Enabled = True
-
-    s = ""
-    norma = True
-    gbRunDVS = False
-    ' TODO проверить утверждение ниже, пропущен k7
-    'Входные реле включены (порт A0 и A1) ? - неисправны
-    If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
-            k5_isOpen Or k6_isOpen Or k1_isOpen Then
-        s = "Есть открытые КЭМы !!!"
-        norma = False
-    End If
-
-    ' FIXME выполняется проверка управляющей команды!!!
-    ' но это тут кажется это не испарвить
-    If (gnДатчик(25).Data = 1) Then
-        s = s & "Нажата Останов ДВС !!!"
-        norma = False
-    End If
-
-    ' If gnDif(1) <= 0.3 Then   '0.3 потому что плавает показание
-    '   s = s & "Нет газа !!!"
-    '   norma = False
-    ' End If
-
-    If isClutchOn Then
-        s = s & "Включена муфта !!!"
-        norma = False
-    End If
-
-    If gnDif(14) > 100 Then  'Есть обороты
-        s = s & "Есть обороты ДВС !!!"
-        norma = False
-    End If
-
-    If norma Then
-        s = "АГНКС в исходном состоянии ."
-        frmStart.SSCmdStart.Enabled = True
-        gbOnlyAkk = True
-    Else
-        s = s & "АГНКС не готова !!!"
-        frmStart.SSCmdStart.Enabled = False
-    End If
-    ИсхСост = s
-End Function
-
-
-'Подготавливает компрессор к пуску
-Public Function ПредПуск() As String
-    If giStage1 = 0 Then
-        'Если есть давление в выходном трубопроводе , то открыть КЭМ4
-        If (gnDif(6) - gnDif(2)) >= 0.25 Then
-            ROn A1, 32 'Открыть К4
-        Else
-            ROn A1, 16 'Открыть К3 - для запуска ДВС
-        End If
-        gbAkkum = True
-        giStage1 = 1    ' Пререход на второй подэтап
-    End If
-
-    If giStage1 = 1 Then
-        'ВТОРОЙ ПОДЭТАП
-        If gnDif(14) < 100 Then
-            'Нет оборотов ДВС
-            gbAkkum = True
-            frmStart.SSCmdStart.Enabled = True
-            'Если ДВС был запущен и заглох , то переход на Этап ИсхСост
-            If gbRunDVS = True Then
-                toStage_0
-                gbRunDVS = False
-
-                'frmStart.Timer2.Enabled = False
-                'TODO проверить коррекность gnДатчик(25)
-                If k2_isOpen Or k3_isOpen Or k4_isOpen Or _
-                        k5_isOpen Or k6_isOpen Or k1_isOpen Or _
-                        (gnДатчик(25).Data = 1) Then
-                    ROff A1, 1 'закрыть К 1-6
-                End If
-
-            End If
-
-            If isClutchOn Then
-                ПредПуск = "Двигатель не готов к запуску !!! Включена муфта "
-                Exit Function
-            Else
-                ПредПуск = "Двигатель готов к запуску !!!"
-                Exit Function
-            End If
-            'Есть обороты ДВС
-        ElseIf Not (isClutchOn) Then
-            ПредПуск = "Двигатель на холостом ходу !!!"
-            frmStart.SSCmdStart.Enabled = False
-            gbOnlyAkk = False
-            gbAkkum = False
-            Exit Function
-        ElseIf gnDif(14) <= 1700 Then
-            ПредПуск = "ДВС не вышел на рабочий режим !!!"
-            frmStart.SSCmdStart.Enabled = False
-            gbRunDVS = True
-            gbOnlyAkk = False
-            gbAkkum = False
-            Exit Function
-        Else
-            ПредПуск = "Компрессор в работе, можно заправлять !!!"
-            frmStart.SSCmdStart.Enabled = True
-            gbOnlyAkk = False
-            gbRunDVS = True
-            giStage2 = 0
-            gbAkkum = False
-        End If
-    End If
-End Function
-
-Public Sub InitAGNKS()
-    frmStart.tmrMotor.Interval = 65535
-    frmStart.tmrMotor.Enabled = False
-    gbCmdStart = True    'Сначала Пуск АГНКС
-    InitDisk
-    ConnectKKM
-    Init_Controllers
-    ResetExpenseCounter_2
-End Sub
-
-Private Sub Init_Controllers()
-    'Инициализация платы ACL8113
-    Init_ISO813_Driver
-    'Инициализация платы Pet48DIO
-    Init_DIO_Driver
 End Sub
 
 Public Function Verify_Damage()
@@ -479,6 +470,13 @@ Public Function Verify_Damage()
     Verify_Damage = s
 End Function
 
-
-
-
+Public Function isAll_PSecnsor_OK() As Boolean
+    Dim i As Integer
+    For i = 2 To 7
+         If gnDif(i) = -1 Then
+            isAll_PSecnsor_OK = False
+            Exit Function
+         End If
+    Next i
+    isAll_PSecnsor_OK = True
+End Function
