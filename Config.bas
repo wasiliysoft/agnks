@@ -74,34 +74,25 @@ Public gdРасход1    As Double    'Расход на заправку автомобиля
 
 Public gdK          As Double    'Поправочный коэффициент
 
-' Переменные для усреднения
+' Переменные для усреднения аналоговых значений
 Public glCounter    As Long
 Public sum(31)      As Double
 
 
 Public gbRunDVS     As Boolean
 
-
-
-
-
 Public FileHandle   As Integer    'Идентификатор файла с описаниями
-Public MotorCount   As Long    'Счетчик моторесурсов
-Public GMC          As Long    'глобальный счетчик
-
-
-Public giCountZ     As Integer    'Счетчик заправок
-Public giRealCountZ As Integer    'Реальный счетчик заправок
+Public MotorCount   As Long    'Счетчик моторесурсов, минут
+Public GMC          As Long    'глобальный счетчик, минут
 
 Public gbDontStat   As Boolean    ' флаг заправки (работы)
-
 
 'Аварийные ситуации
 Public gbStopAGNKS  As Boolean    ' флаг Останова АГНКС
 
 'Болванки
 Public gdTime       As Double    'Время заправки
-Public nTimer1Counter As Long ' Счетчик срабатывания Timer1
+Public nTimer1Counter As Long    'Счетчик срабатывания Timer1
 
 Public giDVS        As Integer
 Public gdPlot       As Double

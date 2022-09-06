@@ -138,7 +138,7 @@ Sub StatRS_Insert()
         MotorCount = 0
         StatRS.AddNew
         StatRS("DATA") = Now
-        StatRS("GAZ_CAR") = gdРасход1 / gdPlot        '* 1.42
+        StatRS("GAZ_CAR") = v
         StatRS("GAZ_IR1") = 0
         StatRS("MOTO") = GMC
         StatRS.Update
