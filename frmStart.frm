@@ -504,7 +504,7 @@ Begin VB.Form frmStart
             End
             Begin VB.Timer tmrMotor 
                Enabled         =   0   'False
-               Interval        =   100
+               Interval        =   60000
                Left            =   8790
                Top             =   2835
             End
@@ -3166,26 +3166,74 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub Form_Load()
+   Left = 10
+   Top = 700
+   frmStart.SSTab1.Tab = 3
+   ОкноСообщений.BackColor = &HE0E0E0
+   ОкноСообщений.ForeColor = &HFF0000
+   ОкноСообщений.Caption = "Загрузка программы..."
+   Show
+   DoEvents
+   InitAGNKS
+   If isDebug Then
+      frmDebug.Show vbModeless
+      'frmDbDebug.Show
+   End If
+End Sub
+' TODO вынести в модуль IO_File
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+    'реакция на ctrl+alt+home
+    'On Error Resume Next
+    If ((KeyCode = vbKeyHome) And (Shift = 6)) Then
+      setting_gdK
+    ElseIf ((KeyCode = vbKeyEnd) And (Shift = 6)) Then
+      update_gdK_pass
+    End If
 
-
-Private Sub cmdDanger_Click()
-    frmStart.cmdDanger.Visible = False
-    ROff A1, 1  'закрыть К 1-6
-    'Стоп ДВС, открыть КЭМ4 'TODO проверить комментарий
-    toStage_0
-    gbStopAGNKS = False
 End Sub
 
-Private Sub cmdKKM_Click()
-    StatusKKM
-    frmKKM.txtKKM.Text = frmStart.Label_Summa.Caption
-    frmKKM.lblErrorKKM.Caption = gsErrorKKM    ' = Drvfr.ResultCodeDescription
-    frmKKM.lblStatusKKM.Caption = gsРежимККМ    '= Drvfr.ECRModeDescription
-    frmKKM.Show vbModal
+Private Sub SSCmdStart_Click()
+    If gbCmdStart = True Then
+        gbCmdStart = False
+        giStage = 1  'Переход на этап ПредПуск()
+        giStage2 = 0
+        giStage1 = 0
+        ROn A1, 4 'Открыть К1
+    Else
+        'Если идет заправка аккумуляторов
+        If gbAkkum = True Then
+            frmЗапрос.Show vbModeless
+            gbFrmShow = True
+        End If
+        giStage = 2
+        SSCmdStart.Enabled = False
+    End If
+
 End Sub
 
-Private Sub cmdOpenStatForm_Click()
-    frmSt.Show vbModeless
+Private Sub cmdSTOP_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+      If giStage = 2 Then
+         StopOutput (2)
+      End If
+
+      ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
+      ROn A1, 2 ' Стоп ДВС
+      toStage_0
+      If gbDontStat = True Then
+         StatRS_Insert
+         gbDontStat = False    'Можно работать с диском
+      End If
+
+      Select Case Index
+         Case 1 ' Нажата Стоп ДВС
+            cmdSTOP(1).Enabled = False
+         Case 0 ' Нажата Стоп АГНКС
+            cmdSTOP(0).Enabled = False
+            'frmStart.Timer2.Enabled = False
+            cmdDanger.Visible = True
+            ОкноСообщений.Caption = ОстановАГНКС()
+      End Select
 End Sub
 
 Private Sub cmdStopCarRefueling_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -3212,41 +3260,31 @@ Private Sub cmdStopCarRefueling_MouseUp(Button As Integer, Shift As Integer, X A
     gbAkkum = True
 End Sub
 
+Private Sub cmdDanger_Click()
+    frmStart.cmdDanger.Visible = False
+    ROff A1, 1  'закрыть К 1-6
+    'Стоп ДВС, открыть КЭМ4 'TODO проверить комментарий
+    toStage_0
+    gbStopAGNKS = False
+End Sub
+
+Private Sub cmdKKM_Click()
+    StatusKKM
+    frmKKM.txtKKM.Text = frmStart.Label_Summa.Caption
+    frmKKM.lblErrorKKM.Caption = gsErrorKKM    ' = Drvfr.ResultCodeDescription
+    frmKKM.lblStatusKKM.Caption = gsРежимККМ    '= Drvfr.ECRModeDescription
+    frmKKM.Show vbModal
+End Sub
+
+Private Sub cmdOpenStatForm_Click()
+    frmSt.Show vbModeless
+End Sub
+
 Private Sub cmdUpdateStat_Click()
    frmStart.MousePointer = vbHourglass
    load_statistic_from_DB
    frmStart.MousePointer = vbArrow
 End Sub
-
-' TODO вынести в модуль IO_File
-Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-    'реакция на ctrl+alt+home
-    'On Error Resume Next
-    If ((KeyCode = vbKeyHome) And (Shift = 6)) Then
-      setting_gdK
-    ElseIf ((KeyCode = vbKeyEnd) And (Shift = 6)) Then
-      update_gdK_pass
-    End If
-
-End Sub
-
-Private Sub Form_Load()
-   Left = 10
-   Top = 700
-   frmStart.SSTab1.Tab = 3
-   ОкноСообщений.BackColor = &HE0E0E0
-   ОкноСообщений.ForeColor = &HFF0000
-   ОкноСообщений.Caption = "Загрузка программы..."
-   Show
-   DoEvents
-   InitAGNKS
-   If isDebug Then
-      frmDebug.Show vbModeless
-      'frmDbDebug.Show
-   End If
-End Sub
-
-
 
 Private Sub Label1_Click(Index As Integer)
     'Dim Maska As Integer
@@ -3297,51 +3335,6 @@ Private Sub Label1_Click(Index As Integer)
 
 End Sub
 
-
-Private Sub SSCmdStart_Click()
-    If gbCmdStart = True Then
-        gbCmdStart = False
-        giStage = 1  'Переход на этап ПредПуск()
-        giStage2 = 0
-        giStage1 = 0
-        ROn A1, 4 'Открыть К1
-    Else
-        'Если идет заправка аккумуляторов
-        If gbAkkum = True Then
-            frmЗапрос.Show vbModeless
-            gbFrmShow = True
-        End If
-        giStage = 2
-        SSCmdStart.Enabled = False
-    End If
-
-End Sub
-
-
-Private Sub cmdSTOP_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-      If giStage = 2 Then
-         StopOutput (2)
-      End If
-
-      ROff A1, 0    'Закрыть К 1-6, ВЫКЛ Реле 2
-      ROn A1, 2 ' Стоп ДВС
-      toStage_0
-      If gbDontStat = True Then
-         StatRS_Insert
-         gbDontStat = False    'Можно работать с диском
-      End If
-
-      Select Case Index
-         Case 1 ' Нажата Стоп ДВС
-            cmdSTOP(1).Enabled = False
-         Case 0 ' Нажата Стоп АГНКС
-            cmdSTOP(0).Enabled = False
-            'frmStart.Timer2.Enabled = False
-            cmdDanger.Visible = True
-            ОкноСообщений.Caption = ОстановАГНКС()
-      End Select
-End Sub
-
 Private Sub SSExit_Click()
     ' TODO Запрос на подтверждение выхода
     ' TODO Возможно тут достаточно проверить Car или giStage
@@ -3364,42 +3357,6 @@ Private Sub SSExit_Click()
     ExitWindowsEx 1, 0
     End
 End Sub
-
-
-Private Sub Timer_ДВС_Timer()
-
-    Dim i           As Integer
-
-    'Отображение работы ДВС, компрессора, детандера
-    If ОборотыДВС.Caption > 50 Then
-        tmrMotor.Enabled = True    'Считать моторесурс
-        For i = 0 To 5
-            If ДВС(i).Visible Then
-                ДВС(i).Visible = False
-                If isClutchOn Then
-                    Компрессор(i).Visible = False
-                End If
-                If i < 5 Then
-                    ДВС(i + 1).Visible = True
-                    If isClutchOn Then
-                        Компрессор(i + 1).Visible = True
-                    End If
-                    Exit For
-                Else
-                    ДВС(0).Visible = True
-                    If isClutchOn Then
-                        Компрессор(0).Visible = True
-                    End If
-                End If
-            End If
-        Next i
-    Else
-        tmrMotor.Enabled = False    'Перестать считать моторесурс
-    End If
-
-
-End Sub
-
 
 ' 500 мсек
 Private Sub Timer1_Timer()
@@ -3543,7 +3500,36 @@ Private Sub tmrMotor_Timer()
     MotorCount = MotorCount + 1
 End Sub
 
-
+' Interval 75 ms
+Private Sub Timer_ДВС_Timer()
+    Dim i           As Integer
+    'Отображение работы ДВС, компрессора, детандера
+    If ОборотыДВС.Caption > 50 Then
+        tmrMotor.Enabled = True    'Считать моторесурс
+        For i = 0 To 5
+            If ДВС(i).Visible Then
+                ДВС(i).Visible = False
+                If isClutchOn Then
+                    Компрессор(i).Visible = False
+                End If
+                If i < 5 Then
+                    ДВС(i + 1).Visible = True
+                    If isClutchOn Then
+                        Компрессор(i + 1).Visible = True
+                    End If
+                    Exit For
+                Else
+                    ДВС(0).Visible = True
+                    If isClutchOn Then
+                        Компрессор(0).Visible = True
+                    End If
+                End If
+            End If
+        Next i
+    Else
+        tmrMotor.Enabled = False    'Перестать считать моторесурс
+    End If
+End Sub
 
 Public Sub ShowPict()
     With frmStart

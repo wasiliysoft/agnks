@@ -3,8 +3,6 @@ Option Explicit
 
 
 Public Sub InitAGNKS()
-    frmStart.tmrMotor.Interval = 65535
-    frmStart.tmrMotor.Enabled = False
     gbCmdStart = True    'Сначала Пуск АГНКС
     InitDisk
     ConnectKKM
