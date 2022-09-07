@@ -17,6 +17,7 @@ Begin VB.Form frmStart
    ScaleHeight     =   493
    ScaleMode       =   0  'User
    ScaleWidth      =   800
+   StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
    Begin TabDlg.SSTab SSTab1 
       Height          =   7395
@@ -68,19 +69,21 @@ Begin VB.Form frmStart
       Tab(2).Control(10).Enabled=   0   'False
       Tab(2).Control(11)=   "Label20"
       Tab(2).Control(11).Enabled=   0   'False
-      Tab(2).Control(12)=   "SSExit"
+      Tab(2).Control(12)=   "lblAppVersion"
       Tab(2).Control(12).Enabled=   0   'False
-      Tab(2).Control(13)=   "cmdUpdatePC"
+      Tab(2).Control(13)=   "SSExit"
       Tab(2).Control(13).Enabled=   0   'False
-      Tab(2).Control(14)=   "cmdUpdatePlot"
+      Tab(2).Control(14)=   "cmdUpdatePC"
       Tab(2).Control(14).Enabled=   0   'False
-      Tab(2).Control(15)=   "cmdUpdatePrice"
+      Tab(2).Control(15)=   "cmdUpdatePlot"
       Tab(2).Control(15).Enabled=   0   'False
-      Tab(2).Control(16)=   "cmdUpdateGMC"
+      Tab(2).Control(16)=   "cmdUpdatePrice"
       Tab(2).Control(16).Enabled=   0   'False
-      Tab(2).Control(17)=   "cmdUpdatePassword"
+      Tab(2).Control(17)=   "cmdUpdateGMC"
       Tab(2).Control(17).Enabled=   0   'False
-      Tab(2).ControlCount=   18
+      Tab(2).Control(18)=   "cmdUpdatePassword"
+      Tab(2).Control(18).Enabled=   0   'False
+      Tab(2).ControlCount=   19
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
       Tab(3).ControlEnabled=   -1  'True
@@ -3077,6 +3080,15 @@ Begin VB.Form frmStart
          BevelWidth      =   7
          Font3D          =   3
       End
+      Begin VB.Label lblAppVersion 
+         BackStyle       =   0  'Transparent
+         Caption         =   "appVersion"
+         Height          =   240
+         Left            =   -74145
+         TabIndex        =   208
+         Top             =   1125
+         Width           =   1860
+      End
       Begin VB.Label Label20 
          Caption         =   "Пароль"
          Height          =   285
@@ -3122,9 +3134,9 @@ Begin VB.Form frmStart
          BackStyle       =   0  'Transparent
          Caption         =   "05 сеитября 2022    00:00:00"
          Height          =   285
-         Left            =   -68655
+         Left            =   -68610
          TabIndex        =   192
-         Top             =   1140
+         Top             =   870
          Width           =   3210
       End
       Begin VB.Label Label4 
@@ -3139,9 +3151,9 @@ Begin VB.Form frmStart
          BackStyle       =   0  'Transparent
          Caption         =   "Данный программный продукт разработан лабораторией автоматизации производства Управления ""ЭНЕРГОГАЗРЕМОНТ"""
          Height          =   465
-         Left            =   -74190
+         Left            =   -74145
          TabIndex        =   196
-         Top             =   945
+         Top             =   675
          Width           =   5325
       End
       Begin VB.Label lblPC 
@@ -3157,9 +3169,9 @@ Begin VB.Form frmStart
          BackStyle       =   0  'Transparent
          Caption         =   "Системное время"
          Height          =   285
-         Left            =   -67620
+         Left            =   -67575
          TabIndex        =   193
-         Top             =   945
+         Top             =   675
          Width           =   2190
       End
       Begin VB.Image Image1 
@@ -3269,14 +3281,15 @@ Option Explicit
 
 
 Private Sub Form_Load()
-   Left = 10
-   Top = 700
    frmStart.SSTab1.Tab = 3
    ОкноСообщений.BackColor = &HE0E0E0
    ОкноСообщений.ForeColor = &HFF0000
    ОкноСообщений.Caption = "Загрузка программы..."
+   lblAppVersion.Caption = "Версия " & App.Major & "." & App.Minor & "." & App.Revision
+   
    Show
    DoEvents
+   
    InitAGNKS
    If isDebug Then
       frmDebug.Show vbModeless
@@ -3466,6 +3479,8 @@ Private Sub SSExit_Click()
     ExitWindowsEx 1, 0
     End
 End Sub
+
+
 
 ' 500 мсек
 Private Sub Timer1_Timer()
