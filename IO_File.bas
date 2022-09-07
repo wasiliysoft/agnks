@@ -6,10 +6,9 @@ Private pAgnksСonfig As AgnksСonfigType
 'структура для конфигурационного файла (configFilePath)
 Public Type AgnksСonfigType
     PC As Double        ' Поправочный коэффициент
-    price As Double     ' Цена газа
+    Price As Double     ' Цена газа
     plot As Double      ' Плотность газа
-    motoMinute As Long  ' Моторесурс в минутах
-    pwd As String * 7   ' Пароль
+    pwd As String * 10   ' Пароль
 End Type
 
 Private Function configFilePath() As String
@@ -20,37 +19,20 @@ Function agnksСonfig() As AgnksСonfigType
    agnksСonfig = pAgnksСonfig
 End Function
 
-
-'Функция инициализации данных, считывание с диска
-'TODO Вывести на отдельную вкладку информацию
-' о моточасах
-' поправочный коэфф
-' цена газа
-' плотность газа
-' смена пароля и настройка параметров прямо из окна пульта
-Public Function InitDisk() As Integer
-    'Возвращает код ошибки : 0 -нет ошибок
+Public Sub InitDisk()
    ' On Error Resume Next
-   'TODO Добавить смену курсора внутрь функций
+   'TODO Добавить смену курсора внутрь функций работы с базой
     frmStart.MousePointer = vbHourglass
 
+    init_agnksConfig
+    init_SensorDescr_file
     init_Database
+    load_statistic_from_DB 'TODO вынести из функции инициализации диска?
     'Получаем моточасы из базы
     GMC = getGMC_from_DB
 
-    load_statistic_from_DB 'TODO вынести из функции инициализации диска?
-
-    init_agnksConfig
-    
-    init_SensorDescr_file
     frmStart.MousePointer = vbArrow
-    InitDisk = 0
-    Exit Function
-
-ErrorHandler:        'Если есть какие-нибудь ошибки возвращаем -1
-    InitDisk = -1
-    Exit Function
-End Function
+End Sub
 
 Private Sub init_agnksConfig()
     Dim fh As Long: fh = FreeFile
@@ -60,10 +42,9 @@ Private Sub init_agnksConfig()
     On Error GoTo 0
     If fLen = 0 Then
         With pAgnksСonfig
-            .motoMinute = -1
             .PC = -1
             .plot = -1
-            .price = -1
+            .Price = -1
             .pwd = "LAB"
         End With
         MsgBox "Отсутвует файл конфигурации АГНКС: " & configFilePath, vbExclamation
@@ -73,31 +54,36 @@ Private Sub init_agnksConfig()
         Close #fh
     End If
     frmStart.lblPC.Caption = Format(agnksСonfig.PC, "0.0000")
-    frmStart.Price.Caption = Format(agnksСonfig.Price, "0.00")  ' Вкладка Схема
-    frmStart.lbl_Price.Caption = Format(agnksСonfig.Price, "0.00") ' Вкладка Системные
+    frmStart.Price.Caption = Format(agnksСonfig.Price, "0.00")
     frmStart.lbl_gnPlot.Caption = Format(pAgnksСonfig.plot, "0.0000")
 End Sub
 
-'FIXME обработать отмену ввода
+
 Sub updatePC()
-    Dim s As String
-    Dim title As String: title = "DANGER - Обновление поправочного коэффициента"
-    s = InputBox("Введите пароль", title)
-    If (s = Trim(pAgnksСonfig.pwd)) Then
-        s = InputBox("Введите поправочный коэффициент", title, Format(agnksСonfig.PC, "0.000"))
-        If (CDbl(s) > 0) And (CDbl(s) <= 10) Then
-            pAgnksСonfig.PC = CDbl(s)
-            saveConfig
-            MsgBox "Коэффициент введен", vbInformation
-        End If
+    If isAuth = False Then Exit Sub
+
+    Dim d As Double: d = 0
+    Dim sInput As String
+    sInput = InputBox("Введите поправочный коэффициент", , Format(agnksСonfig.PC, "0.0000"))
+    If (Len(sInput) = 0) Then Exit Sub
+    On Error Resume Next
+        d = CDbl(sInput)
+    On Error GoTo 0
+
+    If d < -10 Or 10 < d Or d <> Round(d, 4) Then
+        MsgBox "Разрешен ввод от -10 до 10 с точностью 4 знака после запятой.", vbExclamation, "Некорректный ввод"
     Else
-        MsgBox "Пароль не верный", vbCritical
+        pAgnksСonfig.PC = d
+        saveConfig
+        init_agnksConfig
+        MsgBox "Обновлено", vbInformation
     End If
-    init_agnksConfig
 End Sub
 
-' TODO implementation
+
 Sub updatePlot()
+    If isAuth = False Then Exit Sub
+
     Dim d As Double: d = 0
     Dim sInput As String
     sInput = InputBox("Введите новое значение плотности газа", , Format(agnksСonfig.plot, "0.0000"))
@@ -106,7 +92,7 @@ Sub updatePlot()
         d = CDbl(sInput)
     On Error GoTo 0
     If d >= 1 Or d <= 0.5 Or d <> Round(d, 4) Then
-        MsgBox "Некорректный ввод", vbExclamation
+        MsgBox "Допустимое значение от 0,5 до 1 с точностью 4 знака после запятой.", vbExclamation, "Некорректный ввод"
     Else
         pAgnksСonfig.plot = d
         saveConfig
@@ -115,8 +101,10 @@ Sub updatePlot()
     End If
 End Sub
 
-' TODO implementation
+
 Sub updatePrice()
+    If isAuth = False Then Exit Sub
+
     Dim d As Double: d = 0
     Dim sInput As String
     sInput = InputBox("Введите новое значение цены газа", , Format(agnksСonfig.Price, "0.00"))
@@ -125,7 +113,7 @@ Sub updatePrice()
         d = CDbl(sInput)
     On Error GoTo 0
     If d >= 1000 Or d <= 0 Or d <> Round(d, 2) Then
-        MsgBox "Некорректный ввод", vbExclamation
+        MsgBox "Допустимое значение от 0 до 1000 с точностью 2 знака после запятой.", vbExclamation, "Некорректный ввод"
     Else
         pAgnksСonfig.Price = d
         saveConfig
@@ -133,6 +121,49 @@ Sub updatePrice()
         MsgBox "Обновлено", vbInformation
     End If
 End Sub
+
+Sub updatePWD()
+    If isAuth = False Then Exit Sub
+
+    Dim sInput1 As String
+    Dim sInput2 As String
+    
+    ' ВНИМАНИЕ!!!
+    ' Максимальная длинна хранимого пароля
+    ' определяется в структуре AgnksСonfigType
+
+    frmPassword.lblDescription = "Введите новый пароль, от 3 до 10 символов"
+    frmPassword.txtPassword = ""
+        frmPassword.Show vbModal
+        sInput1 = frmPassword.txtPassword
+    frmPassword.txtPassword = ""
+
+    sInput1 = Trim(sInput1)
+    If Len(sInput1) = 0 Then ' Отмена ввода
+        Exit Sub
+    ElseIf Len(sInput1) < 3 Or 10 < Len(sInput1) Then
+        MsgBox "Некорректный пароль", vbExclamation
+        Exit Sub
+    Else
+        frmPassword.lblDescription = "Повторите новый пароль"
+        frmPassword.txtPassword = ""
+            frmPassword.Show vbModal
+            sInput2 = frmPassword.txtPassword
+        frmPassword.txtPassword = ""
+
+        sInput2 = Trim(sInput2)
+        If sInput1 <> sInput2 Then
+            MsgBox "Пароли не совпадают", vbExclamation
+            Exit Sub
+        Else
+            pAgnksСonfig.pwd = sInput2
+            saveConfig
+            init_agnksConfig
+            MsgBox "Обновлено", vbInformation
+        End If
+    End If
+End Sub
+
 ' TODO return result
 Private Sub saveConfig()
     Dim fh As Long: fh = FreeFile
@@ -141,28 +172,25 @@ Private Sub saveConfig()
     Close #fh
 End Sub
 
-Sub updatePWD()
-    Dim s As String
-    Dim s1 As String
-    Dim title As String: title = "DANGER - Обновление пароля"
-    s = InputBox("Введите текущий пароль", title)
-    If (s = Trim(pAgnksСonfig.pwd)) Then
-        s = InputBox("Введите новый пароль", title)
-        If (Len(s) > 0) And (Len(s) <= 7) Then
-            s1 = InputBox("Повторите новый пароль", title)
-            If (s = s1) Then
-                pAgnksСonfig.pwd = s1
-                saveConfig
-                MsgBox "Пароль введен", vbInformation
-            Else
-                MsgBox "Пароли не совпадают", vbCritical
-            End If
-        End If
+Private Function isAuth() As Boolean
+    isAuth = False
+    Dim sInput As String
+    frmPassword.lblDescription = "Введите пароль"
+    frmPassword.txtPassword = ""
+        frmPassword.Show vbModal
+        sInput = frmPassword.txtPassword
+    frmPassword.txtPassword = ""
+
+    sInput = Trim(sInput)
+    If Len(sInput) = 0 Then
+        Exit Function
+    ElseIf sInput <> Trim(pAgnksСonfig.pwd) Then
+        MsgBox "Неверный пароль", vbExclamation
+        Exit Function
     Else
-        MsgBox "Пароль не верный", vbCritical
+        isAuth = True
     End If
-    init_agnksConfig
-End Sub
+End Function
 
 Private Sub init_SensorDescr_file()
     Dim fh As Long: fh = FreeFile

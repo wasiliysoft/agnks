@@ -73,6 +73,12 @@ Sub saveGMC_in_DB()
     SelectRS.Close
     Set SelectRS = Nothing
 End Sub
+
+' TODO implementation
+Sub updateGMC()
+    MsgBox "Не реализованно", vbInformation
+End Sub
+
 Sub load_statistic_from_DB()
 '
 ' Заполняет вкладку "Жарнал" данными из базы.

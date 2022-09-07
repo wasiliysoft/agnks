@@ -22,6 +22,7 @@ Module=MetanCounter_Helper; MetanCounter_Helper.bas
 Module=Utils; Utils.bas
 Module=AvgHelperModule; AvgHelperModule.bas
 Form=frmDbDebug.frm
+Form=frmPassword.frm
 IconForm="frmStart"
 Startup="frmStart"
 HelpFile=""
