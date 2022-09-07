@@ -78,7 +78,7 @@ Begin VB.Form frmStart
       Tab(2).Control(15).Enabled=   0   'False
       Tab(2).Control(16)=   "cmdUpdatePlot"
       Tab(2).Control(16).Enabled=   0   'False
-      Tab(2).Control(17)=   "Command3"
+      Tab(2).Control(17)=   "cmdUpdatePrice"
       Tab(2).Control(17).Enabled=   0   'False
       Tab(2).Control(18)=   "Command4"
       Tab(2).Control(18).Enabled=   0   'False
@@ -94,16 +94,16 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "cmdOpenStatForm"
-      Tab(4).Control(1)=   "lstStat(0)"
-      Tab(4).Control(2)=   "lstStat(1)"
-      Tab(4).Control(3)=   "lstStat(2)"
-      Tab(4).Control(4)=   "lstStat(3)"
-      Tab(4).Control(5)=   "cmdUpdateStat"
-      Tab(4).Control(6)=   "lblStat(0)"
-      Tab(4).Control(7)=   "lblStat(1)"
-      Tab(4).Control(8)=   "lblStat(2)"
-      Tab(4).Control(9)=   "lblStat(3)"
+      Tab(4).Control(0)=   "lblStat(3)"
+      Tab(4).Control(1)=   "lblStat(2)"
+      Tab(4).Control(2)=   "lblStat(1)"
+      Tab(4).Control(3)=   "lblStat(0)"
+      Tab(4).Control(4)=   "cmdUpdateStat"
+      Tab(4).Control(5)=   "lstStat(3)"
+      Tab(4).Control(6)=   "lstStat(2)"
+      Tab(4).Control(7)=   "lstStat(1)"
+      Tab(4).Control(8)=   "lstStat(0)"
+      Tab(4).Control(9)=   "cmdOpenStatForm"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton Command5 
          Caption         =   "изменить"
@@ -121,7 +121,7 @@ Begin VB.Form frmStart
          Top             =   3060
          Width           =   1140
       End
-      Begin VB.CommandButton Command3 
+      Begin VB.CommandButton cmdUpdatePrice 
          Caption         =   "изменить"
          Height          =   330
          Left            =   3825
@@ -429,7 +429,7 @@ Begin VB.Form frmStart
                Top             =   270
                Width           =   735
             End
-            Begin VB.Label Label_Price 
+            Begin VB.Label Price 
                Alignment       =   1  'Right Justify
                BackColor       =   &H00000000&
                BorderStyle     =   1  'Fixed Single
@@ -3290,6 +3290,10 @@ Option Explicit
 
 Private Sub cmdUpdatePlot_Click()
     updatePlot
+End Sub
+
+Private Sub cmdUpdatePrice_Click()
+    updatePrice
 End Sub
 
 Private Sub Form_Load()

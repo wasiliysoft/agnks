@@ -72,9 +72,10 @@ Private Sub init_agnksConfig()
             Get #fh, 1, pAgnksСonfig
         Close #fh
     End If
-    frmStart.lblPC.Caption = Format(agnksСonfig.PC, "0.000")
-    frmStart.Label_Price.Caption = pAgnksСonfig.price
-    frmStart.lbl_gnPlot.Caption = pAgnksСonfig.plot
+    frmStart.lblPC.Caption = Format(agnksСonfig.PC, "0.0000")
+    frmStart.Price.Caption = Format(agnksСonfig.Price, "0.00")  ' Вкладка Схема
+    frmStart.lbl_Price.Caption = Format(agnksСonfig.Price, "0.00") ' Вкладка Системные
+    frmStart.lbl_gnPlot.Caption = Format(pAgnksСonfig.plot, "0.0000")
 End Sub
 
 'FIXME обработать отмену ввода
@@ -98,16 +99,16 @@ End Sub
 ' TODO implementation
 Sub updatePlot()
     Dim d As Double: d = 0
-    Dim sInput As String 
+    Dim sInput As String
     sInput = InputBox("Введите новое значение плотности газа", , Format(agnksСonfig.plot, "0.0000"))
     If (Len(sInput) = 0) Then Exit Sub
     On Error Resume Next
         d = CDbl(sInput)
-    On Error GoTo 0 
-    If  d >= 1 Or d <= 0.5 Then
-        Msgbox "Некорректный ввод", vbExclamation
+    On Error GoTo 0
+    If d >= 1 Or d <= 0.5 Or d <> Round(d, 4) Then
+        MsgBox "Некорректный ввод", vbExclamation
     Else
-        pAgnksСonfig.plot = CDbl(d)
+        pAgnksСonfig.plot = d
         saveConfig
         init_agnksConfig
         MsgBox "Обновлено", vbInformation
@@ -116,9 +117,21 @@ End Sub
 
 ' TODO implementation
 Sub updatePrice()
-    pAgnksСonfig.price = CDbl(11.7)
-    saveConfig
-    init_agnksConfig
+    Dim d As Double: d = 0
+    Dim sInput As String
+    sInput = InputBox("Введите новое значение цены газа", , Format(agnksСonfig.Price, "0.00"))
+    If (Len(sInput) = 0) Then Exit Sub
+    On Error Resume Next
+        d = CDbl(sInput)
+    On Error GoTo 0
+    If d >= 1000 Or d <= 0 Or d <> Round(d, 2) Then
+        MsgBox "Некорректный ввод", vbExclamation
+    Else
+        pAgnksСonfig.Price = d
+        saveConfig
+        init_agnksConfig
+        MsgBox "Обновлено", vbInformation
+    End If
 End Sub
 ' TODO return result
 Private Sub saveConfig()
