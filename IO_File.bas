@@ -172,7 +172,7 @@ Private Sub saveConfig()
     Close #fh
 End Sub
 
-Private Function isAuth() As Boolean
+Function isAuth() As Boolean
     isAuth = False
     Dim sInput As String
     frmPassword.lblDescription = "¬ведите пароль"

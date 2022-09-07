@@ -74,9 +74,37 @@ Sub saveGMC_in_DB()
     Set SelectRS = Nothing
 End Sub
 
-' TODO implementation
+
 Sub updateGMC()
-    MsgBox "Не реализованно", vbInformation
+    If isAuth = False Then Exit Sub
+
+    Dim h As Long: h = 0
+    Dim sInput As String
+    sInput = InputBox("Введите новое значение наработки ДВС в часах")
+    sInput = Trim(sInput)
+    If (Len(sInput) = 0) Then Exit Sub
+    On Error Resume Next
+        h = CLng(sInput)
+        h = h * 60 ' В базе наработка хранится в минутах
+    On Error GoTo 0
+    If  h < 0 Then
+        MsgBox "Значение должно быть больше либо равно 0.", vbExclamation, "Некорректный ввод"
+        Exit Sub
+    Else
+        Set SelectRS = StatDB.OpenRecordset("SELECT * From stat ORDER BY stat.data DESC")
+        If Not SelectRS.EOF Then
+            SelectRS.Edit
+            GMC = h
+            tmrMotorCounter = 0
+            SelectRS("MOTO") = GMC
+            SelectRS.Update
+            MsgBox "Обновлено", vbInformation
+        Else
+            MsgBox "Пустая база данных, корректировка наработки ДВС недоступна.", vbInformation
+        End If
+        SelectRS.Close
+        Set SelectRS = Nothing
+    End If
 End Sub
 
 Sub load_statistic_from_DB()
