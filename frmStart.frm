@@ -36,6 +36,7 @@ Begin VB.Form frmStart
       TabPicture(0)   =   "frmStart.frx":0000
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Frame1(0)"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Аналоговые"
       TabPicture(1)   =   "frmStart.frx":001C
@@ -45,44 +46,25 @@ Begin VB.Form frmStart
       TabCaption(2)   =   "Системные"
       TabPicture(2)   =   "frmStart.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Shape3"
-      Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Image1"
-      Tab(2).Control(1).Enabled=   0   'False
-      Tab(2).Control(2)=   "Label16"
-      Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "lblPC"
-      Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "Label10"
-      Tab(2).Control(4).Enabled=   0   'False
-      Tab(2).Control(5)=   "Label4"
-      Tab(2).Control(5).Enabled=   0   'False
-      Tab(2).Control(6)=   "txtTimeDate"
-      Tab(2).Control(6).Enabled=   0   'False
-      Tab(2).Control(7)=   "Label17"
-      Tab(2).Control(7).Enabled=   0   'False
-      Tab(2).Control(8)=   "Label18"
-      Tab(2).Control(8).Enabled=   0   'False
+      Tab(2).Control(0)=   "cmdUpdatePassword"
+      Tab(2).Control(1)=   "cmdUpdateGMC"
+      Tab(2).Control(2)=   "cmdUpdatePrice"
+      Tab(2).Control(3)=   "cmdUpdatePlot"
+      Tab(2).Control(4)=   "cmdUpdatePC"
+      Tab(2).Control(5)=   "SSExit"
+      Tab(2).Control(6)=   "lblAppVersion"
+      Tab(2).Control(7)=   "Label20"
+      Tab(2).Control(8)=   "lbl_gnPlot"
       Tab(2).Control(9)=   "Label19"
-      Tab(2).Control(9).Enabled=   0   'False
-      Tab(2).Control(10)=   "lbl_gnPlot"
-      Tab(2).Control(10).Enabled=   0   'False
-      Tab(2).Control(11)=   "Label20"
-      Tab(2).Control(11).Enabled=   0   'False
-      Tab(2).Control(12)=   "lblAppVersion"
-      Tab(2).Control(12).Enabled=   0   'False
-      Tab(2).Control(13)=   "SSExit"
-      Tab(2).Control(13).Enabled=   0   'False
-      Tab(2).Control(14)=   "cmdUpdatePC"
-      Tab(2).Control(14).Enabled=   0   'False
-      Tab(2).Control(15)=   "cmdUpdatePlot"
-      Tab(2).Control(15).Enabled=   0   'False
-      Tab(2).Control(16)=   "cmdUpdatePrice"
-      Tab(2).Control(16).Enabled=   0   'False
-      Tab(2).Control(17)=   "cmdUpdateGMC"
-      Tab(2).Control(17).Enabled=   0   'False
-      Tab(2).Control(18)=   "cmdUpdatePassword"
-      Tab(2).Control(18).Enabled=   0   'False
+      Tab(2).Control(10)=   "Label18"
+      Tab(2).Control(11)=   "Label17"
+      Tab(2).Control(12)=   "txtTimeDate"
+      Tab(2).Control(13)=   "Label4"
+      Tab(2).Control(14)=   "Label10"
+      Tab(2).Control(15)=   "lblPC"
+      Tab(2).Control(16)=   "Label16"
+      Tab(2).Control(17)=   "Image1"
+      Tab(2).Control(18)=   "Shape3"
       Tab(2).ControlCount=   19
       TabCaption(3)   =   "Схема"
       TabPicture(3)   =   "frmStart.frx":0054
@@ -93,22 +75,22 @@ Begin VB.Form frmStart
       TabCaption(4)   =   "Журнал"
       TabPicture(4)   =   "frmStart.frx":0070
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "lblStat(3)"
-      Tab(4).Control(1)=   "lblStat(2)"
-      Tab(4).Control(2)=   "lblStat(1)"
-      Tab(4).Control(3)=   "lblStat(0)"
-      Tab(4).Control(4)=   "cmdUpdateStat"
-      Tab(4).Control(5)=   "lstStat(3)"
-      Tab(4).Control(6)=   "lstStat(2)"
-      Tab(4).Control(7)=   "lstStat(1)"
-      Tab(4).Control(8)=   "lstStat(0)"
-      Tab(4).Control(9)=   "cmdOpenStatForm"
+      Tab(4).Control(0)=   "cmdOpenStatForm"
+      Tab(4).Control(1)=   "lstStat(0)"
+      Tab(4).Control(2)=   "lstStat(1)"
+      Tab(4).Control(3)=   "lstStat(2)"
+      Tab(4).Control(4)=   "lstStat(3)"
+      Tab(4).Control(5)=   "cmdUpdateStat"
+      Tab(4).Control(6)=   "lblStat(0)"
+      Tab(4).Control(7)=   "lblStat(1)"
+      Tab(4).Control(8)=   "lblStat(2)"
+      Tab(4).Control(9)=   "lblStat(3)"
       Tab(4).ControlCount=   10
       Begin VB.CommandButton cmdUpdatePassword 
          Caption         =   "изменить"
          Height          =   330
          Left            =   -71175
-         TabIndex        =   207
+         TabIndex        =   131
          Top             =   3465
          Width           =   1140
       End
@@ -116,7 +98,7 @@ Begin VB.Form frmStart
          Caption         =   "изменить"
          Height          =   330
          Left            =   -71175
-         TabIndex        =   205
+         TabIndex        =   129
          Top             =   3060
          Width           =   1140
       End
@@ -124,7 +106,7 @@ Begin VB.Form frmStart
          Caption         =   "изменить"
          Height          =   330
          Left            =   -71175
-         TabIndex        =   204
+         TabIndex        =   128
          Top             =   2655
          Width           =   1140
       End
@@ -132,7 +114,7 @@ Begin VB.Form frmStart
          Caption         =   "изменить"
          Height          =   330
          Left            =   -71175
-         TabIndex        =   203
+         TabIndex        =   127
          Top             =   2250
          Width           =   1140
       End
@@ -140,7 +122,7 @@ Begin VB.Form frmStart
          Caption         =   "изменить"
          Height          =   330
          Left            =   -71175
-         TabIndex        =   202
+         TabIndex        =   126
          Top             =   1845
          Width           =   1140
       End
@@ -148,7 +130,7 @@ Begin VB.Form frmStart
          Caption         =   "Статистика"
          Height          =   690
          Left            =   -74775
-         TabIndex        =   189
+         TabIndex        =   113
          Top             =   6525
          Width           =   2130
       End
@@ -160,7 +142,7 @@ Begin VB.Form frmStart
          ItemData        =   "frmStart.frx":008C
          Left            =   -74820
          List            =   "frmStart.frx":008E
-         TabIndex        =   184
+         TabIndex        =   108
          Top             =   810
          Width           =   2200
       End
@@ -172,7 +154,7 @@ Begin VB.Form frmStart
          ItemData        =   "frmStart.frx":0090
          Left            =   -72420
          List            =   "frmStart.frx":0092
-         TabIndex        =   183
+         TabIndex        =   107
          Top             =   810
          Width           =   2200
       End
@@ -184,7 +166,7 @@ Begin VB.Form frmStart
          ItemData        =   "frmStart.frx":0094
          Left            =   -70020
          List            =   "frmStart.frx":0096
-         TabIndex        =   182
+         TabIndex        =   106
          Top             =   810
          Width           =   2200
       End
@@ -196,7 +178,7 @@ Begin VB.Form frmStart
          ItemData        =   "frmStart.frx":0098
          Left            =   -67620
          List            =   "frmStart.frx":009A
-         TabIndex        =   181
+         TabIndex        =   105
          Top             =   810
          Width           =   2200
       End
@@ -204,7 +186,7 @@ Begin VB.Form frmStart
          Caption         =   "Обновить журнал"
          Height          =   690
          Left            =   -67620
-         TabIndex        =   180
+         TabIndex        =   104
          Top             =   6525
          Width           =   2175
       End
@@ -215,13 +197,13 @@ Begin VB.Form frmStart
          Height          =   7110
          Index           =   3
          Left            =   0
-         TabIndex        =   131
+         TabIndex        =   55
          Top             =   315
          Width           =   9795
          Begin Threed.SSCommand cmdDanger 
             Height          =   2310
             Left            =   3690
-            TabIndex        =   161
+            TabIndex        =   85
             Top             =   4680
             Visible         =   0   'False
             Width           =   3255
@@ -249,7 +231,7 @@ Begin VB.Form frmStart
             BackColor       =   &H00C0C0C0&
             Height          =   2400
             Left            =   3735
-            TabIndex        =   171
+            TabIndex        =   95
             Top             =   4590
             Width           =   3165
             Begin VB.Label Label14 
@@ -258,7 +240,7 @@ Begin VB.Form frmStart
                Caption         =   "в минуту"
                Height          =   195
                Left            =   180
-               TabIndex        =   190
+               TabIndex        =   114
                Top             =   1125
                Width           =   660
             End
@@ -268,7 +250,7 @@ Begin VB.Form frmStart
                Caption         =   "Время заправки"
                Height          =   195
                Left            =   180
-               TabIndex        =   179
+               TabIndex        =   103
                Top             =   1485
                Width           =   1260
             End
@@ -278,7 +260,7 @@ Begin VB.Form frmStart
                Caption         =   "Расход Н / м. куб."
                Height          =   195
                Left            =   180
-               TabIndex        =   178
+               TabIndex        =   102
                Top             =   900
                Width           =   1380
             End
@@ -299,7 +281,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   177
+               TabIndex        =   101
                Top             =   990
                Width           =   960
             End
@@ -309,7 +291,7 @@ Begin VB.Form frmStart
                Caption         =   "Расчетно осталось"
                Height          =   195
                Left            =   180
-               TabIndex        =   176
+               TabIndex        =   100
                Top             =   1935
                Width           =   1455
             End
@@ -330,7 +312,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   175
+               TabIndex        =   99
                Top             =   1890
                Width           =   960
             End
@@ -351,7 +333,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   174
+               TabIndex        =   98
                Top             =   1440
                Width           =   960
             End
@@ -372,7 +354,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   330
                Left            =   2070
-               TabIndex        =   173
+               TabIndex        =   97
                Top             =   270
                Width           =   960
             End
@@ -382,7 +364,7 @@ Begin VB.Form frmStart
                Caption         =   "Заправленно, кг."
                Height          =   195
                Left            =   180
-               TabIndex        =   172
+               TabIndex        =   96
                Top             =   315
                Width           =   1305
             End
@@ -392,13 +374,13 @@ Begin VB.Form frmStart
             Caption         =   "Табло заправки"
             Height          =   2400
             Left            =   90
-            TabIndex        =   162
+            TabIndex        =   86
             Top             =   4590
             Width           =   3570
             Begin Threed.SSCommand cmdKKM 
                Height          =   750
                Left            =   2655
-               TabIndex        =   163
+               TabIndex        =   87
                Top             =   1485
                Width           =   795
                _Version        =   65536
@@ -424,7 +406,7 @@ Begin VB.Form frmStart
                Caption         =   "Цена руб."
                Height          =   195
                Left            =   135
-               TabIndex        =   170
+               TabIndex        =   94
                Top             =   270
                Width           =   735
             End
@@ -445,7 +427,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   510
                Left            =   90
-               TabIndex        =   169
+               TabIndex        =   93
                Top             =   540
                Width           =   1230
             End
@@ -466,7 +448,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   780
                Left            =   90
-               TabIndex        =   168
+               TabIndex        =   92
                Top             =   1485
                Width           =   2490
             End
@@ -476,7 +458,7 @@ Begin VB.Form frmStart
                Caption         =   "Сумма руб."
                Height          =   195
                Left            =   135
-               TabIndex        =   167
+               TabIndex        =   91
                Top             =   1215
                Width           =   855
             End
@@ -497,7 +479,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   510
                Left            =   1350
-               TabIndex        =   166
+               TabIndex        =   90
                Top             =   540
                Width           =   1230
             End
@@ -516,7 +498,7 @@ Begin VB.Form frmStart
                EndProperty
                Height          =   300
                Left            =   2700
-               TabIndex        =   165
+               TabIndex        =   89
                Top             =   675
                Width           =   525
             End
@@ -526,7 +508,7 @@ Begin VB.Form frmStart
                Caption         =   "3"
                Height          =   195
                Left            =   3195
-               TabIndex        =   164
+               TabIndex        =   88
                Top             =   585
                Width           =   90
             End
@@ -534,7 +516,7 @@ Begin VB.Form frmStart
          Begin Threed.SSPanel SSPanel1 
             Height          =   3450
             Left            =   45
-            TabIndex        =   132
+            TabIndex        =   56
             Top             =   90
             Width           =   9720
             _Version        =   65536
@@ -578,7 +560,7 @@ Begin VB.Form frmStart
             Begin Threed.SSPanel Отсек_ДВС 
                Height          =   1500
                Left            =   1800
-               TabIndex        =   133
+               TabIndex        =   57
                Top             =   870
                Width           =   1095
                _Version        =   65536
@@ -601,7 +583,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel ОборотыДВС 
                   Height          =   375
                   Left            =   135
-                  TabIndex        =   134
+                  TabIndex        =   58
                   Top             =   90
                   Width           =   810
                   _Version        =   65536
@@ -641,7 +623,7 @@ Begin VB.Form frmStart
                   Height          =   240
                   Index           =   0
                   Left            =   315
-                  TabIndex        =   135
+                  TabIndex        =   59
                   Top             =   1170
                   Width           =   510
                End
@@ -710,7 +692,7 @@ Begin VB.Form frmStart
             Begin Threed.SSPanel Отсек_компр 
                Height          =   1500
                Left            =   3105
-               TabIndex        =   136
+               TabIndex        =   60
                Top             =   870
                Width           =   1245
                _Version        =   65536
@@ -733,7 +715,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Р_выход_компр 
                   Height          =   375
                   Left            =   135
-                  TabIndex        =   137
+                  TabIndex        =   61
                   Top             =   90
                   Width           =   990
                   _Version        =   65536
@@ -774,7 +756,7 @@ Begin VB.Form frmStart
                   Height          =   240
                   Index           =   1
                   Left            =   315
-                  TabIndex        =   138
+                  TabIndex        =   62
                   Top             =   1170
                   Width           =   660
                End
@@ -835,7 +817,7 @@ Begin VB.Form frmStart
             Begin Threed.SSPanel Панель_Авто 
                Height          =   1890
                Left            =   7230
-               TabIndex        =   139
+               TabIndex        =   63
                Top             =   870
                Visible         =   0   'False
                Width           =   2100
@@ -858,7 +840,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Р_автобаллон 
                   Height          =   375
                   Left            =   630
-                  TabIndex        =   140
+                  TabIndex        =   64
                   Top             =   90
                   Width           =   1320
                   _Version        =   65536
@@ -884,7 +866,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Автобаллон 
                   Height          =   1725
                   Left            =   90
-                  TabIndex        =   141
+                  TabIndex        =   65
                   Top             =   90
                   Width           =   420
                   _Version        =   65536
@@ -911,7 +893,7 @@ Begin VB.Form frmStart
                Begin Threed.SSCommand cmdStopCarRefueling 
                   Height          =   1260
                   Left            =   630
-                  TabIndex        =   155
+                  TabIndex        =   79
                   Top             =   540
                   Width           =   1335
                   _Version        =   65536
@@ -938,7 +920,7 @@ Begin VB.Form frmStart
                Height          =   1890
                Index           =   2
                Left            =   5490
-               TabIndex        =   142
+               TabIndex        =   66
                Top             =   870
                Width           =   1515
                _Version        =   65536
@@ -960,7 +942,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Р_аккумулятор 
                   Height          =   375
                   Left            =   585
-                  TabIndex        =   143
+                  TabIndex        =   67
                   Top             =   90
                   Width           =   855
                   _Version        =   65536
@@ -986,7 +968,7 @@ Begin VB.Form frmStart
                Begin Threed.SSPanel Аккумулятор 
                   Height          =   1725
                   Left            =   90
-                  TabIndex        =   144
+                  TabIndex        =   68
                   Top             =   90
                   Width           =   420
                   _Version        =   65536
@@ -1126,7 +1108,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FF0000&
                Height          =   240
                Left            =   1305
-               TabIndex        =   194
+               TabIndex        =   118
                Top             =   540
                Width           =   2130
             End
@@ -1188,7 +1170,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   315
                Left            =   135
-               TabIndex        =   145
+               TabIndex        =   69
                Top             =   2970
                Width           =   495
             End
@@ -1344,7 +1326,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   2
                Left            =   4635
-               TabIndex        =   154
+               TabIndex        =   78
                Top             =   1620
                Width           =   300
             End
@@ -1356,7 +1338,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   3
                Left            =   135
-               TabIndex        =   153
+               TabIndex        =   77
                Top             =   1710
                Width           =   300
             End
@@ -1368,7 +1350,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   4
                Left            =   135
-               TabIndex        =   152
+               TabIndex        =   76
                Top             =   540
                Width           =   300
             End
@@ -1380,7 +1362,7 @@ Begin VB.Form frmStart
                Height          =   240
                Index           =   5
                Left            =   7740
-               TabIndex        =   151
+               TabIndex        =   75
                Top             =   540
                Width           =   300
             End
@@ -1392,7 +1374,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   6
                Left            =   6075
-               TabIndex        =   150
+               TabIndex        =   74
                Top             =   540
                Width           =   300
             End
@@ -1413,7 +1395,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   315
                Left            =   5445
-               TabIndex        =   149
+               TabIndex        =   73
                Top             =   2970
                Width           =   585
             End
@@ -1433,7 +1415,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   1
                Left            =   990
-               TabIndex        =   147
+               TabIndex        =   71
                Top             =   1710
                Width           =   300
             End
@@ -1445,7 +1427,7 @@ Begin VB.Form frmStart
                Height          =   195
                Index           =   0
                Left            =   855
-               TabIndex        =   146
+               TabIndex        =   70
                Top             =   3060
                Width           =   300
             End
@@ -1603,7 +1585,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00FFFF00&
                Height          =   315
                Left            =   3915
-               TabIndex        =   148
+               TabIndex        =   72
                Top             =   2970
                Width           =   585
             End
@@ -1620,7 +1602,7 @@ Begin VB.Form frmStart
          Begin Threed.SSCommand SSCmdStart 
             Height          =   915
             Left            =   6975
-            TabIndex        =   156
+            TabIndex        =   80
             Top             =   6075
             Width           =   2715
             _Version        =   65536
@@ -1647,7 +1629,7 @@ Begin VB.Form frmStart
             Height          =   1185
             Index           =   0
             Left            =   8145
-            TabIndex        =   157
+            TabIndex        =   81
             Top             =   4680
             Width           =   1545
             _Version        =   65536
@@ -1673,7 +1655,7 @@ Begin VB.Form frmStart
             Height          =   1185
             Index           =   1
             Left            =   7020
-            TabIndex        =   158
+            TabIndex        =   82
             Top             =   4680
             Width           =   1095
             _Version        =   65536
@@ -1698,7 +1680,7 @@ Begin VB.Form frmStart
          Begin Threed.SSPanel SSPanel3 
             Height          =   840
             Left            =   90
-            TabIndex        =   159
+            TabIndex        =   83
             Top             =   3600
             Width           =   9630
             _Version        =   65536
@@ -1736,7 +1718,7 @@ Begin VB.Form frmStart
                ForeColor       =   &H00000000&
                Height          =   660
                Left            =   90
-               TabIndex        =   160
+               TabIndex        =   84
                Top             =   90
                Width           =   9450
             End
@@ -1746,7 +1728,7 @@ Begin VB.Form frmStart
          Height          =   6975
          Index           =   1
          Left            =   -74910
-         TabIndex        =   98
+         TabIndex        =   22
          Top             =   360
          Width           =   9615
          Begin VB.TextBox Text2 
@@ -1757,7 +1739,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   130
+            TabIndex        =   54
             Text            =   "Text2"
             Top             =   1560
             Width           =   2055
@@ -1766,7 +1748,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   1
             Left            =   2400
-            TabIndex        =   129
+            TabIndex        =   53
             Top             =   1200
             Width           =   1215
          End
@@ -1778,7 +1760,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   128
+            TabIndex        =   52
             Text            =   "Text2"
             Top             =   1200
             Width           =   2055
@@ -1787,7 +1769,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   2
             Left            =   2400
-            TabIndex        =   127
+            TabIndex        =   51
             Top             =   1560
             Width           =   1215
          End
@@ -1795,7 +1777,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   3
             Left            =   2400
-            TabIndex        =   126
+            TabIndex        =   50
             Top             =   1920
             Width           =   1215
          End
@@ -1807,7 +1789,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   125
+            TabIndex        =   49
             Text            =   "Text2"
             Top             =   1920
             Width           =   2050
@@ -1816,7 +1798,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   4
             Left            =   2400
-            TabIndex        =   124
+            TabIndex        =   48
             Top             =   2280
             Width           =   1215
          End
@@ -1828,7 +1810,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   123
+            TabIndex        =   47
             Text            =   "Text2"
             Top             =   2280
             Width           =   2050
@@ -1837,7 +1819,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   5
             Left            =   2400
-            TabIndex        =   122
+            TabIndex        =   46
             Top             =   2640
             Width           =   1215
          End
@@ -1849,7 +1831,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   121
+            TabIndex        =   45
             Text            =   "Text2"
             Top             =   2640
             Width           =   2050
@@ -1858,7 +1840,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   6
             Left            =   2400
-            TabIndex        =   120
+            TabIndex        =   44
             Top             =   3000
             Width           =   1215
          End
@@ -1870,7 +1852,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   119
+            TabIndex        =   43
             Text            =   "Text2"
             Top             =   3000
             Width           =   2050
@@ -1879,7 +1861,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   7
             Left            =   2400
-            TabIndex        =   118
+            TabIndex        =   42
             Top             =   3360
             Width           =   1215
          End
@@ -1891,7 +1873,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   117
+            TabIndex        =   41
             Text            =   "Text2"
             Top             =   3360
             Width           =   2050
@@ -1900,7 +1882,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   8
             Left            =   7320
-            TabIndex        =   116
+            TabIndex        =   40
             Top             =   840
             Width           =   1215
          End
@@ -1912,7 +1894,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   115
+            TabIndex        =   39
             Text            =   "Text2"
             Top             =   840
             Width           =   2050
@@ -1921,7 +1903,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   9
             Left            =   7320
-            TabIndex        =   114
+            TabIndex        =   38
             Top             =   1200
             Width           =   1215
          End
@@ -1933,7 +1915,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   113
+            TabIndex        =   37
             Text            =   "Text2"
             Top             =   1200
             Width           =   2050
@@ -1942,7 +1924,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   10
             Left            =   7320
-            TabIndex        =   112
+            TabIndex        =   36
             Top             =   1560
             Width           =   1215
          End
@@ -1954,7 +1936,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   111
+            TabIndex        =   35
             Text            =   "Text2"
             Top             =   1560
             Width           =   2050
@@ -1963,7 +1945,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   11
             Left            =   7320
-            TabIndex        =   110
+            TabIndex        =   34
             Top             =   1920
             Width           =   1215
          End
@@ -1975,7 +1957,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   109
+            TabIndex        =   33
             Text            =   "Text2"
             Top             =   1920
             Width           =   2050
@@ -1984,7 +1966,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   12
             Left            =   7320
-            TabIndex        =   108
+            TabIndex        =   32
             Top             =   2280
             Width           =   1215
          End
@@ -1996,7 +1978,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   107
+            TabIndex        =   31
             Text            =   "Text2"
             Top             =   2280
             Width           =   2050
@@ -2005,7 +1987,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   13
             Left            =   7320
-            TabIndex        =   106
+            TabIndex        =   30
             Top             =   2640
             Width           =   1215
          End
@@ -2017,7 +1999,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   105
+            TabIndex        =   29
             Text            =   "Text2"
             Top             =   2640
             Width           =   2050
@@ -2026,7 +2008,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   14
             Left            =   7320
-            TabIndex        =   104
+            TabIndex        =   28
             Top             =   3000
             Width           =   1215
          End
@@ -2038,7 +2020,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   103
+            TabIndex        =   27
             Text            =   "Text2"
             Top             =   3000
             Width           =   2050
@@ -2047,7 +2029,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   15
             Left            =   7320
-            TabIndex        =   102
+            TabIndex        =   26
             Top             =   3360
             Width           =   1215
          End
@@ -2059,7 +2041,7 @@ Begin VB.Form frmStart
             Left            =   5160
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   101
+            TabIndex        =   25
             Text            =   "Text2"
             Top             =   3360
             Width           =   2050
@@ -2072,7 +2054,7 @@ Begin VB.Form frmStart
             Left            =   240
             Locked          =   -1  'True
             MousePointer    =   1  'Arrow
-            TabIndex        =   100
+            TabIndex        =   24
             Text            =   "Text2"
             Top             =   840
             Width           =   2055
@@ -2081,7 +2063,7 @@ Begin VB.Form frmStart
             Height          =   285
             Index           =   0
             Left            =   2400
-            TabIndex        =   99
+            TabIndex        =   23
             Top             =   840
             Width           =   1215
          End
@@ -2089,127 +2071,345 @@ Begin VB.Form frmStart
       Begin VB.Frame Frame1 
          Height          =   6975
          Index           =   0
-         Left            =   -74910
+         Left            =   -74865
          TabIndex        =   1
          Top             =   360
          Width           =   9615
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   47
-            Left            =   7200
-            TabIndex        =   97
-            Top             =   4365
-            Width           =   1380
+         Begin VB.Frame Frame4 
+            Height          =   2850
+            Left            =   5310
+            TabIndex        =   133
+            Top             =   180
+            Width           =   3885
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   16
+               Left            =   1980
+               TabIndex        =   161
+               Top             =   630
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   16
+               Left            =   2340
+               TabIndex        =   160
+               Top             =   675
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   17
+               Left            =   1980
+               TabIndex        =   159
+               Top             =   990
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   17
+               Left            =   2340
+               TabIndex        =   158
+               Top             =   1035
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   18
+               Left            =   1980
+               TabIndex        =   157
+               Top             =   1350
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   18
+               Left            =   2340
+               TabIndex        =   156
+               Top             =   1395
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   19
+               Left            =   1980
+               TabIndex        =   155
+               Top             =   1710
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   19
+               Left            =   2340
+               TabIndex        =   154
+               Top             =   1755
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   20
+               Left            =   1980
+               TabIndex        =   153
+               Top             =   2070
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   20
+               Left            =   2340
+               TabIndex        =   152
+               Top             =   2115
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   21
+               Left            =   1980
+               TabIndex        =   151
+               Top             =   270
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   21
+               Left            =   2340
+               TabIndex        =   150
+               Top             =   315
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   1
+               Left            =   135
+               TabIndex        =   149
+               Top             =   2430
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   1
+               Left            =   495
+               TabIndex        =   148
+               Top             =   2475
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   23
+               Left            =   1980
+               TabIndex        =   147
+               Top             =   2430
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   23
+               Left            =   2340
+               TabIndex        =   146
+               Top             =   2475
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   26
+               Left            =   135
+               TabIndex        =   145
+               Top             =   270
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   26
+               Left            =   495
+               TabIndex        =   144
+               Top             =   315
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   27
+               Left            =   135
+               TabIndex        =   143
+               Top             =   630
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   27
+               Left            =   495
+               TabIndex        =   142
+               Top             =   675
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   28
+               Left            =   135
+               TabIndex        =   141
+               Top             =   990
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   28
+               Left            =   495
+               TabIndex        =   140
+               Top             =   1035
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   29
+               Left            =   135
+               TabIndex        =   139
+               Top             =   1350
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   29
+               Left            =   495
+               TabIndex        =   138
+               Top             =   1395
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   30
+               Left            =   135
+               TabIndex        =   137
+               Top             =   1710
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   30
+               Left            =   495
+               TabIndex        =   136
+               Top             =   1755
+               Width           =   1380
+            End
+            Begin VB.Label Label1 
+               BackColor       =   &H0000FF00&
+               BorderStyle     =   1  'Fixed Single
+               Height          =   255
+               Index           =   31
+               Left            =   135
+               TabIndex        =   135
+               Top             =   2070
+               Width           =   255
+            End
+            Begin VB.Label Label2 
+               AutoSize        =   -1  'True
+               Caption         =   "Р на входе АГНКС"
+               Height          =   195
+               Index           =   31
+               Left            =   495
+               TabIndex        =   134
+               Top             =   2115
+               Width           =   1380
+            End
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   47
-            Left            =   6840
-            TabIndex        =   96
-            Top             =   4320
+            Index           =   0
+            Left            =   135
+            TabIndex        =   209
+            Top             =   810
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   46
-            Left            =   7200
-            TabIndex        =   95
-            Top             =   4005
+            Index           =   0
+            Left            =   495
+            TabIndex        =   208
+            Top             =   855
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   46
-            Left            =   6840
-            TabIndex        =   94
-            Top             =   3960
+            Index           =   8
+            Left            =   135
+            TabIndex        =   207
+            Top             =   1530
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
+            ForeColor       =   &H00FF0000&
             Height          =   195
-            Index           =   45
-            Left            =   7200
-            TabIndex        =   93
-            Top             =   3645
+            Index           =   8
+            Left            =   495
+            TabIndex        =   206
+            Top             =   1575
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   45
-            Left            =   6840
-            TabIndex        =   92
-            Top             =   3600
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   44
-            Left            =   7200
-            TabIndex        =   91
-            Top             =   3285
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   44
-            Left            =   6840
-            TabIndex        =   90
-            Top             =   3240
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   43
-            Left            =   7200
-            TabIndex        =   89
-            Top             =   2925
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   43
-            Left            =   6840
-            TabIndex        =   88
-            Top             =   2880
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   42
-            Left            =   7200
-            TabIndex        =   87
-            Top             =   2565
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   42
-            Left            =   6840
-            TabIndex        =   86
+            Index           =   9
+            Left            =   135
+            TabIndex        =   205
             Top             =   2520
             Width           =   255
          End
@@ -2217,180 +2417,60 @@ Begin VB.Form frmStart
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   41
-            Left            =   7200
-            TabIndex        =   85
-            Top             =   2205
+            Index           =   9
+            Left            =   495
+            TabIndex        =   204
+            Top             =   2565
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   41
-            Left            =   6840
-            TabIndex        =   84
-            Top             =   2160
+            Index           =   24
+            Left            =   135
+            TabIndex        =   203
+            Top             =   1170
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   40
-            Left            =   7200
-            TabIndex        =   83
-            Top             =   1845
+            Index           =   24
+            Left            =   495
+            TabIndex        =   202
+            Top             =   1215
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   40
-            Left            =   6840
-            TabIndex        =   82
-            Top             =   1800
+            Index           =   25
+            Left            =   2700
+            TabIndex        =   201
+            Top             =   450
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   39
-            Left            =   7200
-            TabIndex        =   81
-            Top             =   1485
+            Index           =   25
+            Left            =   3060
+            TabIndex        =   200
+            Top             =   495
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   39
-            Left            =   6840
-            TabIndex        =   80
-            Top             =   1440
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   38
-            Left            =   7200
-            TabIndex        =   79
-            Top             =   1125
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   38
-            Left            =   6840
-            TabIndex        =   78
-            Top             =   1080
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   37
-            Left            =   7200
-            TabIndex        =   77
-            Top             =   765
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   37
-            Left            =   6840
-            TabIndex        =   76
-            Top             =   720
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   36
-            Left            =   7200
-            TabIndex        =   75
-            Top             =   405
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   36
-            Left            =   6840
-            TabIndex        =   74
-            Top             =   360
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   35
-            Left            =   5040
-            TabIndex        =   73
-            Top             =   4365
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   35
-            Left            =   4680
-            TabIndex        =   72
-            Top             =   4320
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   34
-            Left            =   5040
-            TabIndex        =   71
-            Top             =   4005
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   34
-            Left            =   4680
-            TabIndex        =   70
-            Top             =   3960
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   33
-            Left            =   5040
-            TabIndex        =   69
-            Top             =   3645
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   33
-            Left            =   4680
-            TabIndex        =   68
-            Top             =   3600
+            Index           =   32
+            Left            =   135
+            TabIndex        =   199
+            Top             =   1890
             Width           =   255
          End
          Begin VB.Label Label2 
@@ -2399,349 +2479,109 @@ Begin VB.Form frmStart
             ForeColor       =   &H00FF0000&
             Height          =   195
             Index           =   32
-            Left            =   5040
-            TabIndex        =   67
-            Top             =   3285
+            Left            =   495
+            TabIndex        =   198
+            Top             =   1935
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   32
-            Left            =   4680
-            TabIndex        =   66
-            Top             =   3240
+            Index           =   33
+            Left            =   2700
+            TabIndex        =   197
+            Top             =   1890
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   31
-            Left            =   5040
-            TabIndex        =   65
-            Top             =   2925
+            Index           =   33
+            Left            =   3060
+            TabIndex        =   196
+            Top             =   1935
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   31
-            Left            =   4680
-            TabIndex        =   64
-            Top             =   2880
+            Index           =   34
+            Left            =   2700
+            TabIndex        =   195
+            Top             =   2250
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   30
-            Left            =   5040
-            TabIndex        =   63
-            Top             =   2565
+            Index           =   34
+            Left            =   3060
+            TabIndex        =   194
+            Top             =   2295
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   30
-            Left            =   4680
-            TabIndex        =   62
-            Top             =   2520
+            Index           =   35
+            Left            =   2700
+            TabIndex        =   193
+            Top             =   1530
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   29
-            Left            =   5040
-            TabIndex        =   61
-            Top             =   2205
+            Index           =   35
+            Left            =   3060
+            TabIndex        =   192
+            Top             =   1575
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   29
-            Left            =   4680
-            TabIndex        =   60
-            Top             =   2160
+            Index           =   36
+            Left            =   2700
+            TabIndex        =   191
+            Top             =   810
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   28
-            Left            =   5040
-            TabIndex        =   59
-            Top             =   1845
+            Index           =   36
+            Left            =   3060
+            TabIndex        =   190
+            Top             =   855
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   28
-            Left            =   4680
-            TabIndex        =   58
-            Top             =   1800
+            Index           =   37
+            Left            =   2700
+            TabIndex        =   189
+            Top             =   1170
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   27
-            Left            =   5040
-            TabIndex        =   57
-            Top             =   1485
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   27
-            Left            =   4680
-            TabIndex        =   56
-            Top             =   1440
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   26
-            Left            =   5040
-            TabIndex        =   55
-            Top             =   1125
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   26
-            Left            =   4680
-            TabIndex        =   54
-            Top             =   1080
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   25
-            Left            =   5040
-            TabIndex        =   53
-            Top             =   765
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   25
-            Left            =   4680
-            TabIndex        =   52
-            Top             =   720
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   24
-            Left            =   5040
-            TabIndex        =   51
-            Top             =   405
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   24
-            Left            =   4680
-            TabIndex        =   50
-            Top             =   360
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   23
-            Left            =   2640
-            TabIndex        =   49
-            Top             =   4365
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   23
-            Left            =   2280
-            TabIndex        =   48
-            Top             =   4320
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   22
-            Left            =   2640
-            TabIndex        =   47
-            Top             =   4005
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   22
-            Left            =   2280
-            TabIndex        =   46
-            Top             =   3960
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   21
-            Left            =   2640
-            TabIndex        =   45
-            Top             =   3645
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   21
-            Left            =   2280
-            TabIndex        =   44
-            Top             =   3600
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   20
-            Left            =   2640
-            TabIndex        =   43
-            Top             =   3285
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   20
-            Left            =   2280
-            TabIndex        =   42
-            Top             =   3240
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   19
-            Left            =   2640
-            TabIndex        =   41
-            Top             =   2925
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   19
-            Left            =   2280
-            TabIndex        =   40
-            Top             =   2880
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   18
-            Left            =   2640
-            TabIndex        =   39
-            Top             =   2565
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   18
-            Left            =   2280
-            TabIndex        =   38
-            Top             =   2520
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   17
-            Left            =   2640
-            TabIndex        =   37
-            Top             =   2205
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   17
-            Left            =   2280
-            TabIndex        =   36
-            Top             =   2160
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   16
-            Left            =   2640
-            TabIndex        =   35
-            Top             =   1845
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   16
-            Left            =   2280
-            TabIndex        =   34
-            Top             =   1800
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   15
-            Left            =   2640
-            TabIndex        =   33
-            Top             =   1485
+            Index           =   37
+            Left            =   3060
+            TabIndex        =   188
+            Top             =   1215
             Width           =   1380
          End
          Begin VB.Label Label1 
@@ -2749,118 +2589,408 @@ Begin VB.Form frmStart
             BorderStyle     =   1  'Fixed Single
             Height          =   255
             Index           =   15
-            Left            =   2280
-            TabIndex        =   32
-            Top             =   1440
+            Left            =   135
+            TabIndex        =   187
+            Top             =   450
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   14
-            Left            =   2640
-            TabIndex        =   31
-            Top             =   1125
+            Index           =   15
+            Left            =   495
+            TabIndex        =   186
+            Top             =   495
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   14
-            Left            =   2280
-            TabIndex        =   30
-            Top             =   1080
+            Index           =   2
+            Left            =   5445
+            TabIndex        =   185
+            Top             =   4275
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   13
-            Left            =   2640
-            TabIndex        =   29
-            Top             =   405
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   13
-            Left            =   2280
-            TabIndex        =   28
-            Top             =   720
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   12
-            Left            =   2640
-            TabIndex        =   27
-            Top             =   720
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   12
-            Left            =   2280
-            TabIndex        =   26
-            Top             =   360
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   11
-            Left            =   480
-            TabIndex        =   25
-            Top             =   4365
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   11
-            Left            =   120
-            TabIndex        =   24
+            Index           =   2
+            Left            =   5760
+            TabIndex        =   184
             Top             =   4320
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   10
-            Left            =   480
-            TabIndex        =   23
-            Top             =   4005
             Width           =   1380
          End
          Begin VB.Label Label1 
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   10
-            Left            =   120
-            TabIndex        =   22
-            Top             =   3960
+            Index           =   3
+            Left            =   5445
+            TabIndex        =   183
+            Top             =   4635
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   9
-            Left            =   480
+            Index           =   3
+            Left            =   5760
+            TabIndex        =   182
+            Top             =   4680
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   4
+            Left            =   5445
+            TabIndex        =   181
+            Top             =   4995
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   4
+            Left            =   5760
+            TabIndex        =   180
+            Top             =   5040
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   5
+            Left            =   5445
+            TabIndex        =   179
+            Top             =   5355
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   5
+            Left            =   5760
+            TabIndex        =   178
+            Top             =   5400
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   6
+            Left            =   5445
+            TabIndex        =   177
+            Top             =   5715
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   6
+            Left            =   5760
+            TabIndex        =   176
+            Top             =   5760
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   7
+            Left            =   5445
+            TabIndex        =   175
+            Top             =   6075
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   7
+            Left            =   5760
+            TabIndex        =   174
+            Top             =   6120
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H00C0C0C0&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   10
+            Left            =   7290
+            TabIndex        =   173
+            Top             =   4275
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   10
+            Left            =   7650
+            TabIndex        =   172
+            Top             =   4320
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   11
+            Left            =   7290
+            TabIndex        =   171
+            Top             =   4635
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   11
+            Left            =   7650
+            TabIndex        =   170
+            Top             =   4680
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   12
+            Left            =   7290
+            TabIndex        =   169
+            Top             =   4995
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   12
+            Left            =   7650
+            TabIndex        =   168
+            Top             =   5400
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   13
+            Left            =   7290
+            TabIndex        =   167
+            Top             =   5355
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   13
+            Left            =   7650
+            TabIndex        =   166
+            Top             =   5040
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   14
+            Left            =   7290
+            TabIndex        =   165
+            Top             =   5715
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   14
+            Left            =   7650
+            TabIndex        =   164
+            Top             =   5760
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   22
+            Left            =   7290
+            TabIndex        =   163
+            Top             =   6075
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   22
+            Left            =   7650
+            TabIndex        =   162
+            Top             =   6120
+            Width           =   1380
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   47
+            Left            =   495
             TabIndex        =   21
+            Top             =   6165
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   47
+            Left            =   135
+            TabIndex        =   20
+            Top             =   6120
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   46
+            Left            =   495
+            TabIndex        =   19
+            Top             =   5805
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   46
+            Left            =   135
+            TabIndex        =   18
+            Top             =   5760
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   45
+            Left            =   495
+            TabIndex        =   17
+            Top             =   5445
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   45
+            Left            =   135
+            TabIndex        =   16
+            Top             =   5400
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   44
+            Left            =   495
+            TabIndex        =   15
+            Top             =   5085
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   44
+            Left            =   135
+            TabIndex        =   14
+            Top             =   5040
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   43
+            Left            =   495
+            TabIndex        =   13
+            Top             =   4725
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   43
+            Left            =   135
+            TabIndex        =   12
+            Top             =   4680
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   42
+            Left            =   495
+            TabIndex        =   11
+            Top             =   4365
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   42
+            Left            =   135
+            TabIndex        =   10
+            Top             =   4320
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   41
+            Left            =   495
+            TabIndex        =   9
+            Top             =   4005
+            Width           =   1380
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H0000FF00&
+            BorderStyle     =   1  'Fixed Single
+            Height          =   255
+            Index           =   41
+            Left            =   135
+            TabIndex        =   8
+            Top             =   3960
+            Width           =   255
+         End
+         Begin VB.Label Label2 
+            AutoSize        =   -1  'True
+            Caption         =   "Р на входе АГНКС"
+            Height          =   195
+            Index           =   40
+            Left            =   495
+            TabIndex        =   7
             Top             =   3645
             Width           =   1380
          End
@@ -2868,20 +2998,19 @@ Begin VB.Form frmStart
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   9
-            Left            =   120
-            TabIndex        =   20
+            Index           =   40
+            Left            =   135
+            TabIndex        =   6
             Top             =   3600
             Width           =   255
          End
          Begin VB.Label Label2 
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
-            ForeColor       =   &H00FF0000&
             Height          =   195
-            Index           =   8
-            Left            =   480
-            TabIndex        =   19
+            Index           =   39
+            Left            =   495
+            TabIndex        =   5
             Top             =   3285
             Width           =   1380
          End
@@ -2889,9 +3018,9 @@ Begin VB.Form frmStart
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   8
-            Left            =   120
-            TabIndex        =   18
+            Index           =   39
+            Left            =   135
+            TabIndex        =   4
             Top             =   3240
             Width           =   255
          End
@@ -2899,9 +3028,9 @@ Begin VB.Form frmStart
             AutoSize        =   -1  'True
             Caption         =   "Р на входе АГНКС"
             Height          =   195
-            Index           =   7
-            Left            =   480
-            TabIndex        =   17
+            Index           =   38
+            Left            =   495
+            TabIndex        =   3
             Top             =   2925
             Width           =   1380
          End
@@ -2909,157 +3038,17 @@ Begin VB.Form frmStart
             BackColor       =   &H0000FF00&
             BorderStyle     =   1  'Fixed Single
             Height          =   255
-            Index           =   7
-            Left            =   120
-            TabIndex        =   16
-            Top             =   2880
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   6
-            Left            =   480
-            TabIndex        =   15
-            Top             =   2565
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   6
-            Left            =   120
-            TabIndex        =   14
-            Top             =   2520
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   5
-            Left            =   480
-            TabIndex        =   13
-            Top             =   2205
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   5
-            Left            =   120
-            TabIndex        =   12
-            Top             =   2160
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   4
-            Left            =   480
-            TabIndex        =   11
-            Top             =   1845
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   4
-            Left            =   120
-            TabIndex        =   10
-            Top             =   1800
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   3
-            Left            =   480
-            TabIndex        =   9
-            Top             =   1485
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   3
-            Left            =   120
-            TabIndex        =   8
-            Top             =   1440
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   2
-            Left            =   480
-            TabIndex        =   7
-            Top             =   1125
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   2
-            Left            =   120
-            TabIndex        =   6
-            Top             =   1080
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   1
-            Left            =   480
-            TabIndex        =   5
-            Top             =   765
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   1
-            Left            =   120
-            TabIndex        =   4
-            Top             =   720
-            Width           =   255
-         End
-         Begin VB.Label Label2 
-            AutoSize        =   -1  'True
-            Caption         =   "Р на входе АГНКС"
-            Height          =   195
-            Index           =   0
-            Left            =   480
-            TabIndex        =   3
-            Top             =   405
-            Width           =   1380
-         End
-         Begin VB.Label Label1 
-            BackColor       =   &H0000FF00&
-            BorderStyle     =   1  'Fixed Single
-            Height          =   255
-            Index           =   0
-            Left            =   120
+            Index           =   38
+            Left            =   135
             TabIndex        =   2
-            Top             =   360
+            Top             =   2880
             Width           =   255
          End
       End
       Begin Threed.SSCommand SSExit 
          Height          =   1320
          Left            =   -74820
-         TabIndex        =   191
+         TabIndex        =   115
          Top             =   5895
          Width           =   9390
          _Version        =   65536
@@ -3085,7 +3074,7 @@ Begin VB.Form frmStart
          Caption         =   "appVersion"
          Height          =   240
          Left            =   -74145
-         TabIndex        =   208
+         TabIndex        =   132
          Top             =   1125
          Width           =   1860
       End
@@ -3093,7 +3082,7 @@ Begin VB.Form frmStart
          Caption         =   "Пароль"
          Height          =   285
          Left            =   -74415
-         TabIndex        =   206
+         TabIndex        =   130
          Top             =   3555
          Width           =   1545
       End
@@ -3101,7 +3090,7 @@ Begin VB.Form frmStart
          Caption         =   "0.000"
          Height          =   240
          Left            =   -71985
-         TabIndex        =   201
+         TabIndex        =   125
          Top             =   2340
          Width           =   780
       End
@@ -3109,7 +3098,7 @@ Begin VB.Form frmStart
          Caption         =   "Цена газа"
          Height          =   285
          Left            =   -74415
-         TabIndex        =   200
+         TabIndex        =   124
          Top             =   2745
          Width           =   1545
       End
@@ -3117,7 +3106,7 @@ Begin VB.Form frmStart
          Caption         =   "Наработка ДВС"
          Height          =   285
          Left            =   -74415
-         TabIndex        =   199
+         TabIndex        =   123
          Top             =   3150
          Width           =   1950
       End
@@ -3125,7 +3114,7 @@ Begin VB.Form frmStart
          Caption         =   "Плотность газа:"
          Height          =   285
          Left            =   -74415
-         TabIndex        =   198
+         TabIndex        =   122
          Top             =   2340
          Width           =   1455
       End
@@ -3135,7 +3124,7 @@ Begin VB.Form frmStart
          Caption         =   "05 сеитября 2022    00:00:00"
          Height          =   285
          Left            =   -68610
-         TabIndex        =   192
+         TabIndex        =   116
          Top             =   870
          Width           =   3210
       End
@@ -3143,7 +3132,7 @@ Begin VB.Form frmStart
          Caption         =   "Поправочный коэффициент:"
          Height          =   285
          Left            =   -74415
-         TabIndex        =   197
+         TabIndex        =   121
          Top             =   1935
          Width           =   2310
       End
@@ -3152,7 +3141,7 @@ Begin VB.Form frmStart
          Caption         =   "Данный программный продукт разработан лабораторией автоматизации производства Управления ""ЭНЕРГОГАЗРЕМОНТ"""
          Height          =   465
          Left            =   -74145
-         TabIndex        =   196
+         TabIndex        =   120
          Top             =   675
          Width           =   5325
       End
@@ -3160,7 +3149,7 @@ Begin VB.Form frmStart
          Caption         =   "0.000"
          Height          =   240
          Left            =   -71985
-         TabIndex        =   195
+         TabIndex        =   119
          Top             =   1935
          Width           =   780
       End
@@ -3170,7 +3159,7 @@ Begin VB.Form frmStart
          Caption         =   "Системное время"
          Height          =   285
          Left            =   -67575
-         TabIndex        =   193
+         TabIndex        =   117
          Top             =   675
          Width           =   2190
       End
@@ -3198,7 +3187,7 @@ Begin VB.Form frmStart
          Height          =   240
          Index           =   0
          Left            =   -74475
-         TabIndex        =   188
+         TabIndex        =   112
          Top             =   450
          Width           =   1275
       End
@@ -3217,7 +3206,7 @@ Begin VB.Form frmStart
          Height          =   255
          Index           =   1
          Left            =   -72435
-         TabIndex        =   187
+         TabIndex        =   111
          Top             =   450
          Width           =   2205
       End
@@ -3236,7 +3225,7 @@ Begin VB.Form frmStart
          Height          =   255
          Index           =   2
          Left            =   -70005
-         TabIndex        =   186
+         TabIndex        =   110
          Top             =   450
          Width           =   2205
       End
@@ -3255,7 +3244,7 @@ Begin VB.Form frmStart
          Height          =   255
          Index           =   3
          Left            =   -67665
-         TabIndex        =   185
+         TabIndex        =   109
          Top             =   450
          Width           =   2250
       End
@@ -3495,11 +3484,15 @@ Private Sub Timer1_Timer()
     ОпросПлат
     
     For i = 0 To 47
-        If gnДатчик(i).Data = 0 Then
-            Label1(i).BackColor = &HFF00&
-        Else
-            Label1(i).BackColor = &HFF
-        End If
+      If gnДатчик(i).Note <> "Резерв" Then
+         If gnДатчик(i).Data = 0 Then
+               Label1(i).BackColor = &HFF00&
+         Else
+               Label1(i).BackColor = &HFF
+         End If
+      Else
+         Label1(i).BackColor = &HC0C0C0
+      End If
     Next i
 
     ' Цикл для суммирования аналоговых значений
