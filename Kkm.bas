@@ -12,8 +12,6 @@ Public giПодРежимККМ As Integer
 Public glpassKKM    As Long     'Пароль операторов ККМ при записи в таблицу ККМ
 Public DrvFR        As Object   'Описание объекта драйвера ФР
 
-Public gdPrice      As Double
-
 '  Public Drvfr As Object
 Public Sub StatusKKM()
     On Error GoTo err

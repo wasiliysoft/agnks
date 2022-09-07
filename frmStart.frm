@@ -3548,7 +3548,7 @@ Private Sub Timer1_Timer()
 
     v = Round(gdИР2 / agnksСonfig.plot, 1) ' Округление до десятых
     ЗаправленоГаза.Caption = Format(v, "0.0")
-    Label_Summa.Caption = Format(v * gdPrice, "##0.00")
+    Label_Summa.Caption = Format(v * agnksСonfig.Price, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(GetTimeCounter_2) ' Время заправки
 
     Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / agnksСonfig.plot, "0.00")
