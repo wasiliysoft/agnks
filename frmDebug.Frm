@@ -925,10 +925,12 @@ End Sub
 
 
 Private Sub updateState()
-    Dim Index As Integer
-    For Index = 0 To 16
-        ggACL8113(Index) = CDbl(Text_ggACL8113(Index).Text)
-    Next
+   If isDebug Then
+      Dim Index As Integer
+      For Index = 0 To 16
+         ggACL8113(Index) = CDbl(Text_ggACL8113(Index).Text)
+      Next
+   End If
 End Sub
 
 
