@@ -41,7 +41,7 @@ Public Function InitDisk() As Integer
     load_statistic_from_DB 'TODO âûíåñòè èç ôóíêöèè èíèöèàëèçàöèè äèñêà?
 
     init_agnksConfig
-    init_price_file
+    
     init_SensorDescr_file
     frmStart.MousePointer = vbArrow
     InitDisk = 0
@@ -97,9 +97,21 @@ End Sub
 
 ' TODO implementation
 Sub updatePlot()
-    pAgnksÑonfig.plot = CDbl(0.7)
-    saveConfig
-    init_agnksConfig
+    Dim d As Double: d = 0
+    Dim sInput As String 
+    sInput = InputBox("Ââåäèòå íîâîå çíà÷åíèå ïëîòíîñòè ãàçà", , Format(agnksÑonfig.plot, "0.0000"))
+    If (Len(sInput) = 0) Then Exit Sub
+    On Error Resume Next
+        d = CDbl(sInput)
+    On Error GoTo 0 
+    If  d >= 1 Or d <= 0.5 Then
+        Msgbox "Íåêîððåêòíûé ââîä", vbExclamation
+    Else
+        pAgnksÑonfig.plot = CDbl(d)
+        saveConfig
+        init_agnksConfig
+        MsgBox "Îáíîâëåíî", vbInformation
+    End If
 End Sub
 
 ' TODO implementation
