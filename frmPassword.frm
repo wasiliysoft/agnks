@@ -59,8 +59,8 @@ Private Sub cmdCancel_Click()
 End Sub
 
 Private Sub cmdOk_Click()
-    If Len (Trim(txtPassword))= 0 Then
-      MsgBox "Пустой ввод",vbExclamation
+    If Len(Trim(txtPassword)) = 0 Then
+      MsgBox "Пустой ввод", vbExclamation
     Else
       Hide
     End If
@@ -70,3 +70,8 @@ Private Sub Form_Activate()
     txtPassword.SetFocus
 End Sub
 
+Private Sub txtPassword_KeyPress(KeyAscii As Integer)
+    If KeyAscii = 13 Then
+        cmdOk_Click
+    End If
+End Sub
