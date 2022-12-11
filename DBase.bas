@@ -1,4 +1,4 @@
-Attribute VB_Name = "DB"
+Attribute VB_Name = "DBase"
 Option Explicit
 
 
