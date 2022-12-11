@@ -899,7 +899,7 @@ Private Sub cmdKKM_Click(Index As Integer)
         Case 0    'продажа
             'проверка правильного ввода денег
             If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
-                Dim dblPrice As Double: dblPrice = agnksСonfig.Price
+                Dim dblPrice As Double: dblPrice = agnksConfig.Price
                 Dim dblSumma As Double: dblSumma = CDbl(frmKKM.txtKKM.Text)
                 ' разрешение в чеке: 3 знака после запятой
                 Dim dblQuantity As Double: dblQuantity = CDbl(Format(dblSumma / dblPrice, "##0.000"))

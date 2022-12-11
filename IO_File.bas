@@ -1,10 +1,10 @@
 Attribute VB_Name = "IO_File"
 Option Explicit
 
-Private pAgnksСonfig As AgnksСonfigType
+Private pAgnksConfig As AgnksConfigType
 
 'структура для конфигурационного файла (configFilePath)
-Public Type AgnksСonfigType
+Public Type AgnksConfigType
     PC As Double        ' Поправочный коэффициент
     Price As Double     ' Цена газа
     plot As Double      ' Плотность газа
@@ -15,8 +15,8 @@ Private Function configFilePath() As String
    configFilePath = App.Path + "\agnks.config"
 End Function
 
-Function agnksСonfig() As AgnksСonfigType
-   agnksСonfig = pAgnksСonfig
+Function agnksConfig() As AgnksConfigType
+   agnksConfig = pAgnksConfig
 End Function
 
 Public Sub InitDisk()
@@ -41,7 +41,7 @@ Private Sub init_agnksConfig()
         fLen = FileLen(configFilePath)
     On Error GoTo 0
     If fLen = 0 Then
-        With pAgnksСonfig
+        With pAgnksConfig
             .PC = -1
             .plot = -1
             .Price = -1
@@ -49,13 +49,13 @@ Private Sub init_agnksConfig()
         End With
         MsgBox "Отсутвует файл конфигурации АГНКС: " & configFilePath, vbExclamation
     Else
-        Open configFilePath For Random As fh Len = Len(pAgnksСonfig)
-            Get #fh, 1, pAgnksСonfig
+        Open configFilePath For Random As fh Len = Len(pAgnksConfig)
+            Get #fh, 1, pAgnksConfig
         Close #fh
     End If
-    frmStart.lblPC.Caption = Format(agnksСonfig.PC, "0.0000")
-    frmStart.Price.Caption = Format(agnksСonfig.Price, "0.00")
-    frmStart.lbl_gnPlot.Caption = Format(pAgnksСonfig.plot, "0.0000")
+    frmStart.lblPC.Caption = Format(agnksConfig.PC, "0.0000")
+    frmStart.Price.Caption = Format(agnksConfig.Price, "0.00")
+    frmStart.lbl_gnPlot.Caption = Format(pAgnksConfig.plot, "0.0000")
 End Sub
 
 
@@ -64,7 +64,7 @@ Sub updatePC()
 
     Dim d As Double: d = 0
     Dim sInput As String
-    sInput = InputBox("Введите поправочный коэффициент", , Format(agnksСonfig.PC, "0.0000"))
+    sInput = InputBox("Введите поправочный коэффициент", , Format(agnksConfig.PC, "0.0000"))
     If (Len(sInput) = 0) Then Exit Sub
     On Error Resume Next
         d = CDbl(sInput)
@@ -73,7 +73,7 @@ Sub updatePC()
     If d < -10 Or 10 < d Or d <> Round(d, 4) Then
         MsgBox "Разрешен ввод от -10 до 10 с точностью 4 знака после запятой.", vbExclamation, "Некорректный ввод"
     Else
-        pAgnksСonfig.PC = d
+        pAgnksConfig.PC = d
         saveConfig
         init_agnksConfig
         MsgBox "Обновлено", vbInformation
@@ -86,7 +86,7 @@ Sub updatePlot()
 
     Dim d As Double: d = 0
     Dim sInput As String
-    sInput = InputBox("Введите новое значение плотности газа", , Format(agnksСonfig.plot, "0.0000"))
+    sInput = InputBox("Введите новое значение плотности газа", , Format(agnksConfig.plot, "0.0000"))
     If (Len(sInput) = 0) Then Exit Sub
     On Error Resume Next
         d = CDbl(sInput)
@@ -94,7 +94,7 @@ Sub updatePlot()
     If d >= 1 Or d <= 0.5 Or d <> Round(d, 4) Then
         MsgBox "Допустимое значение от 0,5 до 1 с точностью 4 знака после запятой.", vbExclamation, "Некорректный ввод"
     Else
-        pAgnksСonfig.plot = d
+        pAgnksConfig.plot = d
         saveConfig
         init_agnksConfig
         MsgBox "Обновлено", vbInformation
@@ -107,7 +107,7 @@ Sub updatePrice()
 
     Dim d As Double: d = 0
     Dim sInput As String
-    sInput = InputBox("Введите новое значение цены газа", , Format(agnksСonfig.Price, "0.00"))
+    sInput = InputBox("Введите новое значение цены газа", , Format(agnksConfig.Price, "0.00"))
     If (Len(sInput) = 0) Then Exit Sub
     On Error Resume Next
         d = CDbl(sInput)
@@ -115,7 +115,7 @@ Sub updatePrice()
     If d >= 1000 Or d <= 0 Or d <> Round(d, 2) Then
         MsgBox "Допустимое значение от 0 до 1000 с точностью 2 знака после запятой.", vbExclamation, "Некорректный ввод"
     Else
-        pAgnksСonfig.Price = d
+        pAgnksConfig.Price = d
         saveConfig
         init_agnksConfig
         MsgBox "Обновлено", vbInformation
@@ -130,7 +130,7 @@ Sub updatePWD()
     
     ' ВНИМАНИЕ!!!
     ' Максимальная длинна хранимого пароля
-    ' определяется в структуре AgnksСonfigType
+    ' определяется в структуре AgnksConfigType
 
     frmPassword.lblDescription = "Введите новый пароль, от 3 до 10 символов"
     frmPassword.txtPassword = ""
@@ -156,7 +156,7 @@ Sub updatePWD()
             MsgBox "Пароли не совпадают", vbExclamation
             Exit Sub
         Else
-            pAgnksСonfig.pwd = sInput2
+            pAgnksConfig.pwd = sInput2
             saveConfig
             init_agnksConfig
             MsgBox "Обновлено", vbInformation
@@ -167,8 +167,8 @@ End Sub
 ' TODO return result
 Private Sub saveConfig()
     Dim fh As Long: fh = FreeFile
-    Open configFilePath For Random As fh Len = Len(pAgnksСonfig)
-        Put #fh, 1, pAgnksСonfig
+    Open configFilePath For Random As fh Len = Len(pAgnksConfig)
+        Put #fh, 1, pAgnksConfig
     Close #fh
 End Sub
 
@@ -184,7 +184,7 @@ Function isAuth() As Boolean
     sInput = Trim(sInput)
     If Len(sInput) = 0 Then
         Exit Function
-    ElseIf sInput <> Trim(pAgnksСonfig.pwd) Then
+    ElseIf sInput <> Trim(pAgnksConfig.pwd) Then
         MsgBox "Неверный пароль", vbExclamation
         Exit Function
     Else

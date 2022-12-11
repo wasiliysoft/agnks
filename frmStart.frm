@@ -3546,12 +3546,12 @@ Private Sub Timer1_Timer()
     'Выводим расход на заправку одной машины
     txtKg.Caption = Format(gdИР2, "0.00")
 
-    v = Round(gdИР2 / agnksСonfig.plot, 1) ' Округление до десятых
+    v = Round(gdИР2 / agnksConfig.plot, 1) ' Округление до десятых
     ЗаправленоГаза.Caption = Format(v, "0.0")
-    Label_Summa.Caption = Format(v * agnksСonfig.Price, "##0.00")
+    Label_Summa.Caption = Format(v * agnksConfig.Price, "##0.00")
     txtTime.Caption = formatSecToHHMMSS(GetTimeCounter_2) ' Время заправки
 
-    Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / agnksСonfig.plot, "0.00")
+    Label_Avg_Speed_Car = Format((GetMassExpense_2 * 60) / agnksConfig.plot, "0.00")
     Label_Avg_Left_Time_Car = formatSecToHHMMSS(getLeftRefuelingTime)
 
     bPSensorOsOk = isAll_PSecnsor_OK
