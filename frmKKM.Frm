@@ -899,15 +899,15 @@ Private Sub cmdKKM_Click(Index As Integer)
         Case 0    'продажа
             'проверка правильного ввода денег
             If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
+                Dim dblPrice As Double: dblPrice = agnksСonfig.Price
+                Dim dblSumma As Double: dblSumma = CDbl(frmKKM.txtKKM.Text)
+                ' разрешение в чеке: 3 знака после запятой
+                Dim dblQuantity As Double: dblQuantity = CDbl(Format(dblSumma / dblPrice, "##0.000"))
+                
                 'Оформление чека продажи
                 DrvFR.Password = pass
-                DrvFR.Quantity = CDbl(frmKKM.txtKKM.Text)
-                DrvFR.Price = 1
-                DrvFR.Department = 1
-                DrvFR.Tax1 = 1
-                DrvFR.Tax2 = 0
-                DrvFR.Tax3 = 0
-                DrvFR.Tax4 = 0
+                DrvFR.Quantity = dblQuantity
+                DrvFR.Price = dblPrice
                 DrvFR.StringForPrinting = "Газ природный"
                 DrvFR.Sale
                 'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
