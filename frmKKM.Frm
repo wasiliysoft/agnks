@@ -901,8 +901,9 @@ Private Sub cmdKKM_Click(Index As Integer)
             If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
                 Dim dblPrice As Double: dblPrice = agnksConfig.Price
                 Dim dblSumma As Double: dblSumma = CDbl(frmKKM.txtKKM.Text)
-                ' разрешение в чеке: 3 знака после запятой
-                Dim dblQuantity As Double: dblQuantity = CDbl(Format(dblSumma / dblPrice, "##0.000"))
+                ' Количество с точностью до 1 знака после запятой, 
+                ' см. как рассчитывается первоначальная основная сумма
+                Dim dblQuantity As Double: dblQuantity = CDbl(Format(dblSumma / dblPrice, "0.0"))
                 
                 'Оформление чека продажи
                 DrvFR.Password = pass
