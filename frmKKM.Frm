@@ -916,17 +916,22 @@ Private Sub cmdKKM_Click(Index As Integer)
                     DrvFR.Password = pass
                     DrvFR.Quantity = dblQuantity
                     DrvFR.Price = dblPrice
+                    DrvFR.Department = 1
+                    DrvFR.Tax1 = 1
+                    DrvFR.Tax2 = 0
+                    DrvFR.Tax3 = 0
+                    DrvFR.Tax4 = 0
                     DrvFR.StringForPrinting = "Газ природный"
                     DrvFR.Sale
                     'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
                     DrvFR.Password = pass
-                    DrvFR.CheckSubTotal    'Подводим итог чека, т.е. в Summ1 заносим все Sale
+                    DrvFR.CheckSubTotal 'Подводим итог чека, т.е. в Summ1 заносим все Sale
                     DrvFR.Password = pass
-                    DrvFR.summ1 = summ1
+                    DrvFR.Summ1 = summ1
                     DrvFR.Summ2 = 0
                     DrvFR.Summ3 = 0
                     DrvFR.Summ4 = 0
-                    DrvFR.DiscountOnCheck = 0    'Скидок нет
+                    DrvFR.DiscountOnCheck = 0 'Скидок нет
                     DrvFR.Tax1 = 1
                     DrvFR.Tax2 = 0
                     DrvFR.Tax3 = 0
