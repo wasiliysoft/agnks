@@ -915,7 +915,7 @@ Private Sub cmdKKM_Click(Index As Integer)
                 DrvFR.Password = pass
                 DrvFR.CheckSubTotal    'Подводим итог чека, т.е. в Summ1 заносим все Sale
                 DrvFR.Password = pass
-                DrvFR.Summ1 = CDbl(frmKKM.txtKKM.Text)
+                DrvFR.Summ1 = CDbl(Format(dblQuantity * dblPrice, "0.00"))
                 DrvFR.Summ2 = 0
                 DrvFR.Summ3 = 0
                 DrvFR.Summ4 = 0
