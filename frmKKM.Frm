@@ -893,6 +893,7 @@ Private Sub cmdKKM_Click(Index As Integer)
     Dim i           As Integer
     Dim t           As Date
 
+
     On Error GoTo err
 
     Select Case Index
@@ -901,52 +902,40 @@ Private Sub cmdKKM_Click(Index As Integer)
             If (frmKKM.txtKKM.Visible = True) And (CDbl(frmKKM.txtKKM.Text) > 0) Then
                 Dim dblPrice As Double: dblPrice = agnksConfig.Price
                 Dim dblSumma As Double: dblSumma = CDbl(frmKKM.txtKKM.Text)
-                ' Количество с точностью до 1 знака после запятой, 
+                ' Количество с точностью до 1 знака после запятой,
                 ' см. как рассчитывается первоначальная основная сумма
                 Dim dblQuantity As Double: dblQuantity = CDbl(Format(dblSumma / dblPrice, "0.0"))
+                Dim summ1 As Double: summ1 = CDbl(Format(dblQuantity * dblPrice, "0.00"))
                 
-                'Оформление чека продажи
-                DrvFR.Password = pass
-                DrvFR.Quantity = dblQuantity
-                DrvFR.Price = dblPrice
-                DrvFR.StringForPrinting = "Газ природный"
-                DrvFR.Sale
-                'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
-                DrvFR.Password = pass
-                DrvFR.CheckSubTotal    'Подводим итог чека, т.е. в Summ1 заносим все Sale
-                DrvFR.Password = pass
-                DrvFR.Summ1 = CDbl(Format(dblQuantity * dblPrice, "0.00"))
-                DrvFR.Summ2 = 0
-                DrvFR.Summ3 = 0
-                DrvFR.Summ4 = 0
-                DrvFR.DiscountOnCheck = 0    'Скидок нет
-                DrvFR.Tax1 = 1
-                DrvFR.Tax2 = 0
-                DrvFR.Tax3 = 0
-                DrvFR.Tax4 = 0
-                DrvFR.StringForPrinting = "===================================="
-                DrvFR.CloseCheck
-                giErrorKKM = DrvFR.ResultCode
-                gsErrorKKM = DrvFR.ResultCodeDescription
-                '        If gsРежимККМ <> "" Then
-                '           str = gsРежимККМ & "_подрежим " & CStr(giПодРежимККМ) & ":Ошибки " & CStr(giErrorKKM) & "_" & gsErrorKKM
-                '        Else
-                '           str = CStr(giErrorKKM) & "_" & gsErrorKKM
-                '        End If
-                'Если процедура печати безошибочна, то снимаем флаг печати иначе оставляем флаг
-                If (giErrorKKM = 0) Then    ''And glOperator <> 0 Then
-                    '            BaseZaprAdd CDbl(frmKKM.txtKKM.Text), 0, 1, glOperator, 3, 2, 2, 0, 0 'Перед печатью чека запись в базе:на сумму указанную в чеке
-                    '           ZaprRS.AddNew
-                    '           ZaprRS("DATE") = Now
-                    '           ZaprRS("GAS") = CDbl(frmKKM.txtKKM.Text)
-                    '           ZaprRS("NUMBER") = 10
-                    '           ZaprRS("PRICE") = 1
-                    '           ZaprRS("OPERATOR") = glOperator
-                    '           ZaprRS("TYPEZAPR") = 3 'TYPEZAPR чек без отпуска газа
-                    '           ZaprRS("TYPEFINISH") = 2 'заправка на сумму
-                    '           ZaprDN.Update
-                Else
-                    '!!!надо бы проанализировать ошибку и принять соответствующие действия!!!
+                If (vbYes = MsgBox("Количество:  " & dblQuantity & Chr(13) _
+                            & "Цена:  " & dblPrice & Chr(13) _
+                            & "Сумма:  " & summ1 & Chr(13) & Chr(13) _
+                            & "Продолжить?", vbYesNo + vbQuestion + vbDefaultButton2, "ККМ")) Then
+                
+                    'Оформление чека продажи
+                    DrvFR.Password = pass
+                    DrvFR.Quantity = dblQuantity
+                    DrvFR.Price = dblPrice
+                    DrvFR.StringForPrinting = "Газ природный"
+                    DrvFR.Sale
+                    'Закрытие чека с печатью(отрезка по умалчанию выставляется в таблице свойств ККМ)
+                    DrvFR.Password = pass
+                    DrvFR.CheckSubTotal    'Подводим итог чека, т.е. в Summ1 заносим все Sale
+                    DrvFR.Password = pass
+                    DrvFR.summ1 = summ1
+                    DrvFR.Summ2 = 0
+                    DrvFR.Summ3 = 0
+                    DrvFR.Summ4 = 0
+                    DrvFR.DiscountOnCheck = 0    'Скидок нет
+                    DrvFR.Tax1 = 1
+                    DrvFR.Tax2 = 0
+                    DrvFR.Tax3 = 0
+                    DrvFR.Tax4 = 0
+                    DrvFR.StringForPrinting = "===================================="
+                    DrvFR.CloseCheck
+                    giErrorKKM = DrvFR.ResultCode
+                    gsErrorKKM = DrvFR.ResultCodeDescription
+
                 End If
             End If
 
